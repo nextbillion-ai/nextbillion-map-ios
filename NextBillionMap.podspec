@@ -22,9 +22,9 @@ Pod::Spec.new do |spec|
 
   spec.author       = { "qiu" => "zhengshen@nextbillion.ai" }
 
-  spec.source       = { :git => "https://github.com/nextbillion-ai/nextbillion-direction-ios.git" }
+  spec.source       = { :git => "https://github.com/nextbillion-ai/nextbillion-map-ios.git" }
 
-  spec.vendored_frameworks = 'Nbmap.xcframework'
+  spec.vendored_frameworks = '*.xcframework'
   spec.platform     = :ios, '9.0'
 
   spec.user_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
