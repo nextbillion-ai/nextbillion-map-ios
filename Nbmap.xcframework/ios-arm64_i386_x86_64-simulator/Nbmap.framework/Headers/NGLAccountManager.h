@@ -15,15 +15,19 @@ NGL_EXPORT
 
 /**
  Setting this property to a value of `nil` has no effect.
-
+ 
  @note You must set the access token before attempting to load any Nbmap-hosted
-    style. Therefore, you should generally set it before creating an instance of
-    `NGLMapView`. The recommended way to set an access token is to add an entry
-    to your application’s Info.plist file with the key `NBMapAccessKey`
-    and the type `String`. Alternatively, you may call this method from your
-    application delegate’s `-applicationDidFinishLaunching:` method.
+ style. Therefore, you should generally set it before creating an instance of
+ `NGLMapView`. The recommended way to set an access token is to add an entry
+ to your application’s Info.plist file with the key `NBMapAccessKey`
+ and the type `String`. Alternatively, you may call this method from your
+ application delegate’s `-applicationDidFinishLaunching:` method.
  */
 @property (class, copy, nullable) NSString *accessToken;
+
+@property (class, nonatomic, strong, readonly) NSURL *apiBaseURL;
+
++ (void)setAPIBaseURL:(NSURL *)apiBaseURL;
 
 @end
 
