@@ -1,0 +1,5 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/qiu/Desktop/nb_workspace/ios/ios-maps-sdk/build/ios/Release-iphonesimulator/Nbmap.framework/Nbmap'
+relocations:     []
+...
