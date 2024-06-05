@@ -43,6 +43,11 @@ NGL_EXPORT
 
 + (void)setAPIBaseURL:(NSURL *)apiBaseURL;
 
+@property (class, copy, nullable) NSString *userId;
+
+@property (class, copy, nullable,readonly) NSString *nbId;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
