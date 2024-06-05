@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.2</string>
+	<string>1.1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -43,7 +43,7 @@
 	<key>DTXcodeBuild</key>
 	<string>15E204a</string>
 	<key>GIT_REVISION</key>
-	<string>75964b0</string>
+	<string>d40cc61</string>
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>NGLCommitHash</key>
