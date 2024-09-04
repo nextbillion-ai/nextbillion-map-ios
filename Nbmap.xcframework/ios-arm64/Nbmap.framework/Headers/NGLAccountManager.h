@@ -45,6 +45,8 @@ NGL_EXPORT
 
 @property (class, copy, nullable) NSString *userId;
 
+@property (class, copy, nullable) NSString *crossPlatformInfo;
+
 @property (class, copy, nullable,readonly) NSString *nbId;
 
 

@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.4</string>
+	<string>1.1.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -43,13 +43,13 @@
 	<key>DTXcodeBuild</key>
 	<string>15E204a</string>
 	<key>GIT_REVISION</key>
-	<string>36b700f</string>
+	<string>84d4a79</string>
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>NGLCommitHash</key>
 	<string>deadbeef</string>
 	<key>NGLSemanticVersionString</key>
-	<string>0.0.7</string>
+	<string>1.1.5</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
