@@ -225,7 +225,7 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLExpressionInterpolationMode
  @return An initialized expression equivalent to `object`, suitable for use as
     the value of a style layer attribute.
  */
-+ (instancetype)expressionWithNGLJSONObject:(id)object NS_SWIFT_NAME(init(mglJSONObject:));
++ (instancetype)expressionWithNGLJSONObject:(id)object NS_SWIFT_NAME(init(nglJSONObject:));
 
 /**
  An equivalent Foundation object that can be serialized as JSON.

@@ -59,7 +59,7 @@ FOUNDATION_EXTERN NGL_EXPORT const NSNotificationName NGLOfflinePackErrorNotific
  calling the ``NGLOfflineStorage/removePack:withCompletionHandler:`` method.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NSNotificationName
-    NGLOfflinePackMaximumNextbillionTilesReachedNotification;
+    NGLOfflinePackMaximumNbmapTilesReachedNotification;
 
 /**
  A key in the `userInfo` property of a notification posted by ``NGLOfflinePack``.
@@ -95,7 +95,7 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLOfflinePackUserInfoKey NGLOfflinePackUserI
  The key for an `NSNumber` object that indicates the maximum number of
   tiles that may be downloaded and stored on the current device.
  This key is used in the `userInfo` dictionary of an
- ``NGLOfflinePackMaximumNextbillionTilesReachedNotification`` notification. Call
+ ``NGLOfflinePackMaximumNbmapTilesReachedNotification`` notification. Call
  `-unsignedLongLongValue` on the object to receive the `uint64_t`-typed tile
  limit.
  */
@@ -375,13 +375,13 @@ NGL_EXPORT
  stored on the current device.
 
  Once this limit is reached, an
- ``NGLOfflinePackMaximumNextbillionTilesReachedNotification`` is posted for every
+ ``NGLOfflinePackMaximumNbmapTilesReachedNotification`` is posted for every
  attempt to download additional tiles until already downloaded tiles are removed
  by calling the ``NGLOfflineStorage/removePack:withCompletionHandler:`` method.
 
  @param maximumCount The maximum number of tiles allowed to be downloaded.
  */
-- (void)setMaximumAllowedNextbillionTiles:(uint64_t)maximumCount;
+- (void)setMaximumAllowedNbmapTiles:(uint64_t)maximumCount;
 
 /**
  The cumulative size, measured in bytes, of all downloaded resources on disk.

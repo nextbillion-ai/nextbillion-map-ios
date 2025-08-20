@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return An initialized predicate equivalent to `object`, suitable for use
  with the ``NGLVectorStyleLayer/predicate`` property.
  */
-+ (instancetype)predicateWithNGLJSONObject:(id)object NS_SWIFT_NAME(init(mglJSONObject:));
++ (instancetype)predicateWithNGLJSONObject:(id)object NS_SWIFT_NAME(init(nglJSONObject:));
 
 /**
  An equivalent Foundation object that can be serialized as JSON.
