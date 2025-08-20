@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class NGLAttributionInfo;
 
 /**
- Options for `NGLTileSource` objects.
+ Options for ``NGLTileSource`` objects.
  */
 typedef NSString *NGLTileSourceOption NS_STRING_ENUM;
 
@@ -18,11 +18,11 @@ typedef NSString *NGLTileSourceOption NS_STRING_ENUM;
  zoom level at which to display tiles from the source.
 
  The value should be between 0 and 22, inclusive, and less than
- `NGLTileSourceOptionMaximumZoomLevel`, if specified. The default value for this
+ ``NGLTileSourceOptionMaximumZoomLevel``, if specified. The default value for this
  option is 0.
 
  This option corresponds to the `minzoom` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionMinimumZoomLevel;
@@ -32,25 +32,25 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionMinimu
  zoom level at which to display tiles from the source.
 
  The value should be between 0 and 22, inclusive, and less than
- `NGLTileSourceOptionMinimumZoomLevel`, if specified. The default value for this
+ ``NGLTileSourceOptionMinimumZoomLevel``, if specified. The default value for this
  option is 22.
 
  This option corresponds to the `maxzoom` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionMaximumZoomLevel;
 
 /**
- An `NSValue` object containing an `NGLCoordinateBounds` struct that specifies
+ An `NSValue` object containing an ``NGLCoordinateBounds`` struct that specifies
  the geographic extent of the source.
- 
+
  If this option is specified, the SDK avoids requesting any tile that falls
  outside of the coordinate bounds. Otherwise, the SDK requests any tile needed
  to cover the viewport, as it does by default.
 
  This option corresponds to the `bounds` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionCoordinateBounds;
@@ -62,17 +62,17 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionCoordi
  pressed.
 
  By default, no attribution statements are displayed. If the
- `NGLTileSourceOptionAttributionInfos` option is specified, this option is
+ ``NGLTileSourceOptionAttributionInfos`` option is specified, this option is
  ignored.
 
  This option corresponds to the `attribution` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionAttributionHTMLString;
 
 /**
- An array of `NGLAttributionInfo` objects defining the buttons to be displayed
+ An array of ``NGLAttributionInfo`` objects defining the buttons to be displayed
  in an action sheet when the source is part of a map view’s style and the map
  view’s attribution button is pressed.
 
@@ -85,17 +85,17 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionAttrib
  attribution view when the source is part of the map view’s style.
 
  By default, no attribution statements are displayed. If the
- `NGLTileSourceOptionAttributionInfos` option is specified, this option is
+ ``NGLTileSourceOptionAttributionInfos`` option is specified, this option is
  ignored.
 
  This option corresponds to the `attribution` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionAttributionHTMLString;
 
 /**
- An array of `NGLAttributionInfo` objects defining the buttons to be displayed
+ An array of ``NGLAttributionInfo`` objects defining the buttons to be displayed
  in the map view’s attribution view when the source is part of the map view’s
  style.
 
@@ -107,12 +107,12 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionAttrib
 /**
  An `NSNumber` object containing an unsigned integer that specifies the tile
  coordinate system for the source’s tile URLs. The integer corresponds to one of
- the constants described in `NGLTileCoordinateSystem`.
+ the constants described in ``NGLTileCoordinateSystem``.
 
- The default value for this option is `NGLTileCoordinateSystemXYZ`.
+ The default value for this option is ``NGLTileCoordinateSystem/NGLTileCoordinateSystemXYZ``.
 
  This option corresponds to the `scheme` key in the
- <a href="https://github.com/nbmap/tilejson-spec/tree/master/2.1.0">TileJSON</a>
+ <a href="https://github.com/nextbillion/tilejson-spec/tree/master/2.1.0">TileJSON</a>
  specification.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionTileCoordinateSystem;
@@ -122,23 +122,24 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionTileCo
  interpreted.
  */
 typedef NS_ENUM(NSUInteger, NGLTileCoordinateSystem) {
-    /**
-     The origin is at the top-left (northwest), and `y` values increase
-     southwards.
+  /**
+   The origin is at the top-left (northwest), and `y` values increase
+   southwards.
 
-     This tile coordinate system is used by Nbmap and OpenStreetMap tile
-     servers.
-     */
-    NGLTileCoordinateSystemXYZ = 0,
+   This tile coordinate system is used by Nextbillion and OpenStreetMap tile
+   servers.
+   */
+  NGLTileCoordinateSystemXYZ = 0,
 
-    /**
-     The origin is at the bottom-left (southwest), and `y` values increase
-     northwards.
+  /**
+   The origin is at the bottom-left (southwest), and `y` values increase
+   northwards.
 
-     This tile coordinate system is used by tile servers that conform to the
-     <a href="http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">Tile Map Service Specification</a>.
-     */
-    NGLTileCoordinateSystemTMS
+   This tile coordinate system is used by tile servers that conform to the
+   <a href="http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">Tile Map Service
+   Specification</a>.
+   */
+  NGLTileCoordinateSystemTMS
 };
 
 /**
@@ -147,38 +148,40 @@ typedef NS_ENUM(NSUInteger, NGLTileCoordinateSystem) {
 
 typedef NS_ENUM(NSUInteger, NGLDEMEncoding) {
 
-    /**
-     Raster tiles generated with the [Nbmap encoding formula](https://docs.nbmap.com/help/troubleshooting/access-elevation-data/#nbmap-terrain-rgb).
-    */
-    NGLDEMEncodingNbmap = 0,
+  /**
+   Raster tiles generated with the [Nextbillion encoding
+   formula](https://docs.nextbillion.com/help/troubleshooting/access-elevation-data/#nextbillion-terrain-rgb).
+  */
+  NGLDEMEncodingNextbillion = 0,
 
-    /**
-     Raster tiles generated with the [Mapzen Terrarium encoding formula](https://aws.amazon.com/public-datasets/terrain/).
-    */
-    NGLDEMEncodingTerrarium
+  /**
+   Raster tiles generated with the [Mapzen Terrarium encoding
+   formula](https://aws.amazon.com/public-datasets/terrain/).
+  */
+  NGLDEMEncodingTerrarium
 };
 
 /**
- `NGLTileSource` is a map content source that supplies map tiles to be shown on
+ ``NGLTileSource`` is a map content source that supplies map tiles to be shown on
  the map. The location of and metadata about the tiles are defined either by an
  option dictionary or by an external file that conforms to the
- <a href="https://github.com/nbmap/tilejson-spec/">TileJSON specification</a>.
- A tile source is added to an `NGLStyle` object along with one or more
- `NGLRasterStyleLayer` or `NGLVectorStyleLayer` objects. Use a style layer to
+ <a href="https://github.com/nextbillion/tilejson-spec/">TileJSON specification</a>.
+ A tile source is added to an ``NGLStyle`` object along with one or more
+ ``NGLRasterStyleLayer`` or ``NGLRasterStyleLayer`` objects. Use a style layer to
  control the appearance of content supplied by the tile source.
- 
- A tile source is also known as a tile set. To learn about the structure of a
- Nbmap-hosted tile set, view it in
- <a href="https://www.nbmap.com/studio/tilesets/">Nbmap Studio’s Tilesets editor</a>.
 
- Create instances of `NGLRasterTileSource` and `NGLVectorTileSource` in order
- to use `NGLTileSource`'s properties and methods. Do not create instances of
- `NGLTileSource` directly, and do not create your own subclasses of this class.
+ A tile source is also known as a tile set. To learn about the structure of a
+ Nextbillion-hosted tile set, view it in
+ <a href="https://www.nextbillion.com/studio/tilesets/">Nextbillion Studio’s Tilesets editor</a>.
+
+ Create instances of ``NGLRasterTileSource`` and ``NGLRasterTileSource`` in order
+ to use ``NGLTileSource``'s properties and methods. Do not create instances of
+ ``NGLTileSource`` directly, and do not create your own subclasses of this class.
  */
 NGL_EXPORT
 @interface NGLTileSource : NGLSource
 
-#pragma mark Accessing a Source’s Content
+// MARK: Accessing a Source’s Content
 
 /**
  The URL to the TileJSON configuration file that specifies the contents of the
@@ -189,10 +192,10 @@ NGL_EXPORT
  */
 @property (nonatomic, copy, nullable, readonly) NSURL *configurationURL;
 
-#pragma mark Accessing Attribution Strings
+// MARK: Accessing Attribution Strings
 
 /**
- An array of `NGLAttributionInfo` objects that define the attribution
+ An array of ``NGLAttributionInfo`` objects that define the attribution
  statements to be displayed when the map is shown to the user.
 
  By default, this array is empty. If the source is initialized with a
@@ -200,6 +203,15 @@ NGL_EXPORT
  is loaded.
  */
 @property (nonatomic, copy, readonly) NSArray<NGLAttributionInfo *> *attributionInfos;
+
+/**
+ The attribution HTML string associated with this source.
+
+ By default, this is nil. If the source is initialized with a
+ configuration URL, this is nil until the configuration JSON file
+ is loaded.
+ */
+@property (nonatomic, copy, readonly) NSString *attributionHTMLString;
 
 @end
 

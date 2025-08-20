@@ -1,11 +1,11 @@
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 #import <TargetConditionals.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- The `NGLAnnotation` protocol is used to provide annotation-related information
+ The ``NGLAnnotation`` protocol is used to provide annotation-related information
  to a map view. To use this protocol, you adopt it in any custom objects that
  store or represent annotation data. Each object then serves as the source of
  information about a single map annotation and provides critical information,
@@ -16,16 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
  An object that adopts this protocol must implement the `coordinate` property.
  The other methods of this protocol are optional.
- 
+
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-models/">
- Annotation models</a> and <a href="https://docs.nbmap.com/ios/maps/examples/annotation-views/">
- Annotation views</a> examples to learn how to add objects that follow the
- `NGLAnnotation` protocol.
+ TODO: Annotation models
+ TODO: Annotation views, learn how to add objects that follow the
+ ``NGLAnnotation`` protocol
  */
 @protocol NGLAnnotation <NSObject>
 
-#pragma mark Position Attributes
+// MARK: Position Attributes
 
 /**
  The center point (specified as a map coordinate) of the annotation. (required)
@@ -35,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-#pragma mark Title Attributes
+// MARK: Title Attributes
 
 /**
  The string containing the annotation’s title.

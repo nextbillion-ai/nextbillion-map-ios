@@ -7,47 +7,39 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- An `NGLHeatmapStyleLayer` is a style layer that renders a <a
+ An ``NGLHeatmapStyleLayer`` is a style layer that renders a <a
  href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a>.
  
  A heatmap visualizes the spatial distribution of a large, dense set of point
  data, using color to avoid cluttering the map with individual points at low
  zoom levels. The points are weighted by an attribute you specify. Use a heatmap
  style layer in conjunction with point or point collection features. These
- features can come from vector tiles loaded by an `NGLVectorTileSource` object,
- or they can be `NGLPointAnnotation`, `NGLPointFeature`, `NGLPointCollection`,
- or `NGLPointCollectionFeature` instances in an `NGLShapeSource` or
- `NGLComputedShapeSource` object.
+ features can come from vector tiles loaded by an ``NGLHeatmapStyleLayer``
+ object, or they can be ``NGLHeatmapStyleLayer``, ``NGLHeatmapStyleLayer``,
+ ``NGLHeatmapStyleLayer``, or ``NGLHeatmapStyleLayer`` instances in an
+ ``NGLHeatmapStyleLayer`` or ``NGLHeatmapStyleLayer`` object.
  
- Consider accompanying a heatmap style layer with an `NGLCircleStyleLayer` or
- `NGLSymbolStyleLayer` at high zoom levels. If you are unsure whether the point
- data in an `NGLShapeSource` is dense enough to warrant a heatmap, you can
- alternatively cluster the source using the `NGLShapeSourceOptionClustered`
- option and render the data using an `NGLCircleStyleLayer` or
- `NGLSymbolStyleLayer`.
+ Consider accompanying a heatmap style layer with an ``NGLHeatmapStyleLayer`` or
+ ``NGLHeatmapStyleLayer`` at high zoom levels. If you are unsure whether the
+ point data in an ``NGLHeatmapStyleLayer`` is dense enough to warrant a heatmap,
+ you can alternatively cluster the source using the ``NGLHeatmapStyleLayer``
+ option and render the data using an ``NGLHeatmapStyleLayer`` or
+ ``NGLHeatmapStyleLayer``.
 
  You can access an existing heatmap style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new heatmap style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/heatmap-example/">Create a
+ href="https://docs.nextbillion.com/ios/maps/examples/heatmap-example/">Create a
  heatmap layer</a> example to learn how to add this style layer to your map.
 
  ### Example
 
  ```swift
- let layer = NGLHeatmapStyleLayer(identifier: "earthquake-heat", source: earthquakes)
- layer.heatmapWeight = NSExpression(format: "ngl_interpolate:withCurveType:parameters:stops:(magnitude, 'linear', nil, %@)",
-                                    [0: 0,
-                                     6: 1])
- layer.heatmapIntensity = NSExpression(format: "ngl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
-                                       [0: 1,
-                                        9: 3])
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -57,8 +49,8 @@ NGL_EXPORT
  Returns a heatmap style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -68,7 +60,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 #if TARGET_OS_IPHONE
 /**

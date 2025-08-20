@@ -30,8 +30,8 @@ typedef NS_ENUM(NSUInteger, NGLLightAnchor) {
 typedef struct __attribute__((objc_boxable)) NGLSphericalPosition {
     /** Distance from the center of the base of an object to its light. */
     CGFloat radial;
-    /** Position of the light relative to 0° (0° when `NGLLight.anchor` is set to viewport corresponds
-     to the top of the viewport, or 0° when `NGLLight.anchor` is set to map corresponds to due north,
+    /** Position of the light relative to 0° (0° when ``NGLLight/anchor`` is set to viewport corresponds
+     to the top of the viewport, or 0° when ``NGLLight/anchor`` is set to map corresponds to due north,
      and degrees proceed clockwise). */
     CLLocationDirection azimuthal;
     /** Indicates the height of the light (from 0°, directly above, to 180°, directly below). */
@@ -39,13 +39,13 @@ typedef struct __attribute__((objc_boxable)) NGLSphericalPosition {
 } NGLSphericalPosition;
 
 /**
- Creates a new `NGLSphericalPosition` from the given radial, azimuthal, polar.
+ Creates a new ``NGLSphericalPosition`` from the given radial, azimuthal, polar.
 
  @param radial The radial coordinate.
  @param azimuthal The azimuthal angle.
  @param polar The polar angle.
 
- @return Returns a `NGLSphericalPosition` struct containing the position attributes.
+ @return Returns a ``NGLSphericalPosition`` struct containing the position attributes.
  */
 NS_INLINE NGLSphericalPosition NGLSphericalPositionMake(CGFloat radial, CLLocationDirection azimuthal, CLLocationDirection polar) {
     NGLSphericalPosition position;
@@ -57,23 +57,18 @@ NS_INLINE NGLSphericalPosition NGLSphericalPositionMake(CGFloat radial, CLLocati
 }
 
 /**
-  An `NGLLight` object represents the light source for extruded geometries in
- `NGLStyle`.
+  An ``NGLLight`` object represents the light source for extruded geometries in
+ ``NGLLight``.
  
  ### Example
  ```swift
- let light = NGLLight()
- let position = NGLSphericalPosition(radial: 5, azimuthal: 180, polar: 80)
- light.position = NSExpression(forConstantValue: NSValue(nglSphericalPosition: position))
- light.anchor = NSExpression(forConstantValue: "map")
- mapView.style?.light = light
  ```
  
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/light-example/">Adjust light of
- 3D buildings</a> to learn how to create and modify the light source for 3D
- geometries.
+ href="https://docs.nextbillion.com/ios/maps/examples/light-example/">Adjust
+ light of 3D buildings</a> to learn how to create and modify the light source
+ for 3D geometries.
  */
 NGL_EXPORT
 @interface NGLLight : NSObject
@@ -102,27 +97,27 @@ NGL_EXPORT
  attributes.
 
  This property corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-js/style-spec/#light-anchor"><code>anchor</code></a>
- light property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/light/#anchor"><code>anchor</code></a>
+ light property in the MapLibre Style Spec.
  */
 @property (nonatomic) NSExpression *anchor;
 
 /**
- Position of the `NGLLight` source relative to lit (extruded) geometries, in a
- `NGLSphericalPosition` struct [radial coordinate, azimuthal angle, polar angle]
- where radial indicates the distance from the center of the base of an object to
- its light, azimuthal indicates the position of the light relative to 0° (0°
- when `NGLLight.anchor` is set to `NGLLightAnchorViewport` corresponds to the
- top of the viewport, or 0° when `NGLLight.anchor` is set to `NGLLightAnchorMap`
- corresponds to due north, and degrees proceed clockwise), and polar indicates
- the height of the light (from 0°, directly above, to 180°, directly below).
+ Position of the ``NGLLight`` source relative to lit (extruded) geometries, in a
+ ``NGLLight`` struct [radial coordinate, azimuthal angle, polar angle] where
+ radial indicates the distance from the center of the base of an object to its
+ light, azimuthal indicates the position of the light relative to 0° (0° when
+ ``NGLLight/anchor`` is set to ``NGLLight`` corresponds to the top of the
+ viewport, or 0° when ``NGLLight/anchor`` is set to ``NGLLight`` corresponds to
+ due north, and degrees proceed clockwise), and polar indicates the height of
+ the light (from 0°, directly above, to 180°, directly below).
  
  The default value of this property is an expression that evaluates to an
- `NGLSphericalPosition` struct set to 1.15 radial, 210 azimuthal and 30 polar.
+ ``NGLSphericalPosition`` struct set to 1.15 radial, 210 azimuthal and 30 polar.
  
  You can set this property to an expression containing any of the following:
  
- * Constant `NGLSphericalPosition` values
+ * Constant ``NGLSphericalPosition`` values
  * Predefined functions, including mathematical and string operators
  * Conditional expressions
  * Variable assignments and references to assigned variables
@@ -132,14 +127,14 @@ NGL_EXPORT
  feature attributes.
 
  This property corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-js/style-spec/#light-position"><code>position</code></a>
- light property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/light/#position"><code>position</code></a>
+ light property in the MapLibre Style Spec.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/light-example/">Adjust light of
- 3D buildings</a> example to learn how to create and modify the position of
- value of an `NGLLight` object for 3D geometries.
+ href="https://docs.nextbillion.com/ios/maps/examples/light-example/">Adjust
+ light of 3D buildings</a> example to learn how to create and modify the
+ position of value of an ``NGLLight`` object for 3D geometries.
  */
 @property (nonatomic) NSExpression *position;
 
@@ -169,8 +164,8 @@ NGL_EXPORT
  feature attributes.
 
  This property corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-js/style-spec/#light-color"><code>color</code></a>
- light property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/light/#color"><code>color</code></a>
+ light property in the MapLibre Style Spec.
  */
 @property (nonatomic) NSExpression *color;
 #else
@@ -192,8 +187,8 @@ NGL_EXPORT
  feature attributes.
 
  This property corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-js/style-spec/#light-color"><code>color</code></a>
- light property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/light/#color"><code>color</code></a>
+ light property in the MapLibre Style Spec.
  */
 @property (nonatomic) NSExpression *color;
 #endif
@@ -224,8 +219,8 @@ NGL_EXPORT
  feature attributes.
 
  This property corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-js/style-spec/#light-intensity"><code>intensity</code></a>
- light property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/light/#intensity"><code>intensity</code></a>
+ light property in the MapLibre Style Spec.
  */
 @property (nonatomic) NSExpression *intensity;
 

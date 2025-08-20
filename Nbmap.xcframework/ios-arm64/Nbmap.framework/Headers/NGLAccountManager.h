@@ -1,54 +1,72 @@
 #import <Foundation/Foundation.h>
 
 #import "NGLFoundation.h"
+#import "NGLTileServerOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- The `NGLAccountManager` object provides a global way to set a Nbmap API access
- token.
+ Well-known tile servers
+ */
+typedef NS_ENUM(NSUInteger, NGLWellKnownTileServer) {
+  /**
+   Maptiler
+   */
+  NGLMapTiler,
+  /**
+   MapLibre
+   */
+//  NGLMapLibre,
+  /**
+   Nextbillion
+   */
+  NGLTomTom
+};
+
+/**
+ The ``NGLAccountManager`` object provides a global way to set SDK properties such
+ as apiKey, backend URL, etc.
  */
 NGL_EXPORT
 @interface NGLAccountManager : NSObject
 
-#pragma mark Authorizing Access
+// MARK: Tile Server Configuration
 
 /**
- Setting this property to a value of `nil` has no effect.
- 
- @note You must set the access token before attempting to load any Nbmap-hosted
- style. Therefore, you should generally set it before creating an instance of
- `NGLMapView`. The recommended way to set an access token is to add an entry
- to your application’s Info.plist file with the key `NBMapAccessKey`
- and the type `String`. Alternatively, you may call this method from your
- application delegate’s `-applicationDidFinishLaunching:` method.
+ Tile server options
  */
-@property (class, copy, nullable) NSString *accessToken;
+@property (class, copy, nullable) NGLTileServerOptions* tileServerOptions;
+
+// MARK: Authorizing Access
 
 /**
+ The API Key used by all instances of ``NGLMapView`` in the current application.
  Setting this property to a value of `nil` has no effect.
- 
- The name of the API key header. If set, the API key will be added to the request header with this name instead of in the query.
- 
- @note You can set the header name  before attempting to load any Nbmap-hosted
- style. Therefore, you should generally set it before creating an instance of
- `NGLMapView`. The recommended way to set an access token is to add an entry
- to your application’s Info.plist file with the key `NBMapApiKeyHeaderName`
- and the type `String`. Alternatively, you may call this method from your
- application delegate’s `-applicationDidFinishLaunching:` method.
+
+ > Note: You must set the API key before attempting to load any style which
+    requires the token. Therefore, you should generally set it before creating an instance of
+    ``NGLMapView``. The recommended way to set an api key is to add an entry
+    to your application's Info.plist file with the key `NBMapAccessKey``
+    and the type `String`. Alternatively, you may call this method from your
+    application delegate's `-applicationDidFinishLaunching:` method.
  */
+@property (class, copy, nullable) NSString* accessToken;
+
+/// The user id which user setted
+@property (class, copy, nullable) NSString* userId;
+
+/// The Nextbillion ID (read-only, auto-generated)
+@property (class, readonly, nullable) NSString* nbId;
+
 @property (class, copy, nullable) NSString *apiKeyHeaderName;
 
-@property (class, nonatomic, strong, readonly) NSURL *apiBaseURL;
-
-+ (void)setAPIBaseURL:(NSURL *)apiBaseURL;
-
-@property (class, copy, nullable) NSString *userId;
 
 @property (class, copy, nullable) NSString *crossPlatformInfo;
 
-@property (class, copy, nullable,readonly) NSString *nbId;
-
+/**
+ Instructs the SDk to use the give tile server
+ */
++ (void)useWellKnownTileServer:(NGLWellKnownTileServer)tileServer;
 
 @end
 

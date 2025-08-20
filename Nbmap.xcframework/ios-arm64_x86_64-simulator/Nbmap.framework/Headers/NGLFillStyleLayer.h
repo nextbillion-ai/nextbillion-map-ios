@@ -7,9 +7,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- Controls the frame of reference for `NGLFillStyleLayer.fillTranslation`.
+ Controls the frame of reference for ``NGLFillStyleLayer/fillTranslation``.
 
- Values of this type are used in the `NGLFillStyleLayer.fillTranslationAnchor`
+ Values of this type are used in the ``NGLFillStyleLayer/fillTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLFillTranslationAnchor) {
@@ -24,38 +24,33 @@ typedef NS_ENUM(NSUInteger, NGLFillTranslationAnchor) {
 };
 
 /**
- An `NGLFillStyleLayer` is a style layer that renders one or more filled (and
+ An ``NGLFillStyleLayer`` is a style layer that renders one or more filled (and
  optionally stroked) polygons on the map.
  
  Use a fill style layer to configure the visual appearance of polygon or
  multipolygon features. These features can come from vector tiles loaded by an
- `NGLVectorTileSource` object, or they can be `NGLPolygon`, `NGLPolygonFeature`,
- `NGLMultiPolygon`, or `NGLMultiPolygonFeature` instances in an `NGLShapeSource`
- or `NGLComputedShapeSource` object.
+ ``NGLFillStyleLayer`` object, or they can be ``NGLFillStyleLayer``,
+ ``NGLFillStyleLayer``, ``NGLFillStyleLayer``, or ``NGLFillStyleLayer``
+ instances in an ``NGLFillStyleLayer`` or ``NGLFillStyleLayer`` object.
 
  You can access an existing fill style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new fill style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/select-layer/">Select a feature
- within a layer</a> example to learn how to use a `TERNARY` expression to modify
- the `fillOpacity` of an `NGLFillStyleLayer` object. See the <a
- href="https://docs.nbmap.com/ios/maps/examples/fill-pattern/">Add a pattern to
- a polygon</a> example to learn how to use an image to add pattern to the
- features styled by a `NGLFillStyleLayer`.
+ href="https://docs.nextbillion.com/ios/maps/examples/select-layer/">Select a
+ feature within a layer</a> example to learn how to use a `TERNARY` expression
+ to modify the `fillOpacity` of an ``NGLFillStyleLayer`` object. See the <a
+ href="https://docs.nextbillion.com/ios/maps/examples/fill-pattern/">Add a
+ pattern to a polygon</a> example to learn how to use an image to add pattern to
+ the features styled by a ``NGLFillStyleLayer``.
 
  ### Example
 
  ```swift
- let layer = NGLFillStyleLayer(identifier: "parks", source: parks)
- layer.sourceLayerIdentifier = "parks"
- layer.fillColor = NSExpression(forConstantValue: UIColor.green)
- layer.predicate = NSPredicate(format: "type == %@", "national-park")
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -65,8 +60,8 @@ NGL_EXPORT
  Returns a fill style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -76,7 +71,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Layout Attributes
+// MARK: - Accessing the Layout Attributes
 
 /**
  Sorts features in ascending order based on this value. Features with a higher
@@ -93,7 +88,7 @@ NGL_EXPORT
  */
 @property (nonatomic, null_resettable) NSExpression *fillSortKey;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 /**
  Whether or not the fill should be antialiased.
@@ -102,8 +97,8 @@ NGL_EXPORT
  Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-antialias"><code>fill-antialias</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-antialias"><code>fill-antialias</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -276,8 +271,8 @@ NGL_EXPORT
  points downward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-translate"><code>fill-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-translate"><code>fill-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -302,8 +297,8 @@ NGL_EXPORT
  points upward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-translate"><code>fill-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-translate"><code>fill-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -338,8 +333,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-translate-anchor"><code>fill-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-translate-anchor"><code>fill-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -364,11 +359,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLFillStyleLayer` object and unwrapping its raw value.
+ ``NGLFillStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLFillStyleLayerAdditions)
 
-#pragma mark Working with Fill Style Layer Attribute Values
+// MARK: Working with Fill Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLFillTranslationAnchor` enumeration.
@@ -379,7 +374,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLFillTranslationAnchor:(NGLFillTranslationAnchor)fillTranslationAnchor;
 
 /**
- The `NGLFillTranslationAnchor` enumeration representation of the value.
+ The ``NGLFillTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLFillTranslationAnchor NGLFillTranslationAnchorValue;
 

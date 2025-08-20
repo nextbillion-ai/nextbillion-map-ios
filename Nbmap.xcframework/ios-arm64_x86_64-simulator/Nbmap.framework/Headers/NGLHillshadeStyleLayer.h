@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Direction of light source when map is rotated.
 
- Values of this type are used in the `NGLHillshadeStyleLayer.hillshadeIlluminationAnchor`
+ Values of this type are used in the ``NGLHillshadeStyleLayer/hillshadeIlluminationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLHillshadeIlluminationAnchor) {
@@ -24,35 +24,30 @@ typedef NS_ENUM(NSUInteger, NGLHillshadeIlluminationAnchor) {
 };
 
 /**
- An `NGLHillshadeStyleLayer` is a style layer that renders raster <a
+ An ``NGLHillshadeStyleLayer`` is a style layer that renders raster <a
  href="https://en.wikipedia.org/wiki/Digital_elevation_model">digital elevation
  model</a> (DEM) tiles on the map.
  
  Use a hillshade style layer to configure the color parameters of raster tiles
- loaded by an `NGLRasterDEMSource` object. For example, you could use a
+ loaded by an ``NGLHillshadeStyleLayer`` object. For example, you could use a
  hillshade style layer to render <a
- href="https://docs.nbmap.com/help/troubleshooting/access-elevation-data/#nbmap-terrain-rgb">Nbmap
+ href="https://docs.nextbillion.com/help/troubleshooting/access-elevation-data/#nextbillion-terrain-rgb">Nextbillion
  Terrain-RGB</a> data.
  
  To display posterized hillshading based on vector shapes, as with the <a
- href="https://www.nbmap.com/vector-tiles/nbmap-terrain/">Nbmap Terrain</a>
- source, use an `NGLVectorTileSource` object in conjunction with several
- `NGLFillStyleLayer` objects.
+ href="https://www.nextbillion.com/vector-tiles/nextbillion-terrain/">Nextbillion
+ Terrain</a> source, use an ``NGLHillshadeStyleLayer`` object in conjunction
+ with several ``NGLHillshadeStyleLayer`` objects.
 
  You can access an existing hillshade style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new hillshade style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  ### Example
 
  ```swift
- let layer = NGLHillshadeStyleLayer(identifier: "hills", source: source)
- layer.hillshadeExaggeration = NSExpression(forConstantValue: 0.6)
- if let canalShadowLayer = mapView.style?.layer(withIdentifier: "waterway-river-canal-shadow") {
-     mapView.style?.insertLayer(layer, below: canalShadowLayer)
- }
  ```
  */
 NGL_EXPORT
@@ -62,8 +57,8 @@ NGL_EXPORT
  Returns a hillshade style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -73,7 +68,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 #if TARGET_OS_IPHONE
 /**
@@ -300,11 +295,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLHillshadeStyleLayer` object and unwrapping its raw value.
+ ``NGLHillshadeStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLHillshadeStyleLayerAdditions)
 
-#pragma mark Working with Hillshade Style Layer Attribute Values
+// MARK: Working with Hillshade Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLHillshadeIlluminationAnchor` enumeration.
@@ -315,7 +310,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLHillshadeIlluminationAnchor:(NGLHillshadeIlluminationAnchor)hillshadeIlluminationAnchor;
 
 /**
- The `NGLHillshadeIlluminationAnchor` enumeration representation of the value.
+ The ``NGLHillshadeIlluminationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLHillshadeIlluminationAnchor NGLHillshadeIlluminationAnchorValue;
 

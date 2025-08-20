@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Part of the icon placed closest to the anchor.
 
- Values of this type are used in the `NGLSymbolStyleLayer.iconAnchor`
+ Values of this type are used in the ``NGLSymbolStyleLayer/iconAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLIconAnchor) {
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, NGLIconAnchor) {
 /**
  Orientation of icon when map is pitched.
 
- Values of this type are used in the `NGLSymbolStyleLayer.iconPitchAlignment`
+ Values of this type are used in the ``NGLSymbolStyleLayer/iconPitchAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLIconPitchAlignment) {
@@ -68,16 +68,16 @@ typedef NS_ENUM(NSUInteger, NGLIconPitchAlignment) {
     NGLIconPitchAlignmentViewport,
     /**
      Automatically matches the value of
-     `NGLSymbolStyleLayer.iconRotationAlignment`.
+     ``NGLSymbolStyleLayer/iconRotationAlignment``.
      */
     NGLIconPitchAlignmentAuto,
 };
 
 /**
- In combination with `NGLSymbolStyleLayer.symbolPlacement`, determines the
+ In combination with ``NGLSymbolStyleLayer/symbolPlacement``, determines the
  rotation behavior of icons.
 
- Values of this type are used in the `NGLSymbolStyleLayer.iconRotationAlignment`
+ Values of this type are used in the ``NGLSymbolStyleLayer/iconRotationAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLIconRotationAlignment) {
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, NGLIconRotationAlignment) {
     NGLIconRotationAlignmentMap,
     /**
      Produces icons whose x-axes are aligned with the x-axis of the viewport,
-     regardless of the value of `NGLSymbolStyleLayer.symbolPlacement`.
+     regardless of the value of ``NGLSymbolStyleLayer/symbolPlacement``.
      */
     NGLIconRotationAlignmentViewport,
     /**
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSUInteger, NGLIconRotationAlignment) {
  image is a resizable image, the resizable areas may be stretched, while the cap
  insets are always drawn at the original scale.
 
- Values of this type are used in the `NGLSymbolStyleLayer.iconTextFit`
+ Values of this type are used in the ``NGLSymbolStyleLayer/iconTextFit``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLIconTextFit) {
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, NGLIconTextFit) {
 /**
  Label placement relative to its geometry.
 
- Values of this type are used in the `NGLSymbolStyleLayer.symbolPlacement`
+ Values of this type are used in the ``NGLSymbolStyleLayer/symbolPlacement``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLSymbolPlacement) {
@@ -153,15 +153,21 @@ typedef NS_ENUM(NSUInteger, NGLSymbolPlacement) {
 };
 
 /**
- Controls the order in which overlapping symbols in the same layer are rendered
+ Determines whether overlapping symbols in the same layer are rendered in the
+ order that they appear in the data source or by their y-position relative to
+ the viewport. To control the order and prioritization of symbols otherwise, use
+ ``NGLSymbolStyleLayer/symbolSortKey``.
 
- Values of this type are used in the `NGLSymbolStyleLayer.symbolZOrder`
+ Values of this type are used in the ``NGLSymbolStyleLayer/symbolZOrder``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLSymbolZOrder) {
     /**
-     If `NGLSymbolStyleLayer.symbolSortKey` is set, sort based on that.
-     Otherwise sort symbols by their y-position relative to the viewport.
+     Sorts symbols by ``NGLSymbolStyleLayer/symbolSortKey`` if set. Otherwise,
+     sorts symbols by their y-position relative to the viewport if
+     `iconAllowOverlap` or `textAllowOverlap` is set to `YES` or
+     `NGLTextAllowOverlapIconIgnorePlacement` or `textIgnorePlacement` is
+     `false`.
      */
     NGLSymbolZOrderAuto,
     /**
@@ -180,7 +186,7 @@ typedef NS_ENUM(NSUInteger, NGLSymbolZOrder) {
 /**
  Part of the text placed closest to the anchor.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textAnchor`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextAnchor) {
@@ -225,7 +231,7 @@ typedef NS_ENUM(NSUInteger, NGLTextAnchor) {
 /**
  Text justification options.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textJustification`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textJustification``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextJustification) {
@@ -250,7 +256,7 @@ typedef NS_ENUM(NSUInteger, NGLTextJustification) {
 /**
  Orientation of text when map is pitched.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textPitchAlignment`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textPitchAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextPitchAlignment) {
@@ -264,16 +270,16 @@ typedef NS_ENUM(NSUInteger, NGLTextPitchAlignment) {
     NGLTextPitchAlignmentViewport,
     /**
      Automatically matches the value of
-     `NGLSymbolStyleLayer.textRotationAlignment`.
+     ``NGLSymbolStyleLayer/textRotationAlignment``.
      */
     NGLTextPitchAlignmentAuto,
 };
 
 /**
- In combination with `NGLSymbolStyleLayer.symbolPlacement`, determines the
+ In combination with ``NGLSymbolStyleLayer/symbolPlacement``, determines the
  rotation behavior of the individual glyphs forming the text.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textRotationAlignment`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textRotationAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextRotationAlignment) {
@@ -285,7 +291,7 @@ typedef NS_ENUM(NSUInteger, NGLTextRotationAlignment) {
     NGLTextRotationAlignmentMap,
     /**
      Produces glyphs whose x-axes are aligned with the x-axis of the viewport,
-     regardless of the value of `NGLSymbolStyleLayer.symbolPlacement`.
+     regardless of the value of ``NGLSymbolStyleLayer/symbolPlacement``.
      */
     NGLTextRotationAlignmentViewport,
     /**
@@ -300,7 +306,7 @@ typedef NS_ENUM(NSUInteger, NGLTextRotationAlignment) {
 /**
  Specifies how to capitalize text.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textTransform`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textTransform``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextTransform) {
@@ -326,7 +332,7 @@ typedef NS_ENUM(NSUInteger, NGLTextTransform) {
  single 'vertical' enum value. The order of elements in an array define priority
  order for the placement of an orientation variant.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textWritingModes`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textWritingModes``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextWritingMode) {
@@ -343,9 +349,9 @@ typedef NS_ENUM(NSUInteger, NGLTextWritingMode) {
 };
 
 /**
- Controls the frame of reference for `NGLSymbolStyleLayer.iconTranslation`.
+ Controls the frame of reference for ``NGLSymbolStyleLayer/iconTranslation``.
 
- Values of this type are used in the `NGLSymbolStyleLayer.iconTranslationAnchor`
+ Values of this type are used in the ``NGLSymbolStyleLayer/iconTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLIconTranslationAnchor) {
@@ -360,9 +366,9 @@ typedef NS_ENUM(NSUInteger, NGLIconTranslationAnchor) {
 };
 
 /**
- Controls the frame of reference for `NGLSymbolStyleLayer.textTranslation`.
+ Controls the frame of reference for ``NGLSymbolStyleLayer/textTranslation``.
 
- Values of this type are used in the `NGLSymbolStyleLayer.textTranslationAnchor`
+ Values of this type are used in the ``NGLSymbolStyleLayer/textTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLTextTranslationAnchor) {
@@ -377,41 +383,31 @@ typedef NS_ENUM(NSUInteger, NGLTextTranslationAnchor) {
 };
 
 /**
- An `NGLSymbolStyleLayer` is a style layer that renders icon and text labels at
- points or along lines on the map.
+ An ``NGLSymbolStyleLayer`` is a style layer that renders icon and text labels
+ at points or along lines on the map.
  
  Use a symbol style layer to configure the visual appearance of feature labels.
- These features can come from vector tiles loaded by an `NGLVectorTileSource`
- object, or they can be `NGLShape` or `NGLFeature` instances in an
- `NGLShapeSource` or `NGLComputedShapeSource` object.
+ These features can come from vector tiles loaded by an ``NGLSymbolStyleLayer``
+ object, or they can be ``NGLSymbolStyleLayer`` or ``NGLSymbolStyleLayer``
+ instances in an ``NGLSymbolStyleLayer`` or ``NGLSymbolStyleLayer`` object.
 
  You can access an existing symbol style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new symbol style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/runtime-multiple-annotations/">Dynamically
+ href="https://docs.nextbillion.com/ios/maps/examples/runtime-multiple-annotations/">Dynamically
  style interactive points</a> and <a
- href="https://docs.nbmap.com/ios/maps/examples/clustering-with-images/">Use
+ href="https://docs.nextbillion.com/ios/maps/examples/clustering-with-images/">Use
  images to cluster point data</a> examples learn how to style data on your map
  using this layer.
 
  ### Example
 
  ```swift
- let layer = NGLSymbolStyleLayer(identifier: "coffeeshops", source: pois)
- layer.sourceLayerIdentifier = "pois"
- layer.iconImageName = NSExpression(forConstantValue: "coffee")
- layer.iconScale = NSExpression(forConstantValue: 0.5)
- layer.text = NSExpression(forKeyPath: "name")
- layer.textTranslation = NSExpression(forConstantValue: NSValue(cgVector: CGVector(dx: 10, dy: 0)))
- layer.textJustification = NSExpression(forConstantValue: "left")
- layer.textAnchor = NSExpression(forConstantValue: "left")
- layer.predicate = NSPredicate(format: "%K == %@", "venue-type", "coffee")
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -421,8 +417,8 @@ NGL_EXPORT
  Returns a symbol style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -432,7 +428,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Layout Attributes
+// MARK: - Accessing the Layout Attributes
 
 /**
  If true, the icon will be visible even if it collides with other previously
@@ -441,12 +437,12 @@ NGL_EXPORT
  The default value of this property is an expression that evaluates to `NO`. Set
  this property to `nil` to reset it to the default value.
  
- This property is only applied to the style if `iconImageName` is non-`nil`.
- Otherwise, it is ignored.
+ This property is only applied to the style if `iconImageName` is non-`nil`, and
+ `iconOverlap` is set to `nil`. Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-allow-overlap"><code>icon-allow-overlap</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-allow-overlap"><code>icon-allow-overlap</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -509,8 +505,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-ignore-placement"><code>icon-ignore-placement</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-ignore-placement"><code>icon-ignore-placement</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -532,8 +528,8 @@ NGL_EXPORT
 /**
  Name of a style image to use for drawing an image background.
  
- Use the `+[NGLStyle setImage:forName:]` method to associate an image with a
- name that you can set this property to.
+ Use the ``NGLStyle/setImage:forName:`` method to associate an image with a name
+ that you can set this property to.
  
  Within a constant string value, a feature attribute name enclosed in curly
  braces (e.g., `{token}`) is replaced with the value of the named attribute.
@@ -541,8 +537,8 @@ NGL_EXPORT
  and key path expressions.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-image"><code>icon-image</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-image"><code>icon-image</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -555,7 +551,7 @@ NGL_EXPORT
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/clustering-with-images/">Use
+ href="https://docs.nextbillion.com/ios/maps/examples/clustering-with-images/">Use
  images to cluster point data</a> example to learn how to dynamically set your
  icons with an expression.
  */
@@ -632,30 +628,55 @@ NGL_EXPORT
  */
 @property (nonatomic, null_resettable, getter=isIconOptional) NSExpression *iconOptional;
 
+#if TARGET_OS_IPHONE
 /**
- Size of the additional area around the icon bounding box used for detecting
- symbol collisions.
+ Size of additional area round the icon bounding box used for detecting symbol
+ collisions.
  
  This property is measured in points.
  
- The default value of this property is an expression that evaluates to the float
- `2`. Set this property to `nil` to reset it to the default value.
+ The default value of this property is an expression that evaluates to an
+ `NSValue` object containing a `UIEdgeInsets` struct set to 2 points on all
+ sides. Set this property to `nil` to reset it to the default value.
  
  This property is only applied to the style if `iconImageName` is non-`nil`.
  Otherwise, it is ignored.
  
  You can set this property to an expression containing any of the following:
  
- * Constant numeric values no less than 0
+ * Constant `UIEdgeInsets` values
  * Predefined functions, including mathematical and string operators
  * Conditional expressions
  * Variable assignments and references to assigned variables
- * Interpolation and step functions applied to the `$zoomLevel` variable
- 
- This property does not support applying interpolation or step functions to
- feature attributes.
+ * Interpolation and step functions applied to the `$zoomLevel` variable and/or
+ feature attributes
  */
 @property (nonatomic, null_resettable) NSExpression *iconPadding;
+#else
+/**
+ Size of additional area round the icon bounding box used for detecting symbol
+ collisions.
+ 
+ This property is measured in points.
+ 
+ The default value of this property is an expression that evaluates to an
+ `NSValue` object containing a `NSEdgeInsets` struct set to 2 points on all
+ sides. Set this property to `nil` to reset it to the default value.
+ 
+ This property is only applied to the style if `iconImageName` is non-`nil`.
+ Otherwise, it is ignored.
+ 
+ You can set this property to an expression containing any of the following:
+ 
+ * Constant `NSEdgeInsets` values
+ * Predefined functions, including mathematical and string operators
+ * Conditional expressions
+ * Variable assignments and references to assigned variables
+ * Interpolation and step functions applied to the `$zoomLevel` variable and/or
+ feature attributes
+ */
+@property (nonatomic, null_resettable) NSExpression *iconPadding;
+#endif
 
 /**
  Orientation of icon when map is pitched.
@@ -696,8 +717,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-rotate"><code>icon-rotate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-rotate"><code>icon-rotate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -760,8 +781,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-size"><code>icon-size</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-size"><code>icon-size</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -878,8 +899,8 @@ NGL_EXPORT
  ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-icon-keep-upright"><code>icon-keep-upright</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-icon-keep-upright"><code>icon-keep-upright</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -912,8 +933,8 @@ NGL_EXPORT
  ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-keep-upright"><code>text-keep-upright</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-keep-upright"><code>text-keep-upright</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -946,8 +967,8 @@ NGL_EXPORT
  ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-max-angle"><code>text-max-angle</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-max-angle"><code>text-max-angle</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -977,8 +998,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-max-width"><code>text-max-width</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-max-width"><code>text-max-width</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1000,17 +1021,18 @@ NGL_EXPORT
  If this property is set to `true`, symbols in this layer avoid crossing the
  edge of a tile. You should set this property to `true` if the backing vector
  tiles don’t have enough padding to prevent collisions, or if this layer’s
- `symbolPlacement` property is set to `NGLSymbolPlacementPoint` but this layer
- is above a symbol layer whose `symbolPlacement` property is set to
- `NGLSymbolPlacementLine`. You do not need to enable this property to prevent
- clipped labels at tile boundaries.
+ `symbolPlacement` property is set to
+ ``NGLSymbolPlacement/NGLSymbolPlacementPoint`` but this layer is above a symbol
+ layer whose `symbolPlacement` property is set to
+ ``NGLSymbolPlacement/NGLSymbolPlacementPoint``. You do not need to enable this
+ property to prevent clipped labels at tile boundaries.
  
  The default value of this property is an expression that evaluates to `NO`. Set
  this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-symbol-avoid-edges"><code>symbol-avoid-edges</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-symbol-avoid-edges"><code>symbol-avoid-edges</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1057,6 +1079,26 @@ NGL_EXPORT
 @property (nonatomic, null_resettable) NSExpression *symbolPlacement;
 
 /**
+ Internal use only
+ 
+ The default value of this property is an expression that evaluates to `NO`. Set
+ this property to `nil` to reset it to the default value.
+ 
+ You can set this property to an expression containing any of the following:
+ 
+ * Constant Boolean values
+ * Predefined functions, including mathematical and string operators
+ * Conditional expressions
+ * Variable assignments and references to assigned variables
+ * Step functions applied to the `$zoomLevel` variable
+ 
+ This property does not support applying interpolation functions to the
+ `$zoomLevel` variable or applying interpolation or step functions to feature
+ attributes.
+ */
+@property (nonatomic, null_resettable) NSExpression *symbolScreenSpace;
+
+/**
  Sorts features in ascending order based on this value. Features with lower sort
  keys are drawn and placed first.  When `iconAllowsOverlap` or
  `textAllowsOverlap` is `false`, features with a lower sort key will have
@@ -1100,7 +1142,10 @@ NGL_EXPORT
 @property (nonatomic, null_resettable) NSExpression *symbolSpacing;
 
 /**
- Controls the order in which overlapping symbols in the same layer are rendered
+ Determines whether overlapping symbols in the same layer are rendered in the
+ order that they appear in the data source or by their y-position relative to
+ the viewport. To control the order and prioritization of symbols otherwise, use
+ `symbolSortKey`.
  
  The default value of this property is an expression that evaluates to `auto`.
  Set this property to `nil` to reset it to the default value.
@@ -1109,8 +1154,10 @@ NGL_EXPORT
  
  * Constant `NGLSymbolZOrder` values
  * Any of the following constant string values:
-   * `auto`: If `symbol-sort-key` is set, sort based on that. Otherwise sort
- symbols by their y-position relative to the viewport.
+   * `auto`: Sorts symbols by `symbol-sort-key` if set. Otherwise, sorts symbols
+ by their y-position relative to the viewport if `icon-allow-overlap` or
+ `text-allow-overlap` is set to `true` or `icon-ignore-placement` or
+ `text-ignore-placement` is `false`.
    * `viewport-y`: Specify this z order if symbols’ appearance relies on lower
  features overlapping higher features. For example, symbols with a pin-like
  appearance would require this z order.
@@ -1139,8 +1186,8 @@ NGL_EXPORT
  string. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-field"><code>text-field</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-field"><code>text-field</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1153,9 +1200,10 @@ NGL_EXPORT
  feature attributes
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/clustering/">Cluster
- point data</a> and <a
- href="https://docs.nbmap.com/ios/maps/examples/clustering-with-images/">Use
+ See the <a
+ href="https://docs.nextbillion.com/ios/maps/examples/clustering/">Cluster point
+ data</a> and <a
+ href="https://docs.nextbillion.com/ios/maps/examples/clustering-with-images/">Use
  images to cluster point data</a> to learn how to use an expression to set this
  attribute to the number of markers within a cluster.
  */
@@ -1171,12 +1219,12 @@ NGL_EXPORT
  The default value of this property is an expression that evaluates to `NO`. Set
  this property to `nil` to reset it to the default value.
  
- This property is only applied to the style if `text` is non-`nil`. Otherwise,
- it is ignored.
+ This property is only applied to the style if `iconImageName` is non-`nil`.
+ Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-allow-overlap"><code>text-allow-overlap</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-allow-overlap"><code>text-allow-overlap</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1236,8 +1284,8 @@ NGL_EXPORT
  the text, if the first font lacks a glyph for the character, the next font is
  applied as a fallback, and so on.
  
- See the “[Customizing Fonts](../customizing-fonts.html)” guide for details on
- how this SDK chooses and renders fonts based on the value of this property.
+ See the “[Customizing Fonts](doc:Customizing_Fonts)” guide for details on how
+ this SDK chooses and renders fonts based on the value of this property.
  
  The default value of this property is an expression that evaluates to the array
  `Open Sans Regular`, `Arial Unicode MS Regular`. Set this property to `nil` to
@@ -1247,8 +1295,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-font"><code>text-font</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-font"><code>text-font</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1276,8 +1324,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-size"><code>text-size</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-size"><code>text-size</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1303,8 +1351,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-ignore-placement"><code>text-ignore-placement</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-ignore-placement"><code>text-ignore-placement</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1333,8 +1381,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-justify"><code>text-justify</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-justify"><code>text-justify</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1561,8 +1609,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-rotate"><code>text-rotate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-rotate"><code>text-rotate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1648,7 +1696,7 @@ NGL_EXPORT
  
  You can set this property to an expression containing any of the following:
  
- * Constant `NGLTextAnchor` array values
+ * Constant ``NGLTextAnchor`` array values
  * Constant array, in which each element is any of the following constant string
  values:
    * `center`: The center of the text is placed closest to the anchor.
@@ -1675,6 +1723,94 @@ NGL_EXPORT
  */
 @property (nonatomic, null_resettable) NSExpression *textVariableAnchor;
 
+#if TARGET_OS_IPHONE
+/**
+ To increase the chance of placing high-priority labels on the map, you can
+ provide an array of `textAnchor` locations, each paired with an offset value.
+ The renderer will attempt to place the label at each location, in order, before
+ moving on to the next location+offset. Use `textJustify: auto` to choose
+ justification based on anchor position. 
+ 
+  The length of the array must be even, and must alternate between enum and
+ point entries. i.e., each anchor location must be accompanied by a point, and
+ that point defines the offset when the corresponding anchor location is used.
+ Positive offset values indicate right and down, while negative values indicate
+ left and up. Anchor locations may repeat, allowing the renderer to try multiple
+ offsets to try and place a label using the same anchor. 
+ 
+  When present, this property takes precedence over `textAnchor`,
+ `textVariableAnchor`, `textOffset`, and `textRadialOffset`. 
+ 
+  ```json 
+  { "text-variable-anchor-offset": ["top", [0, 4], "left", [3,0], "bottom", [1,
+ 1]] } 
+  ``` 
+ 
+  When the renderer chooses the `top` anchor, `[0, 4]` will be used for
+ `textOffset`; the text will be shifted down by 4 ems. 
+ 
+  When the renderer chooses the `left` anchor, `[3, 0]` will be used for
+ `textOffset`; the text will be shifted right by 3 ems.
+ 
+ This property is only applied to the style if `text` is non-`nil`, and
+ `symbolPlacement` is set to an expression that evaluates to or
+ `NGLSymbolPlacementPoint`. Otherwise, it is ignored.
+ 
+ You can set this property to an expression containing any of the following:
+ 
+ * Constant interleaved `NGLTextAnchor` and `CGVector` array values
+ * Predefined functions, including mathematical and string operators
+ * Conditional expressions
+ * Variable assignments and references to assigned variables
+ * Interpolation and step functions applied to the `$zoomLevel` variable and/or
+ feature attributes
+ */
+@property (nonatomic, null_resettable) NSExpression *textVariableAnchorOffset;
+#else
+/**
+ To increase the chance of placing high-priority labels on the map, you can
+ provide an array of `textAnchor` locations, each paired with an offset value.
+ The renderer will attempt to place the label at each location, in order, before
+ moving on to the next location+offset. Use `textJustify: auto` to choose
+ justification based on anchor position. 
+ 
+  The length of the array must be even, and must alternate between enum and
+ point entries. i.e., each anchor location must be accompanied by a point, and
+ that point defines the offset when the corresponding anchor location is used.
+ Positive offset values indicate right and down, while negative values indicate
+ left and up. Anchor locations may repeat, allowing the renderer to try multiple
+ offsets to try and place a label using the same anchor. 
+ 
+  When present, this property takes precedence over `textAnchor`,
+ `textVariableAnchor`, `textOffset`, and `textRadialOffset`. 
+ 
+  ```json 
+  { "text-variable-anchor-offset": ["top", [0, 4], "left", [3,0], "bottom", [1,
+ 1]] } 
+  ``` 
+ 
+  When the renderer chooses the `top` anchor, `[0, 4]` will be used for
+ `textOffset`; the text will be shifted down by 4 ems. 
+ 
+  When the renderer chooses the `left` anchor, `[3, 0]` will be used for
+ `textOffset`; the text will be shifted right by 3 ems.
+ 
+ This property is only applied to the style if `text` is non-`nil`, and
+ `symbolPlacement` is set to an expression that evaluates to or
+ `NGLSymbolPlacementPoint`. Otherwise, it is ignored.
+ 
+ You can set this property to an expression containing any of the following:
+ 
+ * Constant interleaved `NGLTextAnchor` and `CGVector` array values
+ * Predefined functions, including mathematical and string operators
+ * Conditional expressions
+ * Variable assignments and references to assigned variables
+ * Interpolation and step functions applied to the `$zoomLevel` variable and/or
+ feature attributes
+ */
+@property (nonatomic, null_resettable) NSExpression *textVariableAnchorOffset;
+#endif
+
 /**
  The property allows control over a symbol's orientation. Note that the property
  values act as a hint, so that a symbol whose language doesn’t support the
@@ -1688,12 +1824,12 @@ NGL_EXPORT
  `NGLSymbolPlacementPoint`. Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#layout-symbol-text-writing-mode"><code>text-writing-mode</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#layout-symbol-text-writing-mode"><code>text-writing-mode</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
- * Constant `NGLTextWritingMode` array values
+ * Constant ``NGLTextWritingMode`` array values
  * Constant array, in which each element is any of the following constant string
  values:
    * `horizontal`: If a text's language supports horizontal writing mode,
@@ -1714,7 +1850,7 @@ NGL_EXPORT
 
 @property (nonatomic, null_resettable) NSExpression *textWritingMode __attribute__((unavailable("Use textWritingModes instead.")));
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 #if TARGET_OS_IPHONE
 /**
@@ -1852,7 +1988,10 @@ NGL_EXPORT
 @property (nonatomic) NGLTransition iconHaloColorTransition;
 
 /**
- Distance of halo to the icon outline.
+ Distance of halo to the icon outline. 
+ The unit is in points only for SDF sprites that were created with a blur radius
+ of 8, multiplied by the display density. I.e., the radius needs to be 16 for
+ `@2x` sprites, etc.
  
  This property is measured in points.
  
@@ -1921,8 +2060,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-icon-translate"><code>icon-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-icon-translate"><code>icon-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1950,8 +2089,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-icon-translate"><code>icon-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-icon-translate"><code>icon-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -1986,8 +2125,8 @@ NGL_EXPORT
  `iconTranslation` is non-`nil`. Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-icon-translate-anchor"><code>icon-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-icon-translate-anchor"><code>icon-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -2210,8 +2349,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-text-translate"><code>text-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-text-translate"><code>text-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -2239,8 +2378,8 @@ NGL_EXPORT
  it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-text-translate"><code>text-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-text-translate"><code>text-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -2275,8 +2414,8 @@ NGL_EXPORT
  `textTranslation` is non-`nil`. Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-text-translate-anchor"><code>text-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-text-translate-anchor"><code>text-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -2301,11 +2440,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLSymbolStyleLayer` object and unwrapping its raw value.
+ ``NGLSymbolStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLSymbolStyleLayerAdditions)
 
-#pragma mark Working with Symbol Style Layer Attribute Values
+// MARK: Working with Symbol Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLIconAnchor` enumeration.
@@ -2316,7 +2455,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLIconAnchor:(NGLIconAnchor)iconAnchor;
 
 /**
- The `NGLIconAnchor` enumeration representation of the value.
+ The ``NGLIconAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLIconAnchor NGLIconAnchorValue;
 
@@ -2329,7 +2468,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLIconPitchAlignment:(NGLIconPitchAlignment)iconPitchAlignment;
 
 /**
- The `NGLIconPitchAlignment` enumeration representation of the value.
+ The ``NGLIconPitchAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLIconPitchAlignment NGLIconPitchAlignmentValue;
 
@@ -2342,7 +2481,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLIconRotationAlignment:(NGLIconRotationAlignment)iconRotationAlignment;
 
 /**
- The `NGLIconRotationAlignment` enumeration representation of the value.
+ The ``NGLIconRotationAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLIconRotationAlignment NGLIconRotationAlignmentValue;
 
@@ -2355,7 +2494,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLIconTextFit:(NGLIconTextFit)iconTextFit;
 
 /**
- The `NGLIconTextFit` enumeration representation of the value.
+ The ``NGLIconTextFit`` enumeration representation of the value.
  */
 @property (readonly) NGLIconTextFit NGLIconTextFitValue;
 
@@ -2368,7 +2507,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLSymbolPlacement:(NGLSymbolPlacement)symbolPlacement;
 
 /**
- The `NGLSymbolPlacement` enumeration representation of the value.
+ The ``NGLSymbolPlacement`` enumeration representation of the value.
  */
 @property (readonly) NGLSymbolPlacement NGLSymbolPlacementValue;
 
@@ -2381,7 +2520,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLSymbolZOrder:(NGLSymbolZOrder)symbolZOrder;
 
 /**
- The `NGLSymbolZOrder` enumeration representation of the value.
+ The ``NGLSymbolZOrder`` enumeration representation of the value.
  */
 @property (readonly) NGLSymbolZOrder NGLSymbolZOrderValue;
 
@@ -2394,7 +2533,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextAnchor:(NGLTextAnchor)textAnchor;
 
 /**
- The `NGLTextAnchor` enumeration representation of the value.
+ The ``NGLTextAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLTextAnchor NGLTextAnchorValue;
 
@@ -2407,7 +2546,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextJustification:(NGLTextJustification)textJustification;
 
 /**
- The `NGLTextJustification` enumeration representation of the value.
+ The ``NGLTextJustification`` enumeration representation of the value.
  */
 @property (readonly) NGLTextJustification NGLTextJustificationValue;
 
@@ -2420,7 +2559,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextPitchAlignment:(NGLTextPitchAlignment)textPitchAlignment;
 
 /**
- The `NGLTextPitchAlignment` enumeration representation of the value.
+ The ``NGLTextPitchAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLTextPitchAlignment NGLTextPitchAlignmentValue;
 
@@ -2433,7 +2572,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextRotationAlignment:(NGLTextRotationAlignment)textRotationAlignment;
 
 /**
- The `NGLTextRotationAlignment` enumeration representation of the value.
+ The ``NGLTextRotationAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLTextRotationAlignment NGLTextRotationAlignmentValue;
 
@@ -2446,7 +2585,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextTransform:(NGLTextTransform)textTransform;
 
 /**
- The `NGLTextTransform` enumeration representation of the value.
+ The ``NGLTextTransform`` enumeration representation of the value.
  */
 @property (readonly) NGLTextTransform NGLTextTransformValue;
 
@@ -2459,7 +2598,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextWritingMode:(NGLTextWritingMode)textWritingModes;
 
 /**
- The `NGLTextWritingMode` enumeration representation of the value.
+ The ``NGLTextWritingMode`` enumeration representation of the value.
  */
 @property (readonly) NGLTextWritingMode NGLTextWritingModeValue;
 
@@ -2472,7 +2611,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLIconTranslationAnchor:(NGLIconTranslationAnchor)iconTranslationAnchor;
 
 /**
- The `NGLIconTranslationAnchor` enumeration representation of the value.
+ The ``NGLIconTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLIconTranslationAnchor NGLIconTranslationAnchorValue;
 
@@ -2485,7 +2624,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLTextTranslationAnchor:(NGLTextTranslationAnchor)textTranslationAnchor;
 
 /**
- The `NGLTextTranslationAnchor` enumeration representation of the value.
+ The ``NGLTextTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLTextTranslationAnchor NGLTextTranslationAnchorValue;
 

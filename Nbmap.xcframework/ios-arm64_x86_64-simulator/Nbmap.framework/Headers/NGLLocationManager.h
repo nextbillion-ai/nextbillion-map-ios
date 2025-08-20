@@ -1,34 +1,34 @@
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol NGLLocationManagerDelegate;
 
 /**
- The `NGLLocationManager` protocol defines a set of methods that a class must
- implement in order to serve as the location manager of an `NGLMapView`. A location
+ The ``NGLLocationManager`` protocol defines a set of methods that a class must
+ implement in order to serve as the location manager of an ``NGLMapView``. A location
  manager is responsible for notifying the map view about location-related events,
  such as a change in the user’s location. This protocol is similar to the
  Core Location framework’s `CLLocationManager` class, but your implementation
  does not need to be based on `CLLocationManager`.
- 
- To receive location updates from an object that conforms to the `NGLLocationManager`
- protocol, use the optional methods available in the `NGLLocationManagerDelegate` protocol.
+
+ To receive location updates from an object that conforms to the ``NGLLocationManager``
+ protocol, use the optional methods available in the ``NGLLocationManagerDelegate`` protocol.
  */
 @protocol NGLLocationManager <NSObject>
 
 @optional
 
-#pragma mark Configuring Location Update Precision
+// MARK: Configuring Location Update Precision
 
 /**
  Specifies the minimum distance (measured in meters) a device must move horizontally
  before a location update is generated.
- 
- The default value of this property is `kCLDistanceFilterNone` when `NGLMapView` uses its
+
+ The default value of this property is `kCLDistanceFilterNone` when ``NGLMapView`` uses its
  default location manager.
- 
+
  @see `CLLocationManager.distanceFilter`
  */
 - (CLLocationDistance)distanceFilter;
@@ -37,23 +37,23 @@ NS_ASSUME_NONNULL_BEGIN
  Sets the minimum update distance in meters.
  @param distanceFilter The distance filter in meters.
  */
-- (void)setDistanceFilter:(CLLocationDistance) distanceFilter;
+- (void)setDistanceFilter:(CLLocationDistance)distanceFilter;
 
 /**
  Specifies the accuracy of the location data.
- 
- The default value is `kCLLocationAccuracyBest` when `NGLMapView` uses its
+
+ The default value is `kCLLocationAccuracyBest` when ``NGLMapView`` uses its
  default location manager.
- 
- @note Determining a location with greater accuracy requires more time and more power.
- 
+
+ > Note: Determining a location with greater accuracy requires more time and more power.
+
  @see `CLLocationManager.desiredAccuracy`
  */
 - (CLLocationAccuracy)desiredAccuracy;
 
 /**
  Sets the desired location accuracy.
- 
+
  @param desiredAccuracy The desired location accuracy.
  */
 - (void)setDesiredAccuracy:(CLLocationAccuracy)desiredAccuracy;
@@ -61,31 +61,31 @@ NS_ASSUME_NONNULL_BEGIN
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
 /**
  Specifies the level of location accuracy the Maps SDK has permission to use.
- 
- @note If the value of this property is `CLAccuracyAuthorizationFullAccuracy`, you can set the
- `NGLLocationManager.desiredAccuracy` property to any value. If the value is `CLAccuracyAuthorizationReducedAccuracy`,
- setting `NGLLocationManager.desiredAccuracy` to a value other than` kCLLocationAccuracyReduced` has no effect on
- the location information.
+
+ > Note: If the value of this property is `CLAccuracyAuthorizationFullAccuracy`, you can set the
+ ``NGLLocationManager/desiredAccuracy`` property to any value. If the value is
+ `CLAccuracyAuthorizationReducedAccuracy`, setting ``NGLLocationManager/desiredAccuracy`` to a value
+ other than` kCLLocationAccuracyReduced` has no effect on the location information.
  */
 - (CLAccuracyAuthorization)accuracyAuthorization API_AVAILABLE(ios(14));
 #endif
 
 /**
  Specifies the type of user activity associated with the location updates.
- 
+
  The location manager uses this property as a cue to determine when location updates
  may be automatically paused.
- 
- The default value is `CLActivityTypeOther` when `NGLMapView` uses its
+
+ The default value is `CLActivityTypeOther` when ``NGLMapView`` uses its
  default location manager.
- 
+
  @see `CLLocationManager.activityType`
  */
 - (CLActivityType)activityType;
 
 /**
  Sets the type of user activity associated with the location updates.
- 
+
  @param activityType The location's manager activity type.
  */
 - (void)setActivityType:(CLActivityType)activityType;
@@ -94,28 +94,29 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Requests the user's permission to temporarily use location update services
  with full accuracy.
- 
- @note If the user turned off location accuracy you may use this method to
+
+ > Note: If the user turned off location accuracy you may use this method to
  request full accuracy for a session.
  */
-- (void)requestTemporaryFullAccuracyAuthorizationWithPurposeKey:(NSString *)purposeKey API_AVAILABLE(ios(14));
+- (void)requestTemporaryFullAccuracyAuthorizationWithPurposeKey:(NSString *)purposeKey
+    API_AVAILABLE(ios(14));
 #endif
 
 @required
 
 /**
  The delegate to receive location updates.
- 
- Do not set the location manager’s delegate yourself. `NGLMapView` sets this property
- after the location manager becomes `NGLMapView`’s location manager.
+
+ Do not set the location manager’s delegate yourself. ``NGLMapView`` sets this property
+ after the location manager becomes ``NGLMapView``’s location manager.
  */
 @property (nonatomic, weak) id<NGLLocationManagerDelegate> delegate;
 
-#pragma mark Requesting Authorization for Location Services
+// MARK: Requesting Authorization for Location Services
 
 /**
  Returns the current localization authorization status.
- 
+
  @see `+[CLLocationManger authorizationStatus]`
  */
 @property (nonatomic, readonly) CLAuthorizationStatus authorizationStatus;
@@ -131,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)requestWhenInUseAuthorization;
 
-#pragma mark Initiating Location Updates
+// MARK: Initiating Location Updates
 
 /**
  Starts the generation of location updates that reports the user's current location.
@@ -143,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)stopUpdatingLocation;
 
-#pragma mark Initiating Heading Updates
+// MARK: Initiating Heading Updates
 
 /**
  Specifies a physical device orientation.
@@ -155,10 +156,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)startUpdatingHeading;
 
+#if TARGET_OS_IPHONE
 /**
  Stops the generation of heading updates.
  */
 - (void)stopUpdatingHeading;
+#endif
 
 /**
  Dissmisses immediately the heading calibration view from screen.
@@ -168,64 +171,62 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- The `NGLLocationManagerDelegate` protocol defines a set of methods that respond
- to location updates from an `NGLLocationManager` object that is serving as the
- location manager of an `NGLMapView`.
+ The ``NGLLocationManagerDelegate`` protocol defines a set of methods that respond
+ to location updates from an ``NGLLocationManager`` object that is serving as the
+ location manager of an ``NGLMapView``.
  */
 @protocol NGLLocationManagerDelegate <NSObject>
 
-#pragma mark Responding to Location Updates
+// MARK: Responding to Location Updates
 
 /**
  Notifies the delegate with the new location data.
- 
+
  @param manager The location manager reporting the update.
  @param locations An array of `CLLocation` objects in chronological order,
  with the last object representing the most recent location. This array
- contains multiple `CLLocation` objects when `NGLMapView` uses  its
+ contains multiple `CLLocation` objects when ``NGLMapView`` uses  its
  default location manager.
  */
 - (void)locationManager:(id<NGLLocationManager>)manager
      didUpdateLocations:(NSArray<CLLocation *> *)locations;
 
-#pragma mark Responding to Heading Updates
+// MARK: Responding to Heading Updates
 
 /**
  Notifies the delegate with the new heading data.
- 
+
  @param manager The location manager reporting the update.
  @param newHeading The new heading update.
  */
-- (void)locationManager:(id<NGLLocationManager>)manager
-       didUpdateHeading:(CLHeading *)newHeading;
+- (void)locationManager:(id<NGLLocationManager>)manager didUpdateHeading:(CLHeading *)newHeading;
 
 /**
  Asks the delegate if the calibration alert should be displayed.
- 
+
  @param manager The location manager reporting the calibration.
  */
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(id<NGLLocationManager>)manager;
 
-#pragma mark Responding to Location Updates Errors
+// MARK: Responding to Location Updates Errors
 
 /**
  Notifies the delegate that the location manager was unable to retrieve
  location updates.
- 
+
  @param manager The location manager reporting the error.
  @param error An error object containing the error code that indicates
  why the location manager failed.
  */
-- (void)locationManager:(id<NGLLocationManager>)manager
-       didFailWithError:(nonnull NSError *)error;
+- (void)locationManager:(id<NGLLocationManager>)manager didFailWithError:(nonnull NSError *)error;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
 /**
  Notifies the delegate that the location authorization status has changed.
- 
+
  @param manager The location manager reporting the change.
  */
 - (void)locationManagerDidChangeAuthorization:(id<NGLLocationManager>)manager;
-#endif       
+#endif
 
 @optional
 

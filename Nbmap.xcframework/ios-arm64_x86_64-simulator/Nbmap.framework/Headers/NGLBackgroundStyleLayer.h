@@ -7,15 +7,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- An `NGLBackgroundStyleLayer` is a style layer that covers the entire map. Use a
- background style layer to configure a color or pattern to show below all other
- map content. If the style’s other layers use the Nbmap Streets source, the
- background style layer is responsible for drawing land, whereas the oceans and
- other bodies of water are drawn by `NGLFillStyleLayer` objects.
+ An ``NGLBackgroundStyleLayer`` is a style layer that covers the entire map. Use
+ a background style layer to configure a color or pattern to show below all
+ other map content. If the style’s other layers use the Nextbillion Streets
+ source, the background style layer is responsible for drawing land, whereas the
+ oceans and other bodies of water are drawn by ``NGLBackgroundStyleLayer``
+ objects.
  
  A background style layer is typically the bottommost layer in a style, because
  it covers the entire map and can occlude any layers below it. You can therefore
- access it by getting the last item in the `NGLStyle.layers` array.
+ access it by getting the last item in the ``NGLStyle/layers`` array.
  
  If the background style layer is transparent or omitted from the style, any
  portion of the map view that does not show another style layer is transparent.
@@ -27,15 +28,15 @@ NGL_EXPORT
 Returns a background style layer initialized with an identifier.
 
 After initializing and configuring the style layer, add it to a map view’s
-style using the `-[NGLStyle addLayer:]` or
-`-[NGLStyle insertLayer:belowLayer:]` method.
+style using the ``NGLStyle/addLayer:`` or
+``NGLStyle/insertLayer:belowLayer:`` method.
 
 @param identifier A string that uniquely identifies the source in the style to
 which it is added.
 */
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 #if TARGET_OS_IPHONE
 /**

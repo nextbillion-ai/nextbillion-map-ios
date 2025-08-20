@@ -1,19 +1,19 @@
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
 #import "NGLFoundation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- The `NGLClockDirectionFormatter` class provides properly formatted descriptions
+ The ``NGLClockDirectionFormatter`` class provides properly formatted descriptions
  of headings relative to the user, known as <i>clock positions</i>. For
  example, a value of `90` may be formatted as “3 o’clock”, depending on the
  locale.
 
  Use this class to create localized heading strings when displaying directions
  relative to the user’s current location and heading. To format a direction
- irrespective of the user’s orientation, use `NGLCompassDirectionFormatter`
+ irrespective of the user’s orientation, use ``NGLCompassDirectionFormatter``
  instead.
  */
 NGL_EXPORT
@@ -37,9 +37,11 @@ NGL_EXPORT
 - (NSString *)stringFromDirection:(CLLocationDirection)direction;
 
 /**
- This method is not supported for the `NGLDirectionFormatter` class.
+ This method is not supported for the ``NGLClockDirectionFormatter`` class.
  */
-- (BOOL)getObjectValue:(out id __nullable * __nullable)obj forString:(NSString *)string errorDescription:(out NSString * __nullable * __nullable)error;
+- (BOOL)getObjectValue:(out id __nullable *__nullable)obj
+             forString:(NSString *)string
+      errorDescription:(out NSString *__nullable *__nullable)error;
 
 @end
 
