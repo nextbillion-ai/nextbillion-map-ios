@@ -60,8 +60,12 @@ NGL_EXPORT
 
 @property (class, copy, nullable) NSString *apiKeyHeaderName;
 
-
+/// the cross platform info
 @property (class, copy, nullable) NSString *crossPlatformInfo;
+
+/// tile server base url
++ (nullable NSURL *)apiBaseURL;
++ (void)setAPIBaseURL:(nullable NSURL *)apiBaseURL;
 
 /**
  Instructs the SDk to use the give tile server
