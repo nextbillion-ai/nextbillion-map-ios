@@ -230,6 +230,16 @@ NGL_EXPORT
  */
 - (instancetype)initWithFrame:(CGRect)frame options:(NGLMapOptions *)options;
 
+/**
+ Initializes and returns a newly allocated map view with the specified frame
+ and style type.
+
+ @param frame The frame for the view, measured in points.
+ @param styleType The predefined style type to use for the map.
+ @return An initialized map view.
+ */
+- (instancetype)initWithFrame:(CGRect)frame styleType:(NGMapStyleType)styleType;
+
 // MARK: Accessing the Delegate
 
 /**
@@ -275,6 +285,18 @@ NGL_EXPORT
  - TODO: change the style of a map at runtime.
  */
 @property (nonatomic, null_resettable) NSURL *styleURL;
+
+/**
+ Sets the map style using a predefined style type.
+ 
+ This method provides a convenient way to switch between different predefined map styles
+ such as Bright, Night, and Satellite. The method will automatically find the appropriate
+ style URL based on the current tile server configuration.
+ 
+ @param styleType The type of style to apply to the map.
+ */
+- (void)setStyleWithType:(NGMapStyleType)styleType;
+
 
 /**
  * The style JSON representation of the map.

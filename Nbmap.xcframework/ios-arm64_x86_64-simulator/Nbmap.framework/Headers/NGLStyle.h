@@ -21,6 +21,18 @@ FOUNDATION_EXTERN NGL_EXPORT NGLExceptionName const NGLRedundantSourceException;
 FOUNDATION_EXTERN NGL_EXPORT NGLExceptionName const NGLRedundantSourceIdentifierException;
 
 /**
+ The supported map style type
+ */
+typedef NS_ENUM(NSUInteger, NGMapStyleType) {
+    Bright,
+    
+    Night,
+    
+    Satellite
+};
+
+
+/**
  The proxy object for the current map style.
 
  NGLStyle provides a set of convenience methods for changing default styles included

@@ -2,6 +2,7 @@
 
 #import "NGLActionJournalOptions.h"
 #import "NGLFoundation.h"
+#import "NGLStyle.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,9 +29,26 @@ NGL_EXPORT
 @property (nonatomic, nullable) NSString *styleJSON;
 
 /**
+ The predefined style type to use for the map. This property provides a convenient way
+ to set the map style using predefined style types such as Bright, Night, and Satellite.
+ 
+ If both `styleType` and `styleURL` are set, `styleURL` takes precedence.
+ If both `styleType` and `styleJSON` are set, `styleJSON` takes precedence.
+ */
+@property (nonatomic) NGMapStyleType styleType;
+
+/**
  Action journal  options
  */
 @property (nonatomic, nonnull) NGLActionJournalOptions *actionJournalOptions;
+
+/**
+ Convenience initializer that creates map options with a specific style type.
+ 
+ @param styleType The predefined style type to use for the map.
+ @return A new NGLMapOptions instance configured with the specified style type.
+ */
+- (instancetype)initWithStyleType:(NGMapStyleType)styleType;
 
 @end
 
