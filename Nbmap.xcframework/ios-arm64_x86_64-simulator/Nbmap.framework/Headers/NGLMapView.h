@@ -147,14 +147,6 @@ FOUNDATION_EXTERN NGL_EXPORT NGLExceptionName const NGLUserLocationAnnotationTyp
  manipulate it with standard gestures, animate the map between different
  viewpoints, and present information in the form of annotations and overlays.
 
- The map view loads scalable vector tiles that conform to the
- <a href="https://github.com/nextbillion/vector-tile-spec">Nextbillion Vector Tile Specification</a>.
- It styles them with a style that conforms to the
- <a href="https://maplibre.org/maplibre-style-spec/">MapLibre Style Spec</a>.
- Such styles can be designed with
- <a href="https://maplibre.org/maputnik/">Maputnik</a>.
-
-
  Because ``NGLMapView`` loads asynchronously, several delegate methods are available
  for receiving map-related updates. These methods can be used to ensure that certain operations
  have completed before taking any additional actions. Information on these methods is located
