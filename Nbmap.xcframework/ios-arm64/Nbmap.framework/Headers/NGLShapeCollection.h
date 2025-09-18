@@ -8,27 +8,27 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- An `NGLShapeCollection` object represents a shape consisting of zero or more
- distinct but related shapes that are instances of `NGLShape`. The constituent
+ An ``NGLShapeCollection`` object represents a shape consisting of zero or more
+ distinct but related shapes that are instances of ``NGLShape``. The constituent
  shapes can be a mixture of different kinds of shapes.
 
- `NGLShapeCollection` is most commonly used to add multiple shapes to a single
- `NGLShapeSource`. Configure the appearance of an `NGLShapeSource`’s or
- `NGLVectorTileSource`’s shape collection collectively using an
- `NGLSymbolStyleLayer` object, or use multiple instances of
- `NGLCircleStyleLayer`, `NGLFillStyleLayer`, and `NGLLineStyleLayer` to
+ ``NGLShapeCollection`` is most commonly used to add multiple shapes to a single
+ ``NGLShapeSource``. Configure the appearance of an ``NGLShapeSource``’s or
+ ``NGLVectorTileSource``’s shape collection collectively using an
+ ``NGLSymbolStyleLayer`` object, or use multiple instances of
+ ``NGLCircleStyleLayer``, ``NGLCircleStyleLayer``, and ``NGLCircleStyleLayer`` to
  configure the appearance of each kind of shape inside the collection.
 
- You cannot add an `NGLShapeCollection` object directly to a map view as an
- annotation. However, you can create individual `NGLPointAnnotation`,
- `NGLPolyline`, and `NGLPolygon` objects from the `shapes` array and add those
- annotation objects to the map view using the `-[NGLMapView addAnnotations:]`
+ You cannot add an ``NGLShapeCollection`` object directly to a map view as an
+ annotation. However, you can create individual ``NGLPointAnnotation``,
+ ``NGLPolyline``, and ``NGLPolyline`` objects from the `shapes` array and add those
+ annotation objects to the map view using the ``NGLMapView/addAnnotations:``
  method.
 
  To represent a collection of point, polyline, or polygon shapes, it may be more
- convenient to use an `NGLPointCollection`, `NGLMultiPolyline`, or
- `NGLMultiPolygon` object, respectively. To access a shape collection’s
- attributes, use the corresponding `NGLFeature` object.
+ convenient to use an ``NGLPointCollection``, ``NGLPointCollection``, or
+ ``NGLMultiPolygon`` object, respectively. To access a shape collection’s
+ attributes, use the corresponding ``NGLFeature`` object.
 
  A shape collection is known as a
  <a href="https://tools.ietf.org/html/rfc7946#section-3.1.8">GeometryCollection</a>

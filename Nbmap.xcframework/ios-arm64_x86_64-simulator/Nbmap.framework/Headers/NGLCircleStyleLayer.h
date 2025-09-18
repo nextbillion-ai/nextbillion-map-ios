@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Orientation of circle when map is pitched.
 
- Values of this type are used in the `NGLCircleStyleLayer.circlePitchAlignment`
+ Values of this type are used in the ``NGLCircleStyleLayer/circlePitchAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLCirclePitchAlignment) {
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, NGLCirclePitchAlignment) {
 /**
  Controls the scaling behavior of the circle when the map is pitched.
 
- Values of this type are used in the `NGLCircleStyleLayer.circleScaleAlignment`
+ Values of this type are used in the ``NGLCircleStyleLayer/circleScaleAlignment``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLCircleScaleAlignment) {
@@ -41,9 +41,9 @@ typedef NS_ENUM(NSUInteger, NGLCircleScaleAlignment) {
 };
 
 /**
- Controls the frame of reference for `NGLCircleStyleLayer.circleTranslation`.
+ Controls the frame of reference for ``NGLCircleStyleLayer/circleTranslation``.
 
- Values of this type are used in the `NGLCircleStyleLayer.circleTranslationAnchor`
+ Values of this type are used in the ``NGLCircleStyleLayer/circleTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLCircleTranslationAnchor) {
@@ -58,48 +58,39 @@ typedef NS_ENUM(NSUInteger, NGLCircleTranslationAnchor) {
 };
 
 /**
- An `NGLCircleStyleLayer` is a style layer that renders one or more filled
+ An ``NGLCircleStyleLayer`` is a style layer that renders one or more filled
  circles on the map.
  
  Use a circle style layer to configure the visual appearance of point or point
  collection features. These features can come from vector tiles loaded by an
- `NGLVectorTileSource` object, or they can be `NGLPointAnnotation`,
- `NGLPointFeature`, `NGLPointCollection`, or `NGLPointCollectionFeature`
- instances in an `NGLShapeSource` or `NGLComputedShapeSource` object.
+ ``NGLCircleStyleLayer`` object, or they can be ``NGLCircleStyleLayer``,
+ ``NGLCircleStyleLayer``, ``NGLCircleStyleLayer``, or ``NGLCircleStyleLayer``
+ instances in an ``NGLCircleStyleLayer`` or ``NGLCircleStyleLayer`` object.
  
  A circle style layer renders circles whose radii are measured in screen units.
  To display circles on the map whose radii correspond to real-world distances,
  use many-sided regular polygons and configure their appearance using an
- `NGLFillStyleLayer` object.
+ ``NGLCircleStyleLayer`` object.
 
  You can access an existing circle style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new circle style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/dds-circle-layer/">Data-driven
+ href="https://docs.nextbillion.com/ios/maps/examples/dds-circle-layer/">Data-driven
  circles</a>, <a
- href="https://docs.nbmap.com/ios/maps/examples/shape-collection/">Add multiple
- shapes from a single shape source</a>, and <a
- href="https://docs.nbmap.com/ios/maps/examples/clustering/">Cluster point
+ href="https://docs.nextbillion.com/ios/maps/examples/shape-collection/">Add
+ multiple shapes from a single shape source</a>, and <a
+ href="https://docs.nextbillion.com/ios/maps/examples/clustering/">Cluster point
  data</a> examples to learn how to add circles to your map using this style
  layer.
 
  ### Example
 
  ```swift
- let layer = NGLCircleStyleLayer(identifier: "circles", source: population)
- layer.sourceLayerIdentifier = "population"
- layer.circleColor = NSExpression(forConstantValue: UIColor.green)
- layer.circleRadius = NSExpression(format: "ngl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'exponential', 1.75, %@)",
-                                   [12: 2,
-                                    22: 180])
- layer.circleOpacity = NSExpression(forConstantValue: 0.7)
- layer.predicate = NSPredicate(format: "%K == %@", "marital-status", "married")
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -109,8 +100,8 @@ NGL_EXPORT
  Returns a circle style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -120,7 +111,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Layout Attributes
+// MARK: - Accessing the Layout Attributes
 
 /**
  Sorts features in ascending order based on this value. Features with a higher
@@ -137,7 +128,7 @@ NGL_EXPORT
  */
 @property (nonatomic, null_resettable) NSExpression *circleSortKey;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 /**
  Amount to blur the circle. 1 blurs the circle such that only the centerpoint is
@@ -289,8 +280,8 @@ NGL_EXPORT
  Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-circle-pitch-scale"><code>circle-pitch-scale</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-circle-pitch-scale"><code>circle-pitch-scale</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -419,8 +410,8 @@ NGL_EXPORT
  points downward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-circle-translate"><code>circle-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-circle-translate"><code>circle-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -445,8 +436,8 @@ NGL_EXPORT
  points upward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-circle-translate"><code>circle-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-circle-translate"><code>circle-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -481,8 +472,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-circle-translate-anchor"><code>circle-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-circle-translate-anchor"><code>circle-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -507,11 +498,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLCircleStyleLayer` object and unwrapping its raw value.
+ ``NGLCircleStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLCircleStyleLayerAdditions)
 
-#pragma mark Working with Circle Style Layer Attribute Values
+// MARK: Working with Circle Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLCirclePitchAlignment` enumeration.
@@ -522,7 +513,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLCirclePitchAlignment:(NGLCirclePitchAlignment)circlePitchAlignment;
 
 /**
- The `NGLCirclePitchAlignment` enumeration representation of the value.
+ The ``NGLCirclePitchAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLCirclePitchAlignment NGLCirclePitchAlignmentValue;
 
@@ -535,7 +526,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLCircleScaleAlignment:(NGLCircleScaleAlignment)circleScaleAlignment;
 
 /**
- The `NGLCircleScaleAlignment` enumeration representation of the value.
+ The ``NGLCircleScaleAlignment`` enumeration representation of the value.
  */
 @property (readonly) NGLCircleScaleAlignment NGLCircleScaleAlignmentValue;
 
@@ -548,7 +539,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLCircleTranslationAnchor:(NGLCircleTranslationAnchor)circleTranslationAnchor;
 
 /**
- The `NGLCircleTranslationAnchor` enumeration representation of the value.
+ The ``NGLCircleTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLCircleTranslationAnchor NGLCircleTranslationAnchorValue;
 

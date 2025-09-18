@@ -1,0 +1,1 @@
+#define NGL_RENDER_BACKEND_METAL 1

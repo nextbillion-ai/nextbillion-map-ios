@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The display of line endings.
 
- Values of this type are used in the `NGLLineStyleLayer.lineCap`
+ Values of this type are used in the ``NGLLineStyleLayer/lineCap``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLLineCap) {
@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, NGLLineCap) {
 /**
  The display of lines when joining.
 
- Values of this type are used in the `NGLLineStyleLayer.lineJoin`
+ Values of this type are used in the ``NGLLineStyleLayer/lineJoin``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLLineJoin) {
@@ -57,9 +57,9 @@ typedef NS_ENUM(NSUInteger, NGLLineJoin) {
 };
 
 /**
- Controls the frame of reference for `NGLLineStyleLayer.lineTranslation`.
+ Controls the frame of reference for ``NGLLineStyleLayer/lineTranslation``.
 
- Values of this type are used in the `NGLLineStyleLayer.lineTranslationAnchor`
+ Values of this type are used in the ``NGLLineStyleLayer/lineTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLLineTranslationAnchor) {
@@ -74,42 +74,33 @@ typedef NS_ENUM(NSUInteger, NGLLineTranslationAnchor) {
 };
 
 /**
- An `NGLLineStyleLayer` is a style layer that renders one or more stroked
+ An ``NGLLineStyleLayer`` is a style layer that renders one or more stroked
  polylines on the map.
  
  Use a line style layer to configure the visual appearance of polyline or
  multipolyline features. These features can come from vector tiles loaded by an
- `NGLVectorTileSource` object, or they can be `NGLPolyline`,
- `NGLPolylineFeature`, `NGLMultiPolyline`, or `NGLMultiPolylineFeature`
- instances in an `NGLShapeSource` or `NGLComputedShapeSource` object.
+ ``NGLLineStyleLayer`` object, or they can be ``NGLLineStyleLayer``,
+ ``NGLLineStyleLayer``, ``NGLLineStyleLayer``, or ``NGLLineStyleLayer``
+ instances in an ``NGLLineStyleLayer`` or ``NGLLineStyleLayer`` object.
 
  You can access an existing line style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new line style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
  See the <a
- href="https://docs.nbmap.com/ios/maps/examples/shape-collection/">Add multiple
- shapes from a single shape source</a> example to learn how to add a line to
- your map using this style layer. See the <a
- href="https://docs.nbmap.com/ios/maps/examples/runtime-add-line/">Add a line
- style layer from GeoJSON</a> example to learn how to add and style line data to
- an `NGLMapView` object at runtime.
+ href="https://docs.nextbillion.com/ios/maps/examples/shape-collection/">Add
+ multiple shapes from a single shape source</a> example to learn how to add a
+ line to your map using this style layer. See the <a
+ href="https://docs.nextbillion.com/ios/maps/examples/runtime-add-line/">Add a
+ line style layer from GeoJSON</a> example to learn how to add and style line
+ data to an ``NGLMapView`` object at runtime.
 
  ### Example
 
  ```swift
- let layer = NGLLineStyleLayer(identifier: "trails-path", source: trails)
- layer.sourceLayerIdentifier = "trails"
- layer.lineWidth = NSExpression(format: "ngl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'exponential', 1.5, %@)",
-                                [14: 2,
-                                 18: 20])
- layer.lineColor = NSExpression(forConstantValue: UIColor.brown)
- layer.lineCap = NSExpression(forConstantValue: "round")
- layer.predicate = NSPredicate(format: "%K == %@", "trail-type", "mountain-biking")
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -119,8 +110,8 @@ NGL_EXPORT
  Returns a line style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -130,7 +121,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Layout Attributes
+// MARK: - Accessing the Layout Attributes
 
 /**
  The display of line endings.
@@ -244,7 +235,7 @@ NGL_EXPORT
  */
 @property (nonatomic, null_resettable) NSExpression *lineSortKey;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 /**
  Blur applied to the line, in points.
@@ -337,8 +328,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-line-dasharray"><code>line-dasharray</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-line-dasharray"><code>line-dasharray</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -393,8 +384,8 @@ NGL_EXPORT
 #if TARGET_OS_IPHONE
 /**
  The color gradient with which the line will be drawn. This property only has an
- effect on lines defined by an `NGLShapeSource` whose
- `NGLShapeSourceOptionLineDistanceMetrics` option is set to `YES`.
+ effect on lines defined by an ``NGLShapeSource`` whose ``NGLShapeSource``
+ option is set to `YES`.
  
  This property is only applied to the style if `lineDasharray` is set to `nil`,
  and `linePattern` is set to `nil`, and the data source requirements are met.
@@ -415,8 +406,8 @@ NGL_EXPORT
 #else
 /**
  The color gradient with which the line will be drawn. This property only has an
- effect on lines defined by an `NGLShapeSource` whose
- `NGLShapeSourceOptionLineDistanceMetrics` option is set to `YES`.
+ effect on lines defined by an ``NGLShapeSource`` whose ``NGLShapeSource``
+ option is set to `YES`.
  
  This property is only applied to the style if `lineDasharray` is set to `nil`,
  and `linePattern` is set to `nil`, and the data source requirements are met.
@@ -522,8 +513,8 @@ NGL_EXPORT
  points downward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-line-translate"><code>line-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-line-translate"><code>line-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -548,8 +539,8 @@ NGL_EXPORT
  points upward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-line-translate"><code>line-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-line-translate"><code>line-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -584,8 +575,8 @@ NGL_EXPORT
  Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-line-translate-anchor"><code>line-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-line-translate-anchor"><code>line-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -636,11 +627,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLLineStyleLayer` object and unwrapping its raw value.
+ ``NGLLineStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLLineStyleLayerAdditions)
 
-#pragma mark Working with Line Style Layer Attribute Values
+// MARK: Working with Line Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLLineCap` enumeration.
@@ -651,7 +642,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLLineCap:(NGLLineCap)lineCap;
 
 /**
- The `NGLLineCap` enumeration representation of the value.
+ The ``NGLLineCap`` enumeration representation of the value.
  */
 @property (readonly) NGLLineCap NGLLineCapValue;
 
@@ -664,7 +655,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLLineJoin:(NGLLineJoin)lineJoin;
 
 /**
- The `NGLLineJoin` enumeration representation of the value.
+ The ``NGLLineJoin`` enumeration representation of the value.
  */
 @property (readonly) NGLLineJoin NGLLineJoinValue;
 
@@ -677,7 +668,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLLineTranslationAnchor:(NGLLineTranslationAnchor)lineTranslationAnchor;
 
 /**
- The `NGLLineTranslationAnchor` enumeration representation of the value.
+ The ``NGLLineTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLLineTranslationAnchor NGLLineTranslationAnchorValue;
 

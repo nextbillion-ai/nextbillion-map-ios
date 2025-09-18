@@ -1,6 +1,5 @@
 framework module Nbmap {
   umbrella header "Nbmap.h"
   export *
-
   module * { export * }
 }

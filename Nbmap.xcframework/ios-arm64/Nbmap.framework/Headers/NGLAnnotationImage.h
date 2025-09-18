@@ -5,20 +5,19 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- The `NGLAnnotationImage` class is responsible for presenting point-based
+ The ``NGLAnnotationImage`` class is responsible for presenting point-based
  annotations visually on a map view. Annotation image objects wrap `UIImage`
  objects and may be recycled later and put into a reuse queue that is maintained
  by the map view.
- 
+
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/marker-image/">
- Mark a place on the map with an image</a> example to learn how use an image
- as a marker using `NGLAnnotationImage`. 
+ TODO: Mark a place on the map with an image, learn how use an image
+ as a marker using ``NGLAnnotationImage``.
  */
 NGL_EXPORT
 @interface NGLAnnotationImage : NSObject <NSSecureCoding>
 
-#pragma mark Initializing and Preparing the Image Object
+// MARK: Initializing and Preparing the Image Object
 
 /**
  Initializes and returns a new annotation image object.
@@ -29,9 +28,10 @@ NGL_EXPORT
  @return The initialized annotation image object or `nil` if there was a problem
     initializing the object.
  */
-+ (instancetype)annotationImageWithImage:(UIImage *)image reuseIdentifier:(NSString *)reuseIdentifier;
++ (instancetype)annotationImageWithImage:(UIImage *)image
+                         reuseIdentifier:(NSString *)reuseIdentifier;
 
-#pragma mark Getting and Setting Attributes
+// MARK: Getting and Setting Attributes
 
 /** The image to be displayed for the annotation. */
 @property (nonatomic, strong, nullable) UIImage *image;

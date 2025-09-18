@@ -1,15 +1,15 @@
-#import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
 
-#import "NGLFoundation.h"
 #import "NGLAnnotationView.h"
+#import "NGLFoundation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class NGLMapView;
 @class NGLUserLocation;
 
-/** View representing an `NGLUserLocation` on screen. */
+/** View representing an ``NGLUserLocation`` on screen. */
 NGL_EXPORT
 @interface NGLUserLocationAnnotationView : NGLAnnotationView
 
@@ -25,10 +25,9 @@ NGL_EXPORT
 
  The value of this property is nil during initialization and while user tracking
  is inactive.
- 
+
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/user-location-annotation/">
- Customize the user location annotation</a> example to learn how to customize
+ TODO: Customize the user location annotation, learn how to customize
  the default user location annotation object.
  */
 @property (nonatomic, readonly, weak, nullable) NGLUserLocation *userLocation;
@@ -52,7 +51,7 @@ NGL_EXPORT
  user interaction, a change in the user’s location, when the user tracking mode
  changes, or when the viewport changes.
 
- @note During user interaction with the map, this method may be called many
+ > Note: During user interaction with the map, this method may be called many
  times to update the user location annotation. Therefore, your implementation of
  this method should be as lightweight as possible to avoid negatively affecting
  performance.

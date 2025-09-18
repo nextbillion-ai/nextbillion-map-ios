@@ -8,11 +8,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- Methods for round-tripping values for Nbmap-defined types.
+ Methods for round-tripping values for Nextbillion-defined types.
  */
 @interface NSValue (NGLAdditions)
 
-#pragma mark Working with Geographic Coordinate Values
+// MARK: Working with Geographic Coordinate Values
 
 /**
  Creates a new value object containing the specified Core Location geographic
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CLLocationCoordinate2D NGLCoordinateValue;
 
 /**
- Creates a new value object containing the specified Nbmap map point structure.
+ Creates a new value object containing the specified Nextbillion map point structure.
 
  @param point The value for the new object.
  @return A new value object that contains the coordinate and zoom level information.
@@ -37,12 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)valueWithNGLMapPoint:(NGLMapPoint)point;
 
 /**
- The Nbmap map point structure representation of the value.
+ The Nextbillion map point structure representation of the value.
  */
 @property (readonly) NGLMapPoint NGLMapPointValue;
 
 /**
- Creates a new value object containing the specified Nbmap coordinate span
+ Creates a new value object containing the specified Nextbillion coordinate span
  structure.
 
  @param span The value for the new object.
@@ -51,12 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)valueWithNGLCoordinateSpan:(NGLCoordinateSpan)span;
 
 /**
- The Nbmap coordinate span structure representation of the value.
+ The Nextbillion coordinate span structure representation of the value.
  */
 @property (readonly) NGLCoordinateSpan NGLCoordinateSpanValue;
 
 /**
- Creates a new value object containing the specified Nbmap coordinate bounds
+ Creates a new value object containing the specified Nextbillion coordinate bounds
  structure.
 
  @param bounds The value for the new object.
@@ -65,12 +65,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)valueWithNGLCoordinateBounds:(NGLCoordinateBounds)bounds;
 
 /**
- The Nbmap coordinate bounds structure representation of the value.
+ The Nextbillion coordinate bounds structure representation of the value.
  */
 @property (readonly) NGLCoordinateBounds NGLCoordinateBoundsValue;
 
 /**
- Creates a new value object containing the specified Nbmap coordinate 
+ Creates a new value object containing the specified Nextbillion coordinate
  quad structure.
 
  @param quad The value for the new object.
@@ -79,14 +79,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)valueWithNGLCoordinateQuad:(NGLCoordinateQuad)quad;
 
 /**
- The Nbmap coordinate quad structure representation of the value.
+ The Nextbillion coordinate quad structure representation of the value.
  */
 - (NGLCoordinateQuad)NGLCoordinateQuadValue;
 
-#pragma mark Working with Offline Map Values
+// MARK: Working with Offline Map Values
 
 /**
- Creates a new value object containing the given `NGLOfflinePackProgress`
+ Creates a new value object containing the given ``NGLOfflinePackProgress``
  structure.
 
  @param progress The value for the new object.
@@ -95,51 +95,51 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSValue *)valueWithNGLOfflinePackProgress:(NGLOfflinePackProgress)progress;
 
 /**
- The `NGLOfflinePackProgress` structure representation of the value.
+ The ``NGLOfflinePackProgress`` structure representation of the value.
  */
 @property (readonly) NGLOfflinePackProgress NGLOfflinePackProgressValue;
 
-#pragma mark Working with Transition Values
+// MARK: Working with Transition Values
 
 /**
- Creates a new value object containing the given `NGLTransition`
+ Creates a new value object containing the given ``NGLTransition``
  structure.
- 
+
  @param transition The value for the new object.
  @return A new value object that contains the transition information.
  */
 + (NSValue *)valueWithNGLTransition:(NGLTransition)transition;
 
 /**
- The `NGLTransition` structure representation of the value.
+ The ``NGLTransition`` structure representation of the value.
  */
 @property (readonly) NGLTransition NGLTransitionValue;
 
 /**
- Creates a new value object containing the given `NGLSphericalPosition`
+ Creates a new value object containing the given ``NGLSphericalPosition``
  structure.
- 
+
  @param lightPosition The value for the new object.
  @return A new value object that contains the light position information.
  */
 + (instancetype)valueWithNGLSphericalPosition:(NGLSphericalPosition)lightPosition;
 
 /**
- The `NGLSphericalPosition` structure representation of the value.
+ The ``NGLSphericalPosition`` structure representation of the value.
  */
 @property (readonly) NGLSphericalPosition NGLSphericalPositionValue;
 
 /**
- Creates a new value object containing the given `NGLLightAnchor`
+ Creates a new value object containing the given ``NGLLightAnchor``
  enum.
- 
+
  @param lightAnchor The value for the new object.
  @return A new value object that contains the light anchor information.
  */
 + (NSValue *)valueWithNGLLightAnchor:(NGLLightAnchor)lightAnchor;
 
 /**
- The `NGLLightAnchor` enum representation of the value.
+ The ``NGLLightAnchor`` enum representation of the value.
  */
 @property (readonly) NGLLightAnchor NGLLightAnchorValue;
 

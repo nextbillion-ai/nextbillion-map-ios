@@ -8,9 +8,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Controls the frame of reference for
- `NGLFillExtrusionStyleLayer.fillExtrusionTranslation`.
+ ``NGLFillExtrusionStyleLayer/fillExtrusionTranslation``.
 
- Values of this type are used in the `NGLFillExtrusionStyleLayer.fillExtrusionTranslationAnchor`
+ Values of this type are used in the ``NGLFillExtrusionStyleLayer/fillExtrusionTranslationAnchor``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLFillExtrusionTranslationAnchor) {
@@ -25,34 +25,30 @@ typedef NS_ENUM(NSUInteger, NGLFillExtrusionTranslationAnchor) {
 };
 
 /**
- An `NGLFillExtrusionStyleLayer` is a style layer that renders one or more 3D
+ An ``NGLFillExtrusionStyleLayer`` is a style layer that renders one or more 3D
  extruded polygons on the map.
  
  Use a fill-extrusion style layer to configure the visual appearance of polygon
  or multipolygon features. These features can come from vector tiles loaded by
- an `NGLVectorTileSource` object, or they can be `NGLPolygon`,
- `NGLPolygonFeature`, `NGLMultiPolygon`, or `NGLMultiPolygonFeature` instances
- in an `NGLShapeSource` or `NGLComputedShapeSource` object.
+ an ``NGLFillExtrusionStyleLayer`` object, or they can be
+ ``NGLFillExtrusionStyleLayer``, ``NGLFillExtrusionStyleLayer``,
+ ``NGLFillExtrusionStyleLayer``, or ``NGLFillExtrusionStyleLayer`` instances in
+ an ``NGLFillExtrusionStyleLayer`` or ``NGLFillExtrusionStyleLayer`` object.
 
  You can access an existing fill-extrusion style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new fill-extrusion style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/extrusions/">Display
- 3D buildings</a> example to learn how to add and style 3D layers on a map.
+ See the <a
+ href="https://docs.nextbillion.com/ios/maps/examples/extrusions/">Display 3D
+ buildings</a> example to learn how to add and style 3D layers on a map.
 
  ### Example
 
  ```swift
- let layer = NGLFillExtrusionStyleLayer(identifier: "buildings", source: buildings)
- layer.sourceLayerIdentifier = "building"
- layer.fillExtrusionHeight = NSExpression(forKeyPath: "height")
- layer.fillExtrusionBase = NSExpression(forKeyPath: "min_height")
- layer.predicate = NSPredicate(format: "extrude == 'true'")
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -62,8 +58,8 @@ NGL_EXPORT
  Returns a fill-extrusion style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -73,7 +69,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 /**
  The height with which to extrude the base of this layer. Must be less than or
@@ -170,8 +166,8 @@ NGL_EXPORT
  Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-extrusion-vertical-gradient"><code>fill-extrusion-vertical-gradient</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-extrusion-vertical-gradient"><code>fill-extrusion-vertical-gradient</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -276,8 +272,8 @@ NGL_EXPORT
  points downward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-extrusion-translate"><code>fill-extrusion-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-extrusion-translate"><code>fill-extrusion-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -302,8 +298,8 @@ NGL_EXPORT
  points upward. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-extrusion-translate"><code>fill-extrusion-translate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-extrusion-translate"><code>fill-extrusion-translate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -338,8 +334,8 @@ NGL_EXPORT
  non-`nil`. Otherwise, it is ignored.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-fill-extrusion-translate-anchor"><code>fill-extrusion-translate-anchor</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-fill-extrusion-translate-anchor"><code>fill-extrusion-translate-anchor</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -364,11 +360,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLFillExtrusionStyleLayer` object and unwrapping its raw value.
+ ``NGLFillExtrusionStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLFillExtrusionStyleLayerAdditions)
 
-#pragma mark Working with Fill extrusion Style Layer Attribute Values
+// MARK: Working with Fill extrusion Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLFillExtrusionTranslationAnchor` enumeration.
@@ -379,7 +375,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLFillExtrusionTranslationAnchor:(NGLFillExtrusionTranslationAnchor)fillExtrusionTranslationAnchor;
 
 /**
- The `NGLFillExtrusionTranslationAnchor` enumeration representation of the value.
+ The ``NGLFillExtrusionTranslationAnchor`` enumeration representation of the value.
  */
 @property (readonly) NGLFillExtrusionTranslationAnchor NGLFillExtrusionTranslationAnchorValue;
 

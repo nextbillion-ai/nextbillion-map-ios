@@ -1,19 +1,23 @@
 #import <UIKit/UIKit.h>
 
+#import "NGLBackendResource.h"
 #import "NGLCompassButton.h"
 #import "NGLFoundation.h"
 #import "NGLGeometry.h"
 #import "NGLMapCamera.h"
-#import "NGLTypes.h"
+#import "NGLMapOptions.h"
 #import "NGLStyle.h"
+#import "NGLTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class NGLAnnotationView;
 @class NGLAnnotationImage;
 @class NGLUserLocation;
+@class NGLMapProjection;
 @class NGLPolyline;
 @class NGLPolygon;
+@class NGLScaleBar;
 @class NGLShape;
 
 @protocol NGLMapViewDelegate;
@@ -23,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol NGLFeature;
 @protocol NGLLocationManager;
 
-/** Options for `NGLMapView.decelerationRate`. */
+/** Options for ``NGLMapView/decelerationRate``. */
 typedef CGFloat NGLMapViewDecelerationRate NS_TYPED_EXTENSIBLE_ENUM;
 
 /** The default deceleration rate for a map view. */
@@ -37,160 +41,138 @@ FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewDecelerationRate NGLMapViewDecelera
 
 /**
  The vertical alignment of an annotation within a map view. Used with
- `NGLMapView.userLocationVerticalAlignment`.
+ ``NGLMapView/userLocationVerticalAlignment``.
  */
 typedef NS_ENUM(NSUInteger, NGLAnnotationVerticalAlignment) {
-    /** Aligns the annotation vertically in the center of the map view. */
-    NGLAnnotationVerticalAlignmentCenter = 0,
-    /** Aligns the annotation vertically at the top of the map view. */
-    NGLAnnotationVerticalAlignmentTop,
-    /** Aligns the annotation vertically at the bottom of the map view. */
-    NGLAnnotationVerticalAlignmentBottom,
+  /** Aligns the annotation vertically in the center of the map view. */
+  NGLAnnotationVerticalAlignmentCenter = 0,
+  /** Aligns the annotation vertically at the top of the map view. */
+  NGLAnnotationVerticalAlignmentTop,
+  /** Aligns the annotation vertically at the bottom of the map view. */
+  NGLAnnotationVerticalAlignmentBottom,
 };
 
 /**
  The position of scale bar, compass, logo and attribution in a map view. Used with
- `NGLMapView.scaleBarPosition`,
- `NGLMapView.compassViewPosition`,
- `NGLMapView.logoViewPosition`,
- `NGLMapView.attributionButtonPosition`.
+ ``NGLMapView/scaleBarPosition``,
+ ``NGLMapView/compassViewPosition``,
+ ``NGLMapView/logoViewPosition``,
+ ``NGLMapView/attributionButtonPosition``.
  */
 typedef NS_ENUM(NSUInteger, NGLOrnamentPosition) {
-    /** Place the ornament in the top left of the map view. */
-    NGLOrnamentPositionTopLeft = 0,
-    /** Place the ornament in the top right of the map view. */
-    NGLOrnamentPositionTopRight,
-    /** Place the ornament in the bottom left of the map view. */
-    NGLOrnamentPositionBottomLeft,
-    /** Place the ornament in the bottom right of the map view. */
-    NGLOrnamentPositionBottomRight,
+  /** Place the ornament in the top left of the map view. */
+  NGLOrnamentPositionTopLeft = 0,
+  /** Place the ornament in the top right of the map view. */
+  NGLOrnamentPositionTopRight,
+  /** Place the ornament in the bottom left of the map view. */
+  NGLOrnamentPositionBottomLeft,
+  /** Place the ornament in the bottom right of the map view. */
+  NGLOrnamentPositionBottomRight,
 };
 
 /**
  The mode used to track the user location on the map. Used with
- `NGLMapView.userTrackingMode`.
+ ``NGLMapView/userTrackingMode``.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/user-tracking-mode/">
- Switch between user tracking modes</a> example to learn how to toggle modes and
+ - TODO: Switch between user tracking modes</a> example to learn how to toggle modes and
  how each mode behaves.
  */
 typedef NS_ENUM(NSUInteger, NGLUserTrackingMode) {
-    /** The map does not follow the user location. */
-    NGLUserTrackingModeNone              = 0,
-    /** The map follows the user location. This tracking mode falls back
-        to `NGLUserTrackingModeNone` if the user pans the map view. */
-    NGLUserTrackingModeFollow,
-    /**
-        The map follows the user location and rotates when the heading changes.
-        The default user location annotation displays a fan-shaped indicator with
-        the current heading. The heading indicator represents the direction the
-        device is facing, which is sized according to the reported accuracy.
+  /** The map does not follow the user location. */
+  NGLUserTrackingModeNone = 0,
+  /** The map follows the user location. This tracking mode falls back
+      to ``NGLUserTrackingMode/NGLUserTrackingModeNone`` if the user pans the map view. */
+  NGLUserTrackingModeFollow,
+  /**
+      The map follows the user location and rotates when the heading changes.
+      The default user location annotation displays a fan-shaped indicator with
+      the current heading. The heading indicator represents the direction the
+      device is facing, which is sized according to the reported accuracy.
 
-        This tracking mode is disabled if the user pans the map view, but
-        remains enabled if the user zooms in. If the user rotates the map
-        view, this tracking mode will fall back to `NGLUserTrackingModeFollow`.
-     */
-    NGLUserTrackingModeFollowWithHeading,
-    /**
-        The map follows the user location and rotates when the course changes.
-        Course represents the direction in which the device is traveling.
-        The default user location annotation shows a puck-shaped indicator
-        that rotates as the course changes.
+      This tracking mode is disabled if the user pans the map view, but
+      remains enabled if the user zooms in. If the user rotates the map
+      view, this tracking mode will fall back to ``NGLUserTrackingModeFollow``.
+   */
+  NGLUserTrackingModeFollowWithHeading,
+  /**
+      The map follows the user location and rotates when the course changes.
+      Course represents the direction in which the device is traveling.
+      The default user location annotation shows a puck-shaped indicator
+      that rotates as the course changes.
 
-        This tracking mode is disabled if the user pans the map view, but
-        remains enabled if the user zooms in. If the user rotates the map view,
-        this tracking mode will fall back to `NGLUserTrackingModeFollow`.
-     */
-    NGLUserTrackingModeFollowWithCourse,
+      This tracking mode is disabled if the user pans the map view, but
+      remains enabled if the user zooms in. If the user rotates the map view,
+      this tracking mode will fall back to ``NGLUserTrackingModeFollow``.
+   */
+  NGLUserTrackingModeFollowWithCourse,
 };
 
 typedef NS_ENUM(NSUInteger, NGLPanScrollingMode) {
-    /** The map allows the user to only scroll horizontally. */
-    NGLPanScrollingModeHorizontal               = 0,
-    /** The map allows the user to only scroll vertically. */
-    NGLPanScrollingModeVertical,
-    /** The map allows the user to scroll both horizontally and vertically. */
-    NGLPanScrollingModeDefault
+  /** The map allows the user to only scroll horizontally. */
+  NGLPanScrollingModeHorizontal = 0,
+  /** The map allows the user to only scroll vertically. */
+  NGLPanScrollingModeVertical,
+  /** The map allows the user to scroll both horizontally and vertically. */
+  NGLPanScrollingModeDefault
 };
 
-/** Options for `NGLMapView.preferredFramesPerSecond`. */
+/** Options for ``NGLMapView/preferredFramesPerSecond``. */
 typedef NSInteger NGLMapViewPreferredFramesPerSecond NS_TYPED_EXTENSIBLE_ENUM;
 
 /**
  The default frame rate. This can be either 30 FPS or 60 FPS, depending on
  device capabilities.
  */
-FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond NGLMapViewPreferredFramesPerSecondDefault;
+FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond
+    NGLMapViewPreferredFramesPerSecondDefault;
 
 /** A conservative frame rate; typically 30 FPS. */
-FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond NGLMapViewPreferredFramesPerSecondLowPower;
+FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond
+    NGLMapViewPreferredFramesPerSecondLowPower;
 
 /** The maximum supported frame rate; typically 60 FPS. */
-FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond NGLMapViewPreferredFramesPerSecondMaximum;
+FOUNDATION_EXTERN NGL_EXPORT const NGLMapViewPreferredFramesPerSecond
+    NGLMapViewPreferredFramesPerSecondMaximum;
 
-FOUNDATION_EXTERN NGL_EXPORT NGLExceptionName const NGLMissingLocationServicesUsageDescriptionException;
+FOUNDATION_EXTERN NGL_EXPORT
+    NGLExceptionName const NGLMissingLocationServicesUsageDescriptionException;
 FOUNDATION_EXTERN NGL_EXPORT NGLExceptionName const NGLUserLocationAnnotationTypeException;
 
 /**
  An interactive, customizable map view with an interface similar to the one
  provided by Apple’s MapKit.
 
- Using `NGLMapView`, you can embed the map inside a view, allow users to
+ Using ``NGLMapView``, you can embed the map inside a view, allow users to
  manipulate it with standard gestures, animate the map between different
  viewpoints, and present information in the form of annotations and overlays.
 
- The map view loads scalable vector tiles that conform to the
- <a href="https://github.com/nbmap/vector-tile-spec">Nbmap Vector Tile Specification</a>.
- It styles them with a style that conforms to the
- <a href="https://www.nbmap.com/nbmap-gl-style-spec/">Nbmap Style Specification</a>.
- Such styles can be designed in
- <a href="https://www.nbmap.com/studio/">Nbmap Studio</a> and hosted on
- nbmap.com.
-
- A collection of Nbmap-hosted styles is available through the `NGLStyle`
- class. These basic styles use
- <a href="https://www.nbmap.com/developers/vector-tiles/nbmap-streets">Nbmap Streets</a>
- or <a href="https://www.nbmap.com/satellite/">Nbmap Satellite</a> data
- sources, but you can specify a custom style that makes use of your own data.
-
- Nbmap-hosted vector tiles and styles require an API access token, which you
- can obtain from the
- <a href="https://www.nbmap.com/studio/account/tokens/">Nbmap account page</a>.
- Access tokens associate requests to Nbmap’s vector tile and style APIs with
- your Nbmap account. They also deter other developers from using your styles
- without your permission.
-
- Because `NGLMapView` loads asynchronously, several delegate methods are available
+ Because ``NGLMapView`` loads asynchronously, several delegate methods are available
  for receiving map-related updates. These methods can be used to ensure that certain operations
  have completed before taking any additional actions. Information on these methods is located
- in the `NGLMapViewDelegate` protocol documentation.
+ in the ``NGLMapViewDelegate`` protocol documentation.
 
- Adding your own gesture recognizer to `NGLMapView` will block the corresponding
- gesture recognizer built into `NGLMapView`. To avoid conflicts, define which
+ Adding your own gesture recognizer to ``NGLMapView`` will block the corresponding
+ gesture recognizer built into ``NGLMapView``. To avoid conflicts, define which
  gesture takes precedence. For example, you can create your own
- `UITapGestureRecognizer` that will be invoked only if the default `NGLMapView`
+ `UITapGestureRecognizer` that will be invoked only if the default ``NGLMapView``
  tap gesture fails:
 
  ```swift
- let mapTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(myCustomFunction))
- for recognizer in mapView.gestureRecognizers! where recognizer is UITapGestureRecognizer {
-     mapTapGestureRecognizer.require(toFail: recognizer)
+ let mapTapGestureRecognizer = UITapGestureRecognizer(target: self, action:
+ #selector(myCustomFunction)) for recognizer in mapView.gestureRecognizers! where recognizer is
+ UITapGestureRecognizer { mapTapGestureRecognizer.require(toFail: recognizer)
  }
  mapView.addGestureRecognizer(mapTapGestureRecognizer)
  ```
 
- @note You are responsible for getting permission to use the map data and for
+ > Note: You are responsible for getting permission to use the map data and for
  ensuring that your use adheres to the relevant terms of use.
-
- #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/simple-map-view/">
- Simple map view</a> example to learn how to initialize a basic `NGLMapView`.
  */
 NGL_EXPORT
 @interface NGLMapView : UIView <NGLStylable>
 
-#pragma mark Creating Instances
+// MARK: Creating Instances
 
 /**
  Initializes and returns a newly allocated map view with the specified frame
@@ -207,25 +189,50 @@ NGL_EXPORT
 
  @param frame The frame for the view, measured in points.
  @param styleURL URL of the map style to display. The URL may be a full HTTP
-    or HTTPS URL, a Nbmap style URL
-    (`nbmap://styles/{user}/{style}`), or a path to a local file relative
+    or HTTPS URL, a canonical URL or a path to a local file relative
     to the application’s resource path. Specify `nil` for the default style.
  @return An initialized map view.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/custom-style/">
- Apply a style designed in Nbmap Studio</a> example to learn how to
- initialize an `NGLMapView` with a custom style. See the
- <a href="https://docs.nbmap.com/ios/maps/examples/raster-styles/"> Apply a
- style designed in Nbmap Studio Classic</a> example to learn how to intialize
- an `NGLMapView` with a Studio Classic style _or_ a custom style JSON. See the
- <a href="https://docs.nbmap.com/ios/maps/examples/source-custom-vector/"> Use
- third-party vector tiles</a> example to learn how to initialize an
- `NGLMapView` with a third-party tile source.
+
+ - TODO: initialize an ``NGLMapView`` with a custom style
+ - TODO: how to initialize an ``NGLMapView`` with a third-party tile source
  */
 - (instancetype)initWithFrame:(CGRect)frame styleURL:(nullable NSURL *)styleURL;
 
-#pragma mark Accessing the Delegate
+/**
+ * Initializes and returns a newly allocated map view with the specified frame
+ * and style JSON.
+ *
+ * @param frame The frame for the view, measured in points.
+ * @param styleJSON JSON string of the map style to display. The JSON must conform to the
+ *        <a href="https://maplibre.org/maplibre-style-spec/">MapLibre Style Specification</a>.
+ *        Specify `nil` for the default style.
+ * @return An initialized map view.
+ */
+- (instancetype)initWithFrame:(CGRect)frame styleJSON:(NSString *)styleJSON;
+
+/**
+ Initializes and returns a newly allocated map view with the specified frame
+ and the default style.
+
+ @param frame The frame for the view, measured in points.
+ @param options The map instance options
+ @return An initialized map view.
+ */
+- (instancetype)initWithFrame:(CGRect)frame options:(NGLMapOptions *)options;
+
+/**
+ Initializes and returns a newly allocated map view with the specified frame
+ and style type.
+
+ @param frame The frame for the view, measured in points.
+ @param styleType The predefined style type to use for the map.
+ @return An initialized map view.
+ */
+- (instancetype)initWithFrame:(CGRect)frame styleType:(NGMapStyleType)styleType;
+
+// MARK: Accessing the Delegate
 
 /**
  The receiver’s delegate.
@@ -235,9 +242,9 @@ NGL_EXPORT
  annotations displayed on the map, such as the styles to apply to individual
  annotations.
  */
-@property(nonatomic, weak, nullable) IBOutlet id<NGLMapViewDelegate> delegate;
+@property (nonatomic, weak, nullable) IBOutlet id<NGLMapViewDelegate> delegate;
 
-#pragma mark Configuring the Map’s Appearance
+// MARK: Configuring the Map’s Appearance
 
 /**
  The style currently displayed in the receiver.
@@ -248,25 +255,17 @@ NGL_EXPORT
  If the style is loading, this property is set to `nil` until the style finishes
  loading. If the style has failed to load, this property is set to `nil`.
  Because the style loads asynchronously, you should manipulate it in the
- `-[NGLMapViewDelegate mapView:didFinishLoadingStyle:]` or
- `-[NGLMapViewDelegate mapViewDidFinishLoadingMap:]` method. It is not possible
+ ``NGLMapViewDelegate/mapView:didFinishLoadingStyle:`` or
+ ``NGLMapViewDelegate/mapViewDidFinishLoadingMap:`` method. It is not possible
  to manipulate the style before it has finished loading.
-
- @note The default styles provided by Nbmap contain sources and layers with
-    identifiers that will change over time. Applications that use APIs that
-    manipulate a style’s sources and layers must first set the style URL to an
-    explicitly versioned style using a convenience method like
-    `+[NGLStyle outdoorsStyleURLWithVersion:]`, `NGLMapView`’s “Style URL”
-    inspectable in Interface Builder, or a manually constructed `NSURL`.
  */
 @property (nonatomic, readonly, nullable) NGLStyle *style;
 
 /**
  URL of the style currently displayed in the receiver.
 
- The URL may be a full HTTP or HTTPS URL, a Nbmap
- style URL (`nbmap://styles/{user}/{style}`), or a path to a local file
- relative to the application’s resource path.
+ The URL may be a full HTTP or HTTPS URL, canonical URL, or
+ a path to a local file relative to the application’s resource path.
 
  If you set this property to `nil`, the receiver will use the default style
  and this property will automatically be set to that style’s URL.
@@ -275,19 +274,41 @@ NGL_EXPORT
  you want to introspect individual style attributes, use the `style` property.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/switch-styles/">
- Switch between map styles</a> example to learn how to change the style of
- a map at runtime.
+ - TODO: change the style of a map at runtime.
  */
 @property (nonatomic, null_resettable) NSURL *styleURL;
+
+/**
+ Sets the map style using a predefined style type.
+ 
+ This method provides a convenient way to switch between different predefined map styles
+ such as Bright, Night, and Satellite. The method will automatically find the appropriate
+ style URL based on the current tile server configuration.
+ 
+ @param styleType The type of style to apply to the map.
+ */
+- (void)setStyleWithType:(NGMapStyleType)styleType;
+
+
+/**
+ * The style JSON representation of the map.
+ *
+ * Setting this property results in an asynchronous style change. If you wish to know when the style
+ * change is complete, observe the ``NGLMapViewDelegate/mapView:didFinishLoadingStyle:`` method
+ * on ``NGLMapViewDelegate``.
+ *
+ * The JSON must conform to the
+ * <a href="https://maplibre.org/maplibre-style-spec/">MapLibre Style Specification</a>.
+ *
+ * @throws NSInvalidArgumentException if styleJSON is nil or invalid JSON
+ */
+@property (nonatomic, copy) NSString *styleJSON;
 
 /**
  Reloads the style.
 
  You do not normally need to call this method. The map view automatically
- responds to changes in network connectivity by reloading the style. You may
- need to call this method if you change the access token after a style has
- loaded but before loading a style associated with a different Nbmap account.
+ responds to changes in network connectivity by reloading the style.
 
  This method does not bust the cache. Even if the style has recently changed on
  the server, calling this method does not necessarily ensure that the map view
@@ -298,11 +319,11 @@ NGL_EXPORT
 /**
  A boolean value that indicates if whether the map view should automatically
  adjust its content insets.
- 
+
  When this property is set to `YES` the map automatically updates its
  `contentInset` property to account for any area not covered by navigation bars,
  tab bars, toolbars, and other ancestors that obscure the map view.
- 
+
  */
 @property (assign) BOOL automaticallyAdjustsContentInset;
 
@@ -326,10 +347,21 @@ NGL_EXPORT
  A control indicating the scale of the map. The scale bar is positioned in the
  upper-left corner. Enable the scale bar via `showsScale`.
  */
-@property (nonatomic, readonly) UIView *scaleBar;
+@property (nonatomic, readonly) NGLScaleBar *scaleBar;
 
 /**
- The position of the scale bar. The default value is `NGLOrnamentPositionTopLeft`.
+ Sets whether the scale uses styles that make it easier to read on a dark styled map
+ */
+@property (nonatomic, assign) BOOL scaleBarShouldShowDarkStyles;
+
+/**
+ Sets whether the scale uses metric
+ */
+@property (nonatomic, assign) BOOL scaleBarUsesMetricSystem;
+
+/**
+ The position of the scale bar. The default value is
+ ``NGLOrnamentPosition/NGLOrnamentPositionTopLeft``.
  */
 @property (nonatomic, assign) NGLOrnamentPosition scaleBarPosition;
 
@@ -345,7 +377,8 @@ NGL_EXPORT
 @property (nonatomic, readonly) NGLCompassButton *compassView;
 
 /**
- The position of the compass view. The default value is `NGLOrnamentPositionTopRight`.
+ The position of the compass view. The default value is
+ ``NGLOrnamentPosition/NGLOrnamentPositionTopRight``.
  */
 @property (nonatomic, assign) NGLOrnamentPosition compassViewPosition;
 
@@ -355,18 +388,14 @@ NGL_EXPORT
 @property (nonatomic, assign) CGPoint compassViewMargins;
 
 /**
- The Nbmap wordmark, positioned in the lower-left corner.
-
- @note The Nbmap terms of service, which governs the use of Nbmap-hosted
-    vector tiles and styles,
-    <a href="https://docs.nbmap.com/help/how-nbmap-works/attribution/">requires</a> most Nbmap
-    customers to display the Nbmap wordmark. If this applies to you, do not
-    hide this view or change its contents.
+ A logo, the MapLibre logo by default, positioned in the lower-left corner.
+ You are not required to display this, but some vector-sources may require attribution.
  */
 @property (nonatomic, readonly) UIImageView *logoView;
 
 /**
- The position of the logo view. The default value is `NGLOrnamentPositionBottomLeft`.
+ The position of the logo view. The default value is
+ ``NGLOrnamentPosition/NGLOrnamentPositionBottomLeft``.
  */
 @property (nonatomic, assign) NGLOrnamentPosition logoViewPosition;
 
@@ -375,7 +404,6 @@ NGL_EXPORT
  */
 @property (nonatomic, assign) CGPoint logoViewMargins;
 
-
 /**
  A view showing legally required copyright notices,
  positioned at the bottom-right of the map view.
@@ -383,11 +411,8 @@ NGL_EXPORT
  If you choose to reimplement this view, assign the `-showAttribution:` method
  as the action for your view to present the default notices and settings.
 
- @note The Nbmap terms of service, which governs the use of Nbmap-hosted
-    vector tiles and styles,
-    <a href="https://www.nbmap.com/tos/#[FamaFama]">requires</a> these
-    copyright notices to accompany any map that features Nbmap-designed styles,
-    OpenStreetMap data, or other Nbmap data such as satellite or terrain
+ > Note: Attribution is often required for many vector sources,
+    OpenStreetMap data, or other data such as satellite or terrain
     data. If that applies to this map view, do not hide this view or remove
     any notices from it.
 
@@ -395,7 +420,8 @@ NGL_EXPORT
 @property (nonatomic, readonly) UIButton *attributionButton;
 
 /**
- The position of the attribution button. The default value is `NGLOrnamentPositionBottomRight`.
+ The position of the attribution button. The default value is
+ ``NGLOrnamentPosition/NGLOrnamentPositionBottomRight``.
  */
 @property (nonatomic, assign) NGLOrnamentPosition attributionButtonPosition;
 
@@ -417,11 +443,11 @@ NGL_EXPORT
  The preferred frame rate at which the map view is rendered.
 
  The default value for this property is
- `NGLMapViewPreferredFramesPerSecondDefault`, which will adaptively set the
+ ``NGLMapViewPreferredFramesPerSecondDefault``, which will adaptively set the
  preferred frame rate based on the capability of the user’s device to maintain
  a smooth experience.
 
- In addition to the provided `NGLMapViewPreferredFramesPerSecond` options, this
+ In addition to the provided ``NGLMapViewPreferredFramesPerSecond`` options, this
  property can be set to arbitrary integer values.
 
  @see `CADisplayLink.preferredFramesPerSecond`
@@ -430,30 +456,85 @@ NGL_EXPORT
 
 /**
  A Boolean value indicating whether the map should prefetch tiles.
- 
+
  When this property is set to `YES`, the map view prefetches tiles designed for
  a low zoom level and displays them until receiving more detailed tiles for the
  current zoom level. The prefetched tiles typically contain simplified versions
  of each shape, improving the map view’s perceived performance.
- 
+
  The default value of this property is `YES`.
  */
 @property (nonatomic, assign) BOOL prefetchesTiles;
 
-#pragma mark Displaying the User’s Location
+/**
+ A Boolean value indicating whether the map may cache tiles for different zoom levels or not.
+
+ When this property is set to `YES`,  the map view consumes more memory and
+ provide a smoother user experience when zoom in/out.
+
+ The default value of this property is `YES`.
+ */
+
+@property (nonatomic, assign) BOOL tileCacheEnabled;
+
+// MARK: Tile LOD controls
+
+/**
+ Camera based tile level of detail controls
+
+ Minimum radius around the view point in unit of tiles in which the fine
+ grained zoom level tiles are always used when performing LOD
+ radius must be greater than 1 (At least 1 fine detailed tile is present)
+ A smaller radius value may improve performance at the cost of quality (tiles away from
+ camera use lower Zoom levels)
+ */
+@property (nonatomic, assign) double tileLodMinRadius;
+
+/**
+ Camera based tile level of detail controls
+
+ Factor for the distance to the camera view point
+ A value larger than 1 increases the distance to the camera view point reducing LOD
+ Larger values may improve performance at the cost of quality (tiles away from camera
+ use lower Zoom levels)
+ */
+@property (nonatomic, assign) double tileLodScale;
+
+/**
+ Camera based tile level of detail controls
+
+ Pitch angle in radians above which LOD calculation is performed
+ A smaller radius value may improve performance at the cost of quality
+ */
+@property (nonatomic, assign) double tileLodPitchThreshold;
+
+/**
+ Camera based tile level of detail controls
+
+ Shift applied to the Zoom level during LOD calculation
+ A negative value shifts the Zoom level to a coarser level reducing quality but improving
+ performance A positive value shifts the Zoom level to a finer level increasing details but
+ negatively affecting performance A value of zero (default) does not apply any shift to the Zoom
+ level It is not recommended to change the default value unless performance is critical and the loss
+ of quality is acceptable. A value of -1 reduces the number of displayed tiles by a factor of 4 on
+ average It is recommended to first configure the pixelRatio before adjusting TileLodZoomShift.
+ */
+@property (nonatomic, assign) double tileLodZoomShift;
+
+// MARK: Displaying the User’s Location
 
 /**
  The object that this map view uses to start and stop the delivery of
  location-related updates.
 
  To receive the current user location, implement the
- `-[NGLMapViewDelegate mapView:didUpdateUserLocation:]` and
- `-[NGLMapViewDelegate mapView:didFailToLocateUserWithError:]` methods.
+ ``NGLMapViewDelegate/mapView:didUpdateUserLocation:`` and
+ ``NGLMapViewDelegate/mapView:didFailToLocateUserWithError:`` methods.
 
  If setting this property to `nil` or if no custom manager is provided this
  property is set to the default location manager.
 
- `NGLMapView` uses a default location manager. If you want to substitute your
+ ``NGLMapView`` uses a default location manager. If you want to substitute your
  own location manager, you should do so by setting this property before setting
  `showsUserLocation` to `YES`. To restore the default location manager,
  set this property to `nil`.
@@ -483,6 +564,16 @@ NGL_EXPORT
 @property (nonatomic, assign) BOOL showsUserLocation;
 
 /**
+ A Boolean value indicating whether the map may request authorization to use location services.
+
+ Setting this property to `YES` causes the map view to use the Core Location
+ framework to request authorization when authorizationStatus == kCLAuthorizationStatusNotDetermined.
+
+ The default value of this property is `YES`.
+ */
+@property (nonatomic, assign) BOOL shouldRequestAuthorizationToUseLocationServices;
+
+/**
  A Boolean value indicating whether the device’s current location is visible in
  the map view.
 
@@ -498,22 +589,21 @@ NGL_EXPORT
 
 /**
  The mode used to track the user location. The default value is
- `NGLUserTrackingModeNone`.
+ ``NGLUserTrackingMode/NGLUserTrackingModeNone``.
 
  Changing the value of this property updates the map view with an animated
  transition. If you don’t want to animate the change, use the
  `-setUserTrackingMode:animated:` method instead.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/user-location-annotation/">
- Customize the user location annotation</a> to learn how to customize the
- default user location annotation shown by `NGLUserTrackingMode`.
+ - TODO: Customize the user location annotation and learn how to customize the
+ default user location annotation shown by ``NGLUserTrackingMode``.
  */
 @property (nonatomic, assign) NGLUserTrackingMode userTrackingMode;
 
 /**
  Deprecated. Sets the mode used to track the user location, with an optional transition.
- 
+
  To specify a completion handler to execute after the animation finishes, use
  the `-setUserTrackingMode:animated:completionHandler:` method.
 
@@ -524,7 +614,9 @@ NGL_EXPORT
     affects the initial transition; subsequent changes to the user location or
     heading are always animated.
  */
-- (void)setUserTrackingMode:(NGLUserTrackingMode)mode animated:(BOOL)animated __attribute__((deprecated("Use `-setUserTrackingMode:animated:completionHandler:` instead.")));
+- (void)setUserTrackingMode:(NGLUserTrackingMode)mode
+                   animated:(BOOL)animated
+    __attribute__((deprecated("Use `-setUserTrackingMode:animated:completionHandler:` instead.")));
 
 /**
  Sets the mode used to track the user location, with an optional transition and
@@ -538,17 +630,21 @@ NGL_EXPORT
     heading are always animated.
  @param completion The block executed after the animation finishes.
  */
-- (void)setUserTrackingMode:(NGLUserTrackingMode)mode animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)setUserTrackingMode:(NGLUserTrackingMode)mode
+                   animated:(BOOL)animated
+          completionHandler:(nullable void (^)(void))completion;
 
 /**
  The vertical alignment of the user location annotation within the receiver. The
- default value is `NGLAnnotationVerticalAlignmentCenter`.
+ default value is ``NGLAnnotationVerticalAlignment/NGLAnnotationVerticalAlignmentCenter``.
 
  Changing the value of this property updates the map view with an animated
  transition. If you don’t want to animate the change, use the
  `-setUserLocationVerticalAlignment:animated:` method instead.
  */
-@property (nonatomic, assign) NGLAnnotationVerticalAlignment userLocationVerticalAlignment __attribute__((deprecated("Use `-[NGLMapViewDelegate mapViewUserLocationAnchorPoint:]` instead.")));
+@property (nonatomic, assign) NGLAnnotationVerticalAlignment userLocationVerticalAlignment
+    __attribute__((
+        deprecated("Use ``NGLMapViewDelegate/mapViewUserLocationAnchorPoint:`` instead.")));
 
 /**
  Sets the vertical alignment of the user location annotation within the
@@ -559,7 +655,10 @@ NGL_EXPORT
     position within the map view. If `NO`, the user location annotation
     instantaneously moves to its new position.
  */
-- (void)setUserLocationVerticalAlignment:(NGLAnnotationVerticalAlignment)alignment animated:(BOOL)animated __attribute__((deprecated("Use `-[NGLMapViewDelegate mapViewUserLocationAnchorPoint:]` instead.")));
+- (void)setUserLocationVerticalAlignment:(NGLAnnotationVerticalAlignment)alignment
+                                animated:(BOOL)animated
+    __attribute__((
+        deprecated("Use ``NGLMapViewDelegate/mapViewUserLocationAnchorPoint:`` instead.")));
 
 /**
  Updates the position of the user location annotation view by retreiving the user's last
@@ -581,11 +680,11 @@ NGL_EXPORT
  Setting this property to `YES` causes the default user location annotation to
  appear and always show an arrow-shaped heading indicator, if heading is
  available. This property does not rotate the map; for that, see
- `NGLUserTrackingModeFollowWithHeading`.
+ ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithHeading``.
 
- This property has no effect when `userTrackingMode` is
- `NGLUserTrackingModeFollowWithHeading` or
- `NGLUserTrackingModeFollowWithCourse`.
+ This property has no effect when ``userTrackingMode`` is
+ ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithHeading`` or
+ ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithCourse``.
 
  The default value of this property is `NO`.
  */
@@ -609,7 +708,7 @@ NGL_EXPORT
  to fit both foci optimally within the viewport.
 
  This property has no effect if the `userTrackingMode` property is set to a
- value other than `NGLUserTrackingModeFollowWithCourse`.
+ value other than ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithCourse``.
 
  Changing the value of this property updates the map view with an animated
  transition. If you don’t want to animate the change, use the
@@ -629,8 +728,8 @@ NGL_EXPORT
  to fit both foci optimally within the viewport.
 
  This method has no effect if the `userTrackingMode` property is set to a value
- other than `NGLUserTrackingModeFollowWithCourse`.
- 
+ other than ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithCourse``.
+
  To specify a completion handler to execute after the animation finishes, use
  the `-setTargetCoordinate:animated:completionHandler:` method.
 
@@ -638,7 +737,9 @@ NGL_EXPORT
  @param animated If `YES`, the map animates to fit the target within the map
     view. If `NO`, the map fits the target instantaneously.
  */
-- (void)setTargetCoordinate:(CLLocationCoordinate2D)targetCoordinate animated:(BOOL)animated __attribute__((deprecated("Use `-setTargetCoordinate:animated:completionHandler:` instead.")));
+- (void)setTargetCoordinate:(CLLocationCoordinate2D)targetCoordinate
+                   animated:(BOOL)animated
+    __attribute__((deprecated("Use `-setTargetCoordinate:animated:completionHandler:` instead.")));
 
 /**
  Sets the geographic coordinate that is the subject of observation as the user
@@ -653,16 +754,18 @@ NGL_EXPORT
  to fit both foci optimally within the viewport.
 
  This method has no effect if the `userTrackingMode` property is set to a value
- other than `NGLUserTrackingModeFollowWithCourse`.
+ other than ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithCourse``.
 
  @param targetCoordinate The target coordinate to fit within the viewport.
  @param animated If `YES`, the map animates to fit the target within the map
     view. If `NO`, the map fits the target instantaneously.
  @param completion The block executed after the animation finishes.
  */
-- (void)setTargetCoordinate:(CLLocationCoordinate2D)targetCoordinate animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)setTargetCoordinate:(CLLocationCoordinate2D)targetCoordinate
+                   animated:(BOOL)animated
+          completionHandler:(nullable void (^)(void))completion;
 
-#pragma mark Configuring How the User Interacts with the Map
+// MARK: Configuring How the User Interacts with the Map
 
 /**
  A Boolean value that determines whether the user may zoom the map in and
@@ -676,7 +779,7 @@ NGL_EXPORT
  value of this property to `NO`, you may still change the map zoom
  programmatically.
  */
-@property(nonatomic, getter=isZoomEnabled) BOOL zoomEnabled;
+@property (nonatomic, getter=isZoomEnabled) BOOL zoomEnabled;
 
 /**
  A Boolean value that determines whether the user may scroll around the map,
@@ -689,7 +792,7 @@ NGL_EXPORT
  value of this property to `NO`, you may still change the map location
  programmatically.
  */
-@property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
+@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
 
 /**
  The scrolling mode the user is allowed to use to interact with the map.
@@ -698,10 +801,10 @@ NGL_EXPORT
  restricting a user's ability to scroll vertically.
 `NGLPanScrollingModeVertical` only allows the user to scroll vertically on the map,
  restricting a user's ability to scroll horizontally.
- `NGLPanScrollingModeDefault` allows the user to scroll both horizontally and vertically
- on the map.
+ ``NGLPanScrollingMode/NGLPanScrollingModeDefault`` allows the user to scroll both horizontally and
+vertically on the map.
 
- By default, this property is set to `NGLPanScrollingModeDefault`.
+ By default, this property is set to ``NGLPanScrollingMode/NGLPanScrollingModeDefault``.
  */
 @property (nonatomic, assign) NGLPanScrollingMode panScrollingMode;
 
@@ -716,7 +819,7 @@ NGL_EXPORT
  value of this property to `NO`, you may still rotate the map
  programmatically.
  */
-@property(nonatomic, getter=isRotateEnabled) BOOL rotateEnabled;
+@property (nonatomic, getter=isRotateEnabled) BOOL rotateEnabled;
 
 /**
  A Boolean value that determines whether the user may change the pitch (tilt) of
@@ -731,13 +834,13 @@ NGL_EXPORT
 
  The default value of this property is `YES`.
  */
-@property(nonatomic, getter=isPitchEnabled) BOOL pitchEnabled;
+@property (nonatomic, getter=isPitchEnabled) BOOL pitchEnabled;
 
 /**
- A Boolean value that determines whether gestures are anchored to the center coordinate of the map while rotating or zooming.
- Default value is set to NO.
+ A Boolean value that determines whether gestures are anchored to the center coordinate of the map
+ while rotating or zooming. Default value is set to NO.
  */
-@property(nonatomic) BOOL anchorRotateOrZoomGesturesToCenterCoordinate;
+@property (nonatomic) BOOL anchorRotateOrZoomGesturesToCenterCoordinate;
 
 /**
  A Boolean value that determines whether the user will receive haptic feedback
@@ -750,20 +853,20 @@ NGL_EXPORT
  This feature requires a device that supports haptic feedback, running iOS 10 or
  newer.
  */
-@property(nonatomic, getter=isHapticFeedbackEnabled) BOOL hapticFeedbackEnabled;
+@property (nonatomic, getter=isHapticFeedbackEnabled) BOOL hapticFeedbackEnabled;
 
 /**
  A floating-point value that determines the rate of deceleration after the user
  lifts their finger.
 
- Your application can use the `NGLMapViewDecelerationRateNormal` and
- `NGLMapViewDecelerationRateFast` constants as reference points for reasonable
- deceleration rates. `NGLMapViewDecelerationRateImmediate` can be used to
+ Your application can use the ``NGLMapViewDecelerationRateNormal`` and
+ ``NGLMapViewDecelerationRateFast`` constants as reference points for reasonable
+ deceleration rates. ``NGLMapViewDecelerationRateImmediate`` can be used to
  disable deceleration entirely.
  */
-@property(nonatomic) CGFloat decelerationRate;
+@property (nonatomic) CGFloat decelerationRate;
 
-#pragma mark Manipulating the Viewpoint
+// MARK: Manipulating the Viewpoint
 
 /**
  The geographic coordinate at the center of the map view.
@@ -781,7 +884,7 @@ NGL_EXPORT
  Changes the center coordinate of the map and optionally animates the change.
 
  Changing the center coordinate centers the map on the new coordinate without
- changing the current zoom level. For animated changes, wait until the map view has 
+ changing the current zoom level. For animated changes, wait until the map view has
  finished loading before calling this method.
 
  @param coordinate The new center coordinate for the map.
@@ -789,14 +892,14 @@ NGL_EXPORT
     location or `NO` if you want the map to display the new location
     immediately.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`.
  */
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 
 /**
  Changes the center coordinate and zoom level of the map and optionally animates
- the change. For animated changes, wait until the map view has 
+ the change. For animated changes, wait until the map view has
  finished loading before calling this method.
 
  @param centerCoordinate The new center coordinate for the map.
@@ -805,14 +908,16 @@ NGL_EXPORT
     zooming to the new location or `NO` if you want the map to display the new
     location immediately.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`.
  */
-- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate zoomLevel:(double)zoomLevel animated:(BOOL)animated;
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+                  zoomLevel:(double)zoomLevel
+                   animated:(BOOL)animated;
 
 /**
  Changes the center coordinate, zoom level, and direction of the map and
- optionally animates the change. For animated changes, wait until the map view has 
+ optionally animates the change. For animated changes, wait until the map view has
  finished loading before calling this method.
 
  @param centerCoordinate The new center coordinate for the map.
@@ -823,14 +928,17 @@ NGL_EXPORT
     zooming, and rotating to the new location or `NO` if you want the map to
     display the new location immediately.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`.
  */
-- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate zoomLevel:(double)zoomLevel direction:(CLLocationDirection)direction animated:(BOOL)animated;
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+                  zoomLevel:(double)zoomLevel
+                  direction:(CLLocationDirection)direction
+                   animated:(BOOL)animated;
 
 /**
  Changes the center coordinate, zoom level, and direction of the map, calling a
- completion handler at the end of an optional animation. For animated changes, 
+ completion handler at the end of an optional animation. For animated changes,
  wait until the map view has finished loading before calling this method.
 
  @param centerCoordinate The new center coordinate for the map.
@@ -842,10 +950,14 @@ NGL_EXPORT
     display the new location immediately.
  @param completion The block executed after the animation finishes.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`.
  */
-- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate zoomLevel:(double)zoomLevel direction:(CLLocationDirection)direction animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+                  zoomLevel:(double)zoomLevel
+                  direction:(CLLocationDirection)direction
+                   animated:(BOOL)animated
+          completionHandler:(nullable void (^)(void))completion;
 
 /** The zoom level of the receiver.
 
@@ -897,6 +1009,13 @@ NGL_EXPORT
  * is 25.5.
  */
 @property (nonatomic) double maximumZoomLevel;
+
+/**
+ * The maximum bounds of the map that can be shown on screen.
+ *
+ * @param NGLCoordinateBounds the bounds to constrain the screen to.
+ */
+@property (nonatomic) NGLCoordinateBounds maximumScreenBounds;
 
 /**
  The heading of the map, measured in degrees clockwise from true north.
@@ -997,7 +1116,7 @@ NGL_EXPORT
  specify some longitudes less than −180 degrees or greater than 180 degrees. For
  example, to show both Tokyo and San Francisco simultaneously, you could set the
  visible bounds to extend from (35.68476, −220.24257) to (37.78428, −122.41310).
- 
+
  To specify a completion handler to execute after the animation finishes, use
  the `-setVisibleCoordinateBounds:edgePadding:animated:completionHandler:` method.
 
@@ -1007,7 +1126,11 @@ NGL_EXPORT
  @param animated Specify `YES` to animate the change by smoothly scrolling and
     zooming or `NO` to immediately display the given bounds.
  */
-- (void)setVisibleCoordinateBounds:(NGLCoordinateBounds)bounds edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated __attribute__((deprecated("Use `-setVisibleCoordinateBounds:edgePadding:animated:completionHandler:` instead.")));
+- (void)setVisibleCoordinateBounds:(NGLCoordinateBounds)bounds
+                       edgePadding:(UIEdgeInsets)insets
+                          animated:(BOOL)animated
+    __attribute__((deprecated(
+        "Use `-setVisibleCoordinateBounds:edgePadding:animated:completionHandler:` instead.")));
 
 /**
  Changes the receiver’s viewport to fit the given coordinate bounds with some
@@ -1025,7 +1148,10 @@ NGL_EXPORT
     zooming or `NO` to immediately display the given bounds.
  @param completion The block executed after the animation finishes.
  */
-- (void)setVisibleCoordinateBounds:(NGLCoordinateBounds)bounds edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)setVisibleCoordinateBounds:(NGLCoordinateBounds)bounds
+                       edgePadding:(UIEdgeInsets)insets
+                          animated:(BOOL)animated
+                 completionHandler:(nullable void (^)(void))completion;
 
 /**
  Changes the receiver’s viewport to fit all of the given coordinates with some
@@ -1044,7 +1170,10 @@ NGL_EXPORT
  @param animated Specify `YES` to animate the change by smoothly scrolling and
     zooming or `NO` to immediately display the given bounds.
  */
-- (void)setVisibleCoordinates:(const CLLocationCoordinate2D *)coordinates count:(NSUInteger)count edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated;
+- (void)setVisibleCoordinates:(const CLLocationCoordinate2D *)coordinates
+                        count:(NSUInteger)count
+                  edgePadding:(UIEdgeInsets)insets
+                     animated:(BOOL)animated;
 
 /**
  Changes the receiver’s viewport to fit all of the given coordinates with some
@@ -1067,7 +1196,13 @@ NGL_EXPORT
  @param function The timing function to animate the change.
  @param completion The block executed after the animation finishes.
  */
-- (void)setVisibleCoordinates:(const CLLocationCoordinate2D *)coordinates count:(NSUInteger)count edgePadding:(UIEdgeInsets)insets direction:(CLLocationDirection)direction duration:(NSTimeInterval)duration animationTimingFunction:(nullable CAMediaTimingFunction *)function completionHandler:(nullable void (^)(void))completion;
+- (void)setVisibleCoordinates:(const CLLocationCoordinate2D *)coordinates
+                        count:(NSUInteger)count
+                  edgePadding:(UIEdgeInsets)insets
+                    direction:(CLLocationDirection)direction
+                     duration:(NSTimeInterval)duration
+      animationTimingFunction:(nullable CAMediaTimingFunction *)function
+            completionHandler:(nullable void (^)(void))completion;
 
 /**
  Sets the visible region so that the map displays the specified annotations.
@@ -1081,7 +1216,7 @@ NGL_EXPORT
  @param animated `YES` if you want the map region change to be animated, or `NO`
     if you want the map to display the new region immediately without animations.
  */
-- (void)showAnnotations:(NSArray<id <NGLAnnotation>> *)annotations animated:(BOOL)animated;
+- (void)showAnnotations:(NSArray<id<NGLAnnotation>> *)annotations animated:(BOOL)animated;
 
 /**
  Deprecated. Sets the visible region so that the map displays the specified
@@ -1089,7 +1224,7 @@ NGL_EXPORT
 
  Calling this method updates the value in the `visibleCoordinateBounds` property
  and potentially other properties to reflect the new map region.
- 
+
  To specify a completion handler to execute after the animation finishes, use
  the `-showAnnotations:edgePadding:animated:completionHandler:` method.
 
@@ -1099,7 +1234,11 @@ NGL_EXPORT
  @param animated `YES` if you want the map region change to be animated, or `NO`
     if you want the map to display the new region immediately without animations.
  */
-- (void)showAnnotations:(NSArray<id <NGLAnnotation>> *)annotations edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated __attribute__((deprecated("Use `-showAnnotations:edgePadding:animated:completionHandler:` instead.")));
+- (void)showAnnotations:(NSArray<id<NGLAnnotation>> *)annotations
+            edgePadding:(UIEdgeInsets)insets
+               animated:(BOOL)animated
+    __attribute__((
+        deprecated("Use `-showAnnotations:edgePadding:animated:completionHandler:` instead.")));
 
 /**
  Sets the visible region so that the map displays the specified annotations with
@@ -1116,7 +1255,10 @@ NGL_EXPORT
     if you want the map to display the new region immediately without animations.
  @param completion The block executed after the animation finishes.
  */
-- (void)showAnnotations:(NSArray<id <NGLAnnotation>> *)annotations edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)showAnnotations:(NSArray<id<NGLAnnotation>> *)annotations
+            edgePadding:(UIEdgeInsets)insets
+               animated:(BOOL)animated
+      completionHandler:(nullable void (^)(void))completion;
 
 /**
  A camera representing the current viewpoint of the map.
@@ -1125,7 +1267,7 @@ NGL_EXPORT
 
 /**
  Moves the viewpoint to a different location with respect to the map with an
- optional transition animation. For animated changes, wait until the map view has 
+ optional transition animation. For animated changes, wait until the map view has
  finished loading before calling this method.
 
  @param camera The new viewpoint.
@@ -1134,15 +1276,13 @@ NGL_EXPORT
     immediately.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/camera-animation/">
- Camera animation</a> example to learn how to trigger an animation that
- rotates around a central point.
+ - TODO: Camera animation: learn how to trigger an animation that rotates around a central point.
  */
 - (void)setCamera:(NGLMapCamera *)camera animated:(BOOL)animated;
 
 /**
  Moves the viewpoint to a different location with respect to the map with an
- optional transition duration and timing function. For animated changes, wait 
+ optional transition duration and timing function. For animated changes, wait
  until the map view has finished loading before calling this method.
 
  @param camera The new viewpoint.
@@ -1154,15 +1294,16 @@ NGL_EXPORT
     is `0`, this parameter is ignored.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/camera-animation/">
- Camera animation</a> example to learn how to create a timed animation that
+ - TODO: Camera animation: learn how to create a timed animation that
  rotates around a central point for a specific duration.
  */
-- (void)setCamera:(NGLMapCamera *)camera withDuration:(NSTimeInterval)duration animationTimingFunction:(nullable CAMediaTimingFunction *)function;
+- (void)setCamera:(NGLMapCamera *)camera
+               withDuration:(NSTimeInterval)duration
+    animationTimingFunction:(nullable CAMediaTimingFunction *)function;
 
 /**
  Moves the viewpoint to a different location with respect to the map with an
- optional transition duration and timing function. For animated changes, wait 
+ optional transition duration and timing function. For animated changes, wait
  until the map view has finished loading before calling this method.
 
  @param camera The new viewpoint.
@@ -1174,12 +1315,15 @@ NGL_EXPORT
     is `0`, this parameter is ignored.
  @param completion The block to execute after the animation finishes.
  */
-- (void)setCamera:(NGLMapCamera *)camera withDuration:(NSTimeInterval)duration animationTimingFunction:(nullable CAMediaTimingFunction *)function completionHandler:(nullable void (^)(void))completion;
+- (void)setCamera:(NGLMapCamera *)camera
+               withDuration:(NSTimeInterval)duration
+    animationTimingFunction:(nullable CAMediaTimingFunction *)function
+          completionHandler:(nullable void (^)(void))completion;
 
 /**
  Moves the viewpoint to a different location with respect to the map with an
  optional transition duration and timing function, and optionally some additional
- padding on each side. For animated changes, wait until the map view has 
+ padding on each side. For animated changes, wait until the map view has
  finished loading before calling this method.
 
  @param camera The new viewpoint.
@@ -1193,7 +1337,11 @@ NGL_EXPORT
  around the returned camera object if it were set as the receiver’s camera.
  @param completion The block to execute after the animation finishes.
  */
-- (void)setCamera:(NGLMapCamera *)camera withDuration:(NSTimeInterval)duration animationTimingFunction:(nullable CAMediaTimingFunction *)function edgePadding:(UIEdgeInsets)edgePadding completionHandler:(nullable void (^)(void))completion;
+- (void)setCamera:(NGLMapCamera *)camera
+               withDuration:(NSTimeInterval)duration
+    animationTimingFunction:(nullable CAMediaTimingFunction *)function
+                edgePadding:(UIEdgeInsets)edgePadding
+          completionHandler:(nullable void (^)(void))completion;
 
 /**
  Moves the viewpoint to a different location using a transition animation that
@@ -1222,7 +1370,9 @@ NGL_EXPORT
     is based on the length of the flight path.
  @param completion The block to execute after the animation finishes.
  */
-- (void)flyToCamera:(NGLMapCamera *)camera withDuration:(NSTimeInterval)duration completionHandler:(nullable void (^)(void))completion;
+- (void)flyToCamera:(NGLMapCamera *)camera
+         withDuration:(NSTimeInterval)duration
+    completionHandler:(nullable void (^)(void))completion;
 
 /**
  Moves the viewpoint to a different location using a transition animation that
@@ -1242,8 +1392,31 @@ NGL_EXPORT
     `-setCamera:animated:` would have a midpoint at a higher altitude.
  @param completion The block to execute after the animation finishes.
  */
-- (void)flyToCamera:(NGLMapCamera *)camera withDuration:(NSTimeInterval)duration peakAltitude:(CLLocationDistance)peakAltitude completionHandler:(nullable void (^)(void))completion;
+- (void)flyToCamera:(NGLMapCamera *)camera
+         withDuration:(NSTimeInterval)duration
+         peakAltitude:(CLLocationDistance)peakAltitude
+    completionHandler:(nullable void (^)(void))completion;
 
+/**
+ Moves the viewpoint to a different location using a transition animation that
+ evokes powered flight.
+
+ The transition animation seamlessly incorporates zooming and panning to help
+ the user find his or her bearings even after traversing a great distance.
+
+ @param camera The new viewpoint.
+ @param insets The minimum padding (in screen points) that would be visible
+    around the returned camera object if it were set as the receiver's camera.
+ @param duration The amount of time, measured in seconds, that the transition
+    animation should take. Specify `0` to jump to the new viewpoint
+    instantaneously. Specify a negative value to use the default duration, which
+    is based on the length of the flight path.
+ @param completion The block to execute after the animation finishes.
+ */
+- (void)flyToCamera:(NGLMapCamera *)camera
+          edgePadding:(UIEdgeInsets)insets
+         withDuration:(NSTimeInterval)duration
+    completionHandler:(nullable void (^)(void))completion;
 /**
  Returns the camera that best fits the given coordinate bounds.
 
@@ -1253,7 +1426,7 @@ NGL_EXPORT
     including the entire coordinate bounds. The camera object uses the current
     direction and pitch.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`; you may receive a `nil` return value
  depending on the order of notification delivery.
  */
@@ -1271,11 +1444,12 @@ NGL_EXPORT
     including the entire coordinate bounds. The camera object uses the current
     direction and pitch.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`; you may receive a `nil` return value
  depending on the order of notification delivery.
  */
-- (NGLMapCamera *)cameraThatFitsCoordinateBounds:(NGLCoordinateBounds)bounds edgePadding:(UIEdgeInsets)insets;
+- (NGLMapCamera *)cameraThatFitsCoordinateBounds:(NGLCoordinateBounds)bounds
+                                     edgePadding:(UIEdgeInsets)insets;
 
 /**
  Returns the camera that best fits the given coordinate bounds with some
@@ -1292,11 +1466,13 @@ NGL_EXPORT
     including the entire coordinate bounds. The initial camera's pitch and
     direction will be honored.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`; you may receive a `nil` return value
  depending on the order of notification delivery.
  */
-- (NGLMapCamera *)camera:(NGLMapCamera *)camera fittingCoordinateBounds:(NGLCoordinateBounds)bounds edgePadding:(UIEdgeInsets)insets;
+- (NGLMapCamera *)camera:(NGLMapCamera *)camera
+    fittingCoordinateBounds:(NGLCoordinateBounds)bounds
+                edgePadding:(UIEdgeInsets)insets;
 
 /**
  Returns the camera that best fits the given shape with some additional padding
@@ -1311,11 +1487,13 @@ NGL_EXPORT
     (close to the ground) as possible while still including the entire shape.
     The initial camera's pitch and direction will be honored.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`; you may receive a `nil` return value
  depending on the order of notification delivery.
  */
-- (NGLMapCamera *)camera:(NGLMapCamera *)camera fittingShape:(NGLShape *)shape edgePadding:(UIEdgeInsets)insets;
+- (NGLMapCamera *)camera:(NGLMapCamera *)camera
+            fittingShape:(NGLShape *)shape
+             edgePadding:(UIEdgeInsets)insets;
 
 /**
  Returns the camera that best fits the given shape with some additional padding
@@ -1330,11 +1508,13 @@ NGL_EXPORT
     (close to the ground) as possible while still including the entire shape.
     The camera object uses the current pitch.
 
- @note The behavior of this method is undefined if called in response to
+ > Note: The behavior of this method is undefined if called in response to
  `UIApplicationWillTerminateNotification`; you may receive a `nil` return value
  depending on the order of notification delivery.
  */
-- (NGLMapCamera *)cameraThatFitsShape:(NGLShape *)shape direction:(CLLocationDirection)direction edgePadding:(UIEdgeInsets)insets;
+- (NGLMapCamera *)cameraThatFitsShape:(NGLShape *)shape
+                            direction:(CLLocationDirection)direction
+                          edgePadding:(UIEdgeInsets)insets;
 
 /**
  Returns the point in this view’s coordinate system on which to “anchor” in
@@ -1343,7 +1523,7 @@ NGL_EXPORT
  For example, a pinch-to-zoom gesture would anchor the map at the midpoint of
  the pinch.
 
- If the `userTrackingMode` property is not `NGLUserTrackingModeNone`, the
+ If the ``userTrackingMode`` property is not ``NGLUserTrackingMode/NGLUserTrackingModeNone``, the
  user annotation is used as the anchor point.
 
  Subclasses may override this method to provide specialized behavior - for
@@ -1364,19 +1544,32 @@ NGL_EXPORT
  view’s frame. Otherwise, those properties are inset, excluding part of the
  frame from the viewport. For instance, if the only the top edge is inset, the
  map center is effectively shifted downward.
- 
+
  When the map view’s superview is an instance of `UIViewController` whose
  `automaticallyAdjustsScrollViewInsets` property is `YES`, the value of this
  property may be overridden at any time.
- 
+
  The usage of `automaticallyAdjustsScrollViewInsets` has been deprecated
- use the map view’s property `NGLMapView.automaticallyAdjustsContentInset`instead.
+ use the map view’s property ``NGLMapView/automaticallyAdjustsContentInset``instead.
 
  Changing the value of this property updates the map view immediately. If you
  want to animate the change, use the `-setContentInset:animated:completionHandler:`
  method instead.
  */
 @property (nonatomic, assign) UIEdgeInsets contentInset;
+
+/**
+ The current edge insets of the current map view’s camera.
+
+ Camera edge insets are formed as accumulation of map view's content insets
+ and the edge padding passed to the method like `seCamera:...edgePadding:`,
+ `setVisibleCoordinates:...edgePadding:`, `showAnnotations:...edgePadding:` etc.
+
+ The camera edge insets influences the `centerCoordinate` of the viewport.
+ This value is read-only, in order to apply paddings,  use either persistent
+ `contentInset`, either transient `edgePadding` parameter of the `set...` methods.
+ */
+@property (nonatomic, readonly) UIEdgeInsets cameraEdgeInsets;
 
 /**
  Deprecated. Sets the distance from the edges of the map view’s frame to the edges
@@ -1391,10 +1584,10 @@ NGL_EXPORT
  When the map view’s superview is an instance of `UIViewController` whose
  `automaticallyAdjustsScrollViewInsets` property is `YES`, the value of this
  property may be overridden at any time.
- 
+
  The usage of `automaticallyAdjustsScrollViewInsets` has been deprecated
- use the map view’s property `NGLMapView.automaticallyAdjustsContentInset`instead.
- 
+ use the map view’s property ``NGLMapView/automaticallyAdjustsContentInset``instead.
+
  To specify a completion handler to execute after the animation finishes, use
  the `-setContentInset:animated:completionHandler:` method.
 
@@ -1403,7 +1596,9 @@ NGL_EXPORT
     the content inset or `NO` if you want the map to inset the content
     immediately.
  */
-- (void)setContentInset:(UIEdgeInsets)contentInset animated:(BOOL)animated __attribute__((deprecated("Use `-setContentInset:animated:completionHandler:` instead.")));
+- (void)setContentInset:(UIEdgeInsets)contentInset
+               animated:(BOOL)animated
+    __attribute__((deprecated("Use `-setContentInset:animated:completionHandler:` instead.")));
 
 /**
  Sets the distance from the edges of the map view’s frame to the edges of the
@@ -1419,9 +1614,9 @@ NGL_EXPORT
  When the map view’s superview is an instance of `UIViewController` whose
  `automaticallyAdjustsScrollViewInsets` property is `YES`, the value of this
  property may be overridden at any time.
- 
+
  The usage of `automaticallyAdjustsScrollViewInsets` has been deprecated
- use the map view’s property `NGLMapView.automaticallyAdjustsContentInset`instead.
+ use the map view’s property ``NGLMapView/automaticallyAdjustsContentInset``instead.
 
  @param contentInset The new values to inset the content by.
  @param animated Specify `YES` if you want the map view to animate the change to
@@ -1429,9 +1624,11 @@ NGL_EXPORT
     immediately.
  @param completion The block executed after the animation finishes.
  */
-- (void)setContentInset:(UIEdgeInsets)contentInset animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)setContentInset:(UIEdgeInsets)contentInset
+               animated:(BOOL)animated
+      completionHandler:(nullable void (^)(void))completion;
 
-#pragma mark Converting Geographic Coordinates
+// MARK: Converting Geographic Coordinates
 
 /**
  Converts a point in the given view’s coordinate system to a geographic
@@ -1442,9 +1639,7 @@ NGL_EXPORT
  @return The geographic coordinate at the given point.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/point-conversion/">
- Point conversion</a> example to learn how to convert a `CGPoint` to a map
- coordinate.
+ - TODO: Point conversion example to learn how to convert a `CGPoint` to a map coordinate.
  */
 - (CLLocationCoordinate2D)convertPoint:(CGPoint)point toCoordinateFromView:(nullable UIView *)view;
 
@@ -1461,11 +1656,10 @@ NGL_EXPORT
     corresponding to the given geographic coordinate.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/point-conversion/">
- Point conversion</a> example to learn how to convert a map coordinate to a
- `CGPoint` object.
+ - TODO: Point conversion: learn how to convert a map coordinate to a `CGPoint` object.
  */
-- (CGPoint)convertCoordinate:(CLLocationCoordinate2D)coordinate toPointToView:(nullable UIView *)view;
+- (CGPoint)convertCoordinate:(CLLocationCoordinate2D)coordinate
+               toPointToView:(nullable UIView *)view;
 
 /**
  Converts a rectangle in the given view’s coordinate system to a geographic
@@ -1512,51 +1706,55 @@ NGL_EXPORT
  */
 - (CLLocationDistance)metersPerPointAtLatitude:(CLLocationDegrees)latitude;
 
-#pragma mark Annotating the Map
+/**
+ Returns the new map projection instance initialized with the map view,
+ i.e. with the current camera state.
+ */
+- (NGLMapProjection *)mapProjection;
+
+// MARK: Annotating the Map
 
 /**
  The complete list of annotations associated with the receiver. (read-only)
 
- The objects in this array must adopt the `NGLAnnotation` protocol. If no
+ The objects in this array must adopt the ``NGLAnnotation`` protocol. If no
  annotations are associated with the map view, the value of this property is
  `nil`.
  */
-@property (nonatomic, readonly, nullable) NSArray<id <NGLAnnotation>> *annotations;
+@property (nonatomic, readonly, nullable) NSArray<id<NGLAnnotation>> *annotations;
 
 /**
  Adds an annotation to the map view.
 
- @note `NGLMultiPolyline`, `NGLMultiPolygon`, `NGLShapeCollection`, and
-    `NGLPointCollection` objects cannot be added to the map view at this time.
+ > Note: ``NGLMultiPolyline``, ``NGLMultiPolyline``, ``NGLMultiPolyline``, and
+    ``NGLPointCollection`` objects cannot be added to the map view at this time.
     Any multipoint, multipolyline, multipolygon, shape or point collection
     object that is specified is silently ignored.
 
  @param annotation The annotation object to add to the receiver. This object
-    must conform to the `NGLAnnotation` protocol. The map view retains the
+    must conform to the ``NGLAnnotation`` protocol. The map view retains the
     annotation object.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-models/">
- Annotation models</a> and <a href="https://docs.nbmap.com/ios/maps/examples/line-geojson/">
- Add a line annotation from GeoJSON</a> examples to learn how to add an
- annotation to an `NGLMapView` object.
+ - TODO: add a line annotation from GeoJSON.
+ - TODO: add an annotation to an ``NGLMapView`` object.
  */
-- (void)addAnnotation:(id <NGLAnnotation>)annotation;
+- (void)addAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Adds an array of annotations to the map view.
 
- @note `NGLMultiPolyline`, `NGLMultiPolygon`, and `NGLShapeCollection` objects
-    cannot be added to the map view at this time. Nor can `NGLMultiPoint`
-    objects that are not instances of `NGLPolyline` or `NGLPolygon`. Any
+ > Note: ``NGLMultiPolyline``, ``NGLMultiPolyline``, and ``NGLMultiPolyline`` objects
+    cannot be added to the map view at this time. Nor can ``NGLMultiPoint``
+    objects that are not instances of ``NGLPolyline`` or ``NGLPolyline``. Any
     multipoint, multipolyline, multipolygon, or shape collection objects that
     are specified are silently ignored.
 
  @param annotations An array of annotation objects. Each object in the array
-    must conform to the `NGLAnnotation` protocol. The map view retains each
+    must conform to the ``NGLAnnotation`` protocol. The map view retains each
     individual annotation object.
  */
-- (void)addAnnotations:(NSArray<id <NGLAnnotation>> *)annotations;
+- (void)addAnnotations:(NSArray<id<NGLAnnotation>> *)annotations;
 
 /**
  Removes an annotation from the map view, deselecting it if it is selected.
@@ -1566,9 +1764,9 @@ NGL_EXPORT
  this method only when you want to hide or delete a given annotation.
 
  @param annotation The annotation object to remove. This object must conform
-    to the `NGLAnnotation` protocol
+    to the ``NGLAnnotation`` protocol
  */
-- (void)removeAnnotation:(id <NGLAnnotation>)annotation;
+- (void)removeAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Removes an array of annotations from the map view, deselecting any selected
@@ -1579,23 +1777,23 @@ NGL_EXPORT
  call this method only when you want to hide or delete the given annotations.
 
  @param annotations The array of annotation objects to remove. Objects in the
-    array must conform to the `NGLAnnotation` protocol.
+    array must conform to the ``NGLAnnotation`` protocol.
  */
-- (void)removeAnnotations:(NSArray<id <NGLAnnotation>> *)annotations;
+- (void)removeAnnotations:(NSArray<id<NGLAnnotation>> *)annotations;
 
 /**
- Returns an `NGLAnnotationView` if the given annotation is currently associated
+ Returns an ``NGLAnnotationView`` if the given annotation is currently associated
  with a view, otherwise nil.
 
  @param annotation The annotation associated with the view.
-    Annotation must conform to the `NGLAnnotation` protocol.
+    Annotation must conform to the ``NGLAnnotation`` protocol.
  */
-- (nullable NGLAnnotationView *)viewForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable NGLAnnotationView *)viewForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Returns a reusable annotation image object associated with its identifier.
 
- For performance reasons, you should generally reuse `NGLAnnotationImage`
+ For performance reasons, you should generally reuse ``NGLAnnotationImage``
  objects for identical-looking annotations in your map views. Dequeueing
  saves time and memory during performance-critical operations such as
  scrolling.
@@ -1607,16 +1805,16 @@ NGL_EXPORT
     such object exists in the reuse queue.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-view-image/">
- Add annotation views and images</a> example learn how to most efficiently
- reuse an `NGLAnnotationImage`.
+ - TODO: Add annotation views and images: learn how to most efficiently
+ reuse an ``NGLAnnotationImage``.
  */
-- (nullable __kindof NGLAnnotationImage *)dequeueReusableAnnotationImageWithIdentifier:(NSString *)identifier;
+- (nullable __kindof NGLAnnotationImage *)dequeueReusableAnnotationImageWithIdentifier:
+    (NSString *)identifier;
 
 /**
  Returns a reusable annotation view object associated with its identifier.
 
- For performance reasons, you should generally reuse `NGLAnnotationView`
+ For performance reasons, you should generally reuse ``NGLAnnotationView``
  objects for identical-looking annotations in your map views. Dequeueing
  saves time and memory during performance-critical operations such as
  scrolling.
@@ -1627,30 +1825,31 @@ NGL_EXPORT
  @return An annotation view object with the given identifier, or `nil` if no
     such object exists in the reuse queue.
  */
-- (nullable __kindof NGLAnnotationView *)dequeueReusableAnnotationViewWithIdentifier:(NSString *)identifier;
+- (nullable __kindof NGLAnnotationView *)dequeueReusableAnnotationViewWithIdentifier:
+    (NSString *)identifier;
 
 /**
  The complete list of annotations associated with the receiver that are
  currently visible.
 
- The objects in this array must adopt the `NGLAnnotation` protocol. If no
+ The objects in this array must adopt the ``NGLAnnotation`` protocol. If no
  annotations are associated with the map view or if no annotations associated
  with the map view are currently visible, the value of this property is `nil`.
  */
-@property (nonatomic, readonly, nullable) NSArray<id <NGLAnnotation>> *visibleAnnotations;
+@property (nonatomic, readonly, nullable) NSArray<id<NGLAnnotation>> *visibleAnnotations;
 
 /**
  Returns the list of annotations associated with the receiver that intersect with
  the given rectangle.
 
  @param rect A rectangle expressed in the map view’s coordinate system.
- @return An array of objects that adopt the `NGLAnnotation` protocol or `nil` if
+ @return An array of objects that adopt the ``NGLAnnotation`` protocol or `nil` if
     no annotations associated with the map view are currently visible in the
     rectangle.
  */
-- (nullable NSArray<id <NGLAnnotation>> *)visibleAnnotationsInRect:(CGRect)rect;
+- (nullable NSArray<id<NGLAnnotation>> *)visibleAnnotationsInRect:(CGRect)rect;
 
-#pragma mark Managing Annotation Selections
+// MARK: Managing Annotation Selections
 
 /**
  The currently selected annotations.
@@ -1658,14 +1857,14 @@ NGL_EXPORT
  Assigning a new array to this property selects only the first annotation in
  the array.
 
- If the annotation is of type `NGLPointAnnotation` and is offscreen, the camera
+ If the annotation is of type ``NGLPointAnnotation`` and is offscreen, the camera
  will animate to bring the annotation and its callout just on screen. If you
  need finer control, consider using `-selectAnnotation:animated:`.
 
- @note In versions prior to `4.0.0` if the annotation was offscreen it was not
+ > Note: In versions prior to `4.0.0` if the annotation was offscreen it was not
  selected.
  */
-@property (nonatomic, copy) NSArray<id <NGLAnnotation>> *selectedAnnotations;
+@property (nonatomic, copy) NSArray<id<NGLAnnotation>> *selectedAnnotations;
 
 /**
  Deprecated. Selects an annotation and displays its callout view.
@@ -1675,21 +1874,27 @@ NGL_EXPORT
 
  | `animated` parameter | Effect |
  |------------------|--------|
- | `NO`             | The annotation is selected, and the callout is presented. However the map is not panned to bring the annotation or callout into view. The presentation of the callout is NOT animated. |
- | `YES`            | The annotation is selected, and the callout is presented. If the annotation is not visible (or is partially visible) *and* is of type `NGLPointAnnotation`, the map is panned so that the annotation and its callout are brought into view. The annotation is *not* centered within the viewport. |
+ | `NO`             | The annotation is selected, and the callout is presented. However the map is
+ not panned to bring the annotation or callout into view. The presentation of the callout is NOT
+ animated. | | `YES`            | The annotation is selected, and the callout is presented. If the
+ annotation is not visible (or is partially visible) *and* is of type ``NGLPointAnnotation``, the
+ map is panned so that the annotation and its callout are brought into view. The annotation is *not*
+ centered within the viewport. |
 
  Note that a selection initiated by a single tap gesture is always animated.
- 
+
  To specify a completion handler to execute after the animation finishes, use
  the `-selectAnnotation:animated:completionHandler:` method.
 
  @param annotation The annotation object to select.
  @param animated If `YES`, the annotation and callout view are animated on-screen.
 
- @note In versions prior to `4.0.0` selecting an offscreen annotation did not
+ > Note: In versions prior to `4.0.0` selecting an offscreen annotation did not
  change the camera.
  */
-- (void)selectAnnotation:(id <NGLAnnotation>)annotation animated:(BOOL)animated __attribute__((deprecated("Use `-selectAnnotation:animated:completionHandler:` instead.")));
+- (void)selectAnnotation:(id<NGLAnnotation>)annotation
+                animated:(BOOL)animated
+    __attribute__((deprecated("Use `-selectAnnotation:animated:completionHandler:` instead.")));
 
 /**
  Selects an annotation and displays its callout view with an optional completion
@@ -1700,8 +1905,12 @@ NGL_EXPORT
 
  | `animated` parameter | Effect |
  |------------------|--------|
- | `NO`             | The annotation is selected, and the callout is presented. However the map is not panned to bring the annotation or callout into view. The presentation of the callout is NOT animated. |
- | `YES`            | The annotation is selected, and the callout is presented. If the annotation is not visible (or is partially visible) *and* is of type `NGLPointAnnotation`, the map is panned so that the annotation and its callout are brought into view. The annotation is *not* centered within the viewport. |
+ | `NO`             | The annotation is selected, and the callout is presented. However the map is
+ not panned to bring the annotation or callout into view. The presentation of the callout is NOT
+ animated. | | `YES`            | The annotation is selected, and the callout is presented. If the
+ annotation is not visible (or is partially visible) *and* is of type ``NGLPointAnnotation``, the
+ map is panned so that the annotation and its callout are brought into view. The annotation is *not*
+ centered within the viewport. |
 
  Note that a selection initiated by a single tap gesture is always animated.
 
@@ -1709,10 +1918,12 @@ NGL_EXPORT
  @param animated If `YES`, the annotation and callout view are animated on-screen.
  @param completion The block executed after the animation finishes.
 
- @note In versions prior to `4.0.0` selecting an offscreen annotation did not
+ > Note: In versions prior to `4.0.0` selecting an offscreen annotation did not
  change the camera.
  */
-- (void)selectAnnotation:(id <NGLAnnotation>)annotation animated:(BOOL)animated completionHandler:(nullable void (^)(void))completion;
+- (void)selectAnnotation:(id<NGLAnnotation>)annotation
+                animated:(BOOL)animated
+       completionHandler:(nullable void (^)(void))completion;
 
 /**
  :nodoc:
@@ -1721,11 +1932,17 @@ NGL_EXPORT
  change.
 
  @param annotation The annotation object to select.
- @param moveIntoView If the annotation is not visible (or is partially visible) *and* is of type `NGLPointAnnotation`, the map is panned so that the annotation and its callout are brought into view. The annotation is *not* centered within the viewport.
- @param animateSelection If `YES`, the annotation's selection state and callout view's presentation are animated.
+ @param moveIntoView If the annotation is not visible (or is partially visible) *and* is of type
+ ``NGLPointAnnotation``, the map is panned so that the annotation and its callout are brought into
+ view. The annotation is *not* centered within the viewport.
+ @param animateSelection If `YES`, the annotation's selection state and callout view's presentation
+ are animated.
  @param completion The block executed after the animation finishes.
  */
-- (void)selectAnnotation:(id <NGLAnnotation>)annotation moveIntoView:(BOOL)moveIntoView animateSelection:(BOOL)animateSelection completionHandler:(nullable void (^)(void))completion;
+- (void)selectAnnotation:(id<NGLAnnotation>)annotation
+            moveIntoView:(BOOL)moveIntoView
+        animateSelection:(BOOL)animateSelection
+       completionHandler:(nullable void (^)(void))completion;
 
 /**
  Deselects an annotation and hides its callout view.
@@ -1733,18 +1950,18 @@ NGL_EXPORT
  @param annotation The annotation object to deselect.
  @param animated If `YES`, the callout view is animated offscreen.
  */
-- (void)deselectAnnotation:(nullable id <NGLAnnotation>)annotation animated:(BOOL)animated;
+- (void)deselectAnnotation:(nullable id<NGLAnnotation>)annotation animated:(BOOL)animated;
 
-#pragma mark Overlaying the Map
+// MARK: Overlaying the Map
 
 /**
  The complete list of overlays associated with the receiver. (read-only)
 
- The objects in this array must adopt the `NGLOverlay` protocol. If no
+ The objects in this array must adopt the ``NGLOverlay`` protocol. If no
  overlays are associated with the map view, the value of this property is
  empty array.
  */
-@property (nonatomic, readonly, nonnull) NSArray<id <NGLOverlay>> *overlays;
+@property (nonatomic, readonly, nonnull) NSArray<id<NGLOverlay>> *overlays;
 
 /**
  Adds a single overlay object to the map.
@@ -1752,8 +1969,8 @@ NGL_EXPORT
  To remove an overlay from a map, use the `-removeOverlay:` method.
 
  @param overlay The overlay object to add. This object must conform to the
-    `NGLOverlay` protocol. */
-- (void)addOverlay:(id <NGLOverlay>)overlay;
+    ``NGLOverlay`` protocol. */
+- (void)addOverlay:(id<NGLOverlay>)overlay;
 
 /**
  Adds an array of overlay objects to the map.
@@ -1761,9 +1978,9 @@ NGL_EXPORT
  To remove multiple overlays from a map, use the `-removeOverlays:` method.
 
  @param overlays An array of objects, each of which must conform to the
-    `NGLOverlay` protocol.
+    ``NGLOverlay`` protocol.
  */
-- (void)addOverlays:(NSArray<id <NGLOverlay>> *)overlays;
+- (void)addOverlays:(NSArray<id<NGLOverlay>> *)overlays;
 
 /**
  Removes a single overlay object from the map.
@@ -1773,19 +1990,19 @@ NGL_EXPORT
 
  @param overlay The overlay object to remove.
  */
-- (void)removeOverlay:(id <NGLOverlay>)overlay;
+- (void)removeOverlay:(id<NGLOverlay>)overlay;
 
 /**
  Removes one or more overlay objects from the map.
 
  If a given overlay object is not associated with the map view, it is ignored.
 
- @param overlays An array of objects, each of which conforms to the `NGLOverlay`
+ @param overlays An array of objects, each of which conforms to the ``NGLOverlay``
     protocol.
  */
-- (void)removeOverlays:(NSArray<id <NGLOverlay>> *)overlays;
+- (void)removeOverlays:(NSArray<id<NGLOverlay>> *)overlays;
 
-#pragma mark Accessing the Underlying Map Data
+// MARK: Accessing the Underlying Map Data
 
 /**
  Returns an array of rendered map features that intersect with a given point.
@@ -1796,15 +2013,15 @@ NGL_EXPORT
  information about searching for map features, see that method’s documentation.
 
  @param point A point expressed in the map view’s coordinate system.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/select-layer/">
- Select a feature within a layer</a> example to learn how to query an
- `NGLMapView` object for visible `NGLFeature` objects.
+ - TODO: Select a feature within a layer: to learn how to query an
+ ``NGLMapView`` object for visible ``NGLMapView`` objects.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point NS_SWIFT_NAME(visibleFeatures(at:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point
+    NS_SWIFT_NAME(visibleFeatures(at:));
 
 /**
  Returns an array of rendered map features that intersect with a given point,
@@ -1820,10 +2037,13 @@ NGL_EXPORT
  @param styleLayerIdentifiers A set of strings that correspond to the names
     of layers defined in the current style. Only the features contained in
     these layers are included in the returned array.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point inStyleLayersWithIdentifiers:(nullable NSSet<NSString *> *)styleLayerIdentifiers NS_SWIFT_NAME(visibleFeatures(at:styleLayerIdentifiers:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point
+                       inStyleLayersWithIdentifiers:
+                           (nullable NSSet<NSString *> *)styleLayerIdentifiers
+    NS_SWIFT_NAME(visibleFeatures(at:styleLayerIdentifiers:));
 
 /**
  Returns an array of rendered map features that intersect with a given point,
@@ -1832,18 +2052,18 @@ NGL_EXPORT
  Each object in the returned array represents a feature rendered by the
  current style and provides access to attributes specified by the relevant map
  content sources. The returned array includes features loaded by
- `NGLShapeSource` and `NGLVectorTileSource` objects but does not include
- anything from `NGLRasterTileSource` objects, or from video or canvas sources,
+ ``NGLShapeSource`` and ``NGLShapeSource`` objects but does not include
+ anything from ``NGLRasterTileSource`` objects, or from video or canvas sources,
  which are unsupported by this SDK.
 
  The returned features are drawn by a style layer in the current style. For
  example, suppose the current style uses the
- <a href="https://www.nbmap.com/vector-tiles/nbmap-streets/">Nbmap Streets source</a>,
+ <a href="https://www.nextbillion.com/vector-tiles/nextbillion-streets/">Nextbillion Streets source</a>,
  but none of the specified style layers includes features that have the `maki`
  property set to `bus`. If you pass a point corresponding to the location of a
  bus stop into this method, the bus stop feature does not appear in the
  resulting array. On the other hand, if the style does include bus stops, an
- `NGLFeature` object representing that bus stop is returned and its
+ ``NGLFeature`` object representing that bus stop is returned and its
  `featureAttributes` dictionary has the `maki` key set to `bus` (along with
  other attributes). The dictionary contains only the attributes provided by the
  tile source; it does not include computed attribute values or rules about how
@@ -1862,35 +2082,32 @@ NGL_EXPORT
  point, even if the road extends into other tiles.
 
  To find out the layer names in a particular style, view the style in
- <a href="https://www.nbmap.com/studio/">Nbmap Studio</a>.
+ <a href="https://maplibre.org/maputnik">Maputnik</a>.
 
  Only visible features are returned. To obtain features regardless of
  visibility, use the
- `-[NGLVectorTileSource featuresInSourceLayersWithIdentifiers:predicate:]` and
- `-[NGLShapeSource featuresMatchingPredicate:]` methods on the relevant sources.
+ ``NGLVectorTileSource/featuresInSourceLayersWithIdentifiers:predicate:`` and
+ ``NGLShapeSource/featuresMatchingPredicate:`` methods on the relevant sources.
 
  The returned features may also include features corresponding to annotations.
- These features are not object-equal to the `NGLAnnotation` objects that were
+ These features are not object-equal to the ``NGLAnnotation`` objects that were
  originally added to the map. To query the map for annotations, use
- `visibleAnnotations` or `-[NGLMapView visibleAnnotationsInRect:]`.
+ `visibleAnnotations` or ``NGLMapView/visibleAnnotationsInRect:``.
 
- @note Layer identifiers are not guaranteed to exist across styles or different
-    versions of the same style. Applications that use this API must first set
-    the style URL to an explicitly versioned style using a convenience method
-    like `+[NGLStyle outdoorsStyleURLWithVersion:]`, `NGLMapView`’s “Style URL”
-    inspectable in Interface Builder, or a manually constructed `NSURL`. This
-    approach also avoids layer identifer name changes that will occur in the
-    default style’s layers over time.
 
  @param point A point expressed in the map view’s coordinate system.
  @param styleLayerIdentifiers A set of strings that correspond to the names of
     layers defined in the current style. Only the features contained in these
     layers are included in the returned array.
  @param predicate A predicate to filter the returned features.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point inStyleLayersWithIdentifiers:(nullable NSSet<NSString *> *)styleLayerIdentifiers predicate:(nullable NSPredicate *)predicate NS_SWIFT_NAME(visibleFeatures(at:styleLayerIdentifiers:predicate:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesAtPoint:(CGPoint)point
+                       inStyleLayersWithIdentifiers:
+                           (nullable NSSet<NSString *> *)styleLayerIdentifiers
+                                          predicate:(nullable NSPredicate *)predicate
+    NS_SWIFT_NAME(visibleFeatures(at:styleLayerIdentifiers:predicate:));
 
 /**
  Returns an array of rendered map features that intersect with the given
@@ -1902,10 +2119,10 @@ NGL_EXPORT
  information about searching for map features, see that method’s documentation.
 
  @param rect A rectangle expressed in the map view’s coordinate system.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect NS_SWIFT_NAME(visibleFeatures(in:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect NS_SWIFT_NAME(visibleFeatures(in:));
 
 /**
  Returns an array of rendered map features that intersect with the given
@@ -1921,10 +2138,13 @@ NGL_EXPORT
  @param styleLayerIdentifiers A set of strings that correspond to the names of
     layers defined in the current style. Only the features contained in these
     layers are included in the returned array.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect inStyleLayersWithIdentifiers:(nullable NSSet<NSString *> *)styleLayerIdentifiers NS_SWIFT_NAME(visibleFeatures(in:styleLayerIdentifiers:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect
+                      inStyleLayersWithIdentifiers:
+                          (nullable NSSet<NSString *> *)styleLayerIdentifiers
+    NS_SWIFT_NAME(visibleFeatures(in:styleLayerIdentifiers:));
 
 /**
  Returns an array of rendered map features that intersect with the given
@@ -1934,17 +2154,16 @@ NGL_EXPORT
  Each object in the returned array represents a feature rendered by the
  current style and provides access to attributes specified by the relevant map
  content sources. The returned array includes features loaded by
- `NGLShapeSource` and `NGLVectorTileSource` objects but does not include
- anything from `NGLRasterTileSource` objects, or from video or canvas sources,
+ ``NGLShapeSource`` and ``NGLShapeSource`` objects but does not include
+ anything from ``NGLRasterTileSource`` objects, or from video or canvas sources,
  which are unsupported by this SDK.
 
  The returned features are drawn by a style layer in the current style. For
- example, suppose the current style uses the
- <a href="https://www.nbmap.com/vector-tiles/nbmap-streets/">Nbmap Streets source</a>,
+ example, suppose the current style uses a particular source,
  but none of the specified style layers includes features that have the `maki`
  property set to `bus`. If you pass a rectangle containing the location of a bus
  stop into this method, the bus stop feature does not appear in the resulting
- array. On the other hand, if the style does include bus stops, an `NGLFeature`
+ array. On the other hand, if the style does include bus stops, an ``NGLFeature``
  object representing that bus stop is returned and its `featureAttributes`
  dictionary has the `maki` key set to `bus` (along with other attributes). The
  dictionary contains only the attributes provided by the tile source; it does
@@ -1965,40 +2184,28 @@ NGL_EXPORT
  the road within each map tile is included individually.
 
  To find out the layer names in a particular style, view the style in
- <a href="https://www.nbmap.com/studio/">Nbmap Studio</a>.
+ <a href="https://maplibre.org/maputnik">Maputnik</a>.
 
  Only visible features are returned. To obtain features regardless of
  visibility, use the
- `-[NGLVectorTileSource featuresInSourceLayersWithIdentifiers:predicate:]` and
- `-[NGLShapeSource featuresMatchingPredicate:]` methods on the relevant sources.
-
- @note Layer identifiers are not guaranteed to exist across styles or different
- versions of the same style. Applications that use this API must first set the
- style URL to an explicitly versioned style using a convenience method like
- `+[NGLStyle outdoorsStyleURLWithVersion:]`, `NGLMapView`’s “Style URL”
- inspectable in Interface Builder, or a manually constructed `NSURL`. This
- approach also avoids layer identifer name changes that will occur in the
- default style’s layers over time.
-
- @note Layer identifiers are not guaranteed to exist across styles or different
-    versions of the same style. Applications that use this API must first set
-    the style URL to an explicitly versioned style using a convenience method
-    like `+[NGLStyle outdoorsStyleURLWithVersion:]`, `NGLMapView`’s “Style URL”
-    inspectable in Interface Builder, or a manually constructed `NSURL`. This
-    approach also avoids layer identifer name changes that will occur in the
-    default style’s layers over time.
+ ``NGLVectorTileSource/featuresInSourceLayersWithIdentifiers:predicate:`` and
+ ``NGLShapeSource/featuresMatchingPredicate:`` methods on the relevant sources.
 
  @param rect A rectangle expressed in the map view’s coordinate system.
  @param styleLayerIdentifiers A set of strings that correspond to the names of
     layers defined in the current style. Only the features contained in these
     layers are included in the returned array.
  @param predicate A predicate to filter the returned features.
- @return An array of objects conforming to the `NGLFeature` protocol that
+ @return An array of objects conforming to the ``NGLFeature`` protocol that
     represent features in the sources used by the current style.
  */
-- (NSArray<id <NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect inStyleLayersWithIdentifiers:(nullable NSSet<NSString *> *)styleLayerIdentifiers predicate:(nullable NSPredicate *)predicate NS_SWIFT_NAME(visibleFeatures(in:styleLayerIdentifiers:predicate:));
+- (NSArray<id<NGLFeature>> *)visibleFeaturesInRect:(CGRect)rect
+                      inStyleLayersWithIdentifiers:
+                          (nullable NSSet<NSString *> *)styleLayerIdentifiers
+                                         predicate:(nullable NSPredicate *)predicate
+    NS_SWIFT_NAME(visibleFeatures(in:styleLayerIdentifiers:predicate:));
 
-#pragma mark Debugging the Map
+// MARK: Debugging the Map
 
 /**
  The options that determine which debugging aids are shown on the map.
@@ -2007,6 +2214,57 @@ NGL_EXPORT
  released software for performance and aesthetic reasons.
  */
 @property (nonatomic) NGLMapDebugMaskOptions debugMask;
+
+/**
+ Returns the status of the rendering statistics overlay.
+ */
+- (BOOL)isRenderingStatsViewEnabled;
+
+/**
+ Enable a rendering statistics overlay with ``NGLRenderingStats`` values.
+ */
+- (void)enableRenderingStatsView:(BOOL)value;
+
+/**
+ Get the list of action journal log files from oldest to newest.
+
+ @return An array of log file paths.
+*/
+- (NSArray<NSString *> *)getActionJournalLogFiles;
+
+/**
+ Get the action journal events from oldest to newest.
+
+ Each element contains a serialized json object with the event data.
+ Example
+ `{
+    "name" : "onTileAction",
+    "time" : "2025-04-17T13:13:13.974Z",
+    "styleName" : "Streets",
+    "styleURL" : "maptiler://maps/streets",
+    "event" : {
+        "action" : "RequestedFromNetwork",
+        "tileX" : 0,
+        "tileY" : 0,
+        "tileZ" : 0,
+        "overscaledZ" : 0,
+        "sourceID" : "openmaptiles"
+    }
+ }`
+ */
+- (NSArray<NSString *> *)getActionJournalLog;
+
+/**
+ Clear stored action journal events.
+ */
+- (void)clearActionJournalLog;
+
+- (NGLBackendResource *)backendResource;
+
+/**
+ Triggers a repaint of the map.
+*/
+- (void)triggerRepaint;
 
 @end
 

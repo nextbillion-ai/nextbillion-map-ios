@@ -13,7 +13,8 @@ NGL_EXPORT
 /**
  The visibility of the compass button.
 
- You can configure a compass button to be visible all the time or only when the compass heading changes.
+ You can configure a compass button to be visible all the time or only when the compass heading
+ changes.
  */
 @property (nonatomic, assign) NGLOrnamentVisibility compassVisibility;
 

@@ -1,6 +1,6 @@
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
 #import "NGLFoundation.h"
 #import "NGLTypes.h"
@@ -11,18 +11,18 @@ NS_ASSUME_NONNULL_BEGIN
  The attribution info is represented in the longest format available.
  */
 typedef NS_ENUM(NSUInteger, NGLAttributionInfoStyle) {
-    /**
-     Specifies a short attribution info style.
-     */
-    NGLAttributionInfoStyleShort = 1,
-    /**
-     Specifies a medium attribution info style.
-     */
-    NGLAttributionInfoStyleMedium,
-    /**
-     Specifies a long attribution info style.
-     */
-    NGLAttributionInfoStyleLong
+  /**
+   Specifies a short attribution info style.
+   */
+  NGLAttributionInfoStyleShort = 1,
+  /**
+   Specifies a medium attribution info style.
+   */
+  NGLAttributionInfoStyleMedium,
+  /**
+   Specifies a long attribution info style.
+   */
+  NGLAttributionInfoStyleLong
 };
 
 /**
@@ -65,26 +65,13 @@ NGL_EXPORT
 @property (nonatomic, getter=isFeedbackLink) BOOL feedbackLink;
 
 /**
- Returns a copy of the `URL` property modified to account for the given center
- coordinate and zoom level.
-
- @param centerCoordinate The map’s center coordinate.
- @param zoomLevel The map’s zoom level. See the `NGLMapView.zoomLevel` property
-    for more information.
- @return A modified URL containing a fragment that points to the specified
-    viewport. If the `feedbackLink` property is set to `NO`, this method returns
-    `nil`.
- */
-- (nullable NSURL *)feedbackURLAtCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate zoomLevel:(double)zoomLevel;
-
-/**
  Returns a copy of the current `title` formatted accordingly to `style`.
- 
- Example: If the `style` property is set to `NGLAttributionInfoStyleShort` and the
- `title` property is set to `OpenStreetMap`, then this method returns `OSM`.
- 
+
+ Example: If the `style` property is set to ``NGLAttributionInfoStyle/NGLAttributionInfoStyleShort``
+ and the `title` property is set to `OpenStreetMap`, then this method returns `OSM`.
+
  @param style The attribution info style.
- 
+
  @return The `NSAttributedString` styled title.
  */
 - (NSAttributedString *)titleWithStyle:(NGLAttributionInfoStyle)style;

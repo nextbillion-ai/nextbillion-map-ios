@@ -1,26 +1,25 @@
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
-#import "NGLFoundation.h"
 #import "NGLAnnotation.h"
+#import "NGLFoundation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  The NGLUserLocation class defines a specific type of annotation that identifies
  the user’s current location. You do not create instances of this class
- directly. Instead, you retrieve an existing `NGLUserLocation` object from the
+ directly. Instead, you retrieve an existing ``NGLUserLocation`` object from the
  `userLocation` property of the map view displayed in your application.
- 
+
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/user-location-annotation/">
- Customize the user location annotation</a> example to learn how to overide the
+ TODO: Customize the user location annotation,learn how to overide the
  default user location annotation.
  */
 NGL_EXPORT
 @interface NGLUserLocation : NSObject <NGLAnnotation, NSSecureCoding>
 
-#pragma mark Determining the User’s Position
+// MARK: Determining the User’s Position
 
 /**
  The current location of the device. (read-only)
@@ -39,12 +38,12 @@ NGL_EXPORT
  The heading of the user location. (read-only)
 
  This property is `nil` if the user location tracking mode is not
- `NGLUserTrackingModeFollowWithHeading` or if
- `NGLMapView.showsUserHeadingIndicator` is disabled.
+ ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithHeading`` or if
+ ``NGLMapView/showsUserHeadingIndicator`` is disabled.
  */
 @property (nonatomic, readonly, nullable) CLHeading *heading;
 
-#pragma mark Accessing the User Annotation Text
+// MARK: Accessing the User Annotation Text
 
 /** The title to display for the user location annotation. */
 @property (nonatomic, copy) NSString *title;

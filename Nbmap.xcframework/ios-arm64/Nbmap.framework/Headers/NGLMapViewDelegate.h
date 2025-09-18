@@ -1,7 +1,9 @@
 #import <UIKit/UIKit.h>
 
-#import "Nbmap.h"
 #import "NGLCameraChangeReason.h"
+#import "NGLRenderingStats.h"
+#import "NGLTileOperation.h"
+#import "Nextbillion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -9,9 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class NGLUserLocationAnnotationViewStyle;
 
 /**
- The `NGLMapViewDelegate` protocol defines a set of optional methods that you
+ The ``NGLMapViewDelegate`` protocol defines a set of optional methods that you
  can use to receive map-related update messages. Because many map operations
- require the `NGLMapView` class to load data asynchronously, the map view calls
+ require the ``NGLMapView`` class to load data asynchronously, the map view calls
  these methods to notify your application when specific operations complete. The
  map view also uses these methods to request information about annotations
  displayed on the map, such as the styles and interaction modes to apply to
@@ -21,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-#pragma mark Responding to Map Position Changes
+// MARK: Responding to Map Position Changes
 
 /**
  Asks the delegate whether the map view should be allowed to change from the
@@ -44,11 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
  `oldCamera` or change to `newCamera`.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/constraining-gestures/">
- Restrict map panning to an area</a> example to learn how to use this method
- and `NGLMapCamera` objects to restrict a users ability to pan your map.
+ - <doc:BlockingGesturesExample>
  */
-- (BOOL)mapView:(NGLMapView *)mapView shouldChangeFromCamera:(NGLMapCamera *)oldCamera toCamera:(NGLMapCamera *)newCamera;
+- (BOOL)mapView:(NGLMapView *)mapView
+    shouldChangeFromCamera:(NGLMapCamera *)oldCamera
+                  toCamera:(NGLMapCamera *)newCamera;
 
 /**
  :nodoc:
@@ -67,14 +69,19 @@ NS_ASSUME_NONNULL_BEGIN
  gesture is recognized. If this method returns `NO`, the map view’s camera
  continues to be this camera.
  @param newCamera The expected camera after the gesture completes. If this
- method returns `YES`, the viewport of the map will transition to the new camera. Note that the new camera cannot be modified.
+ method returns `YES`, the viewport of the map will transition to the new camera. Note that the new
+ camera cannot be modified.
  @param reason The reason for the camera change.
  @return A Boolean value indicating whether the map view should stay at
  `oldCamera` or transition to `newCamera`.
 
- @note If this method is implemented `-mapView:shouldChangeFromCamera:toCamera:` will not be called.
+ > Note: If this method is implemented `-mapView:shouldChangeFromCamera:toCamera:` will not be
+ called.
  */
-- (BOOL)mapView:(NGLMapView *)mapView shouldChangeFromCamera:(NGLMapCamera *)oldCamera toCamera:(NGLMapCamera *)newCamera reason:(NGLCameraChangeReason)reason;
+- (BOOL)mapView:(NGLMapView *)mapView
+    shouldChangeFromCamera:(NGLMapCamera *)oldCamera
+                  toCamera:(NGLMapCamera *)newCamera
+                    reason:(NGLCameraChangeReason)reason;
 
 /**
  Tells the delegate that the viewpoint depicted by the map view is about to change.
@@ -98,16 +105,18 @@ NS_ASSUME_NONNULL_BEGIN
  @param animated Whether the change will cause an animated effect on the map.
  @param reason The reason for the camera change.
 
- @note If this method is implemented `-mapView:regionWillChangeAnimated:` will not be called.
+ > Note: If this method is implemented `-mapView:regionWillChangeAnimated:` will not be called.
  */
-- (void)mapView:(NGLMapView *)mapView regionWillChangeWithReason:(NGLCameraChangeReason)reason animated:(BOOL)animated;
+- (void)mapView:(NGLMapView *)mapView
+    regionWillChangeWithReason:(NGLCameraChangeReason)reason
+                      animated:(BOOL)animated;
 
 /**
  Tells the delegate that the viewpoint depicted by the map view is changing.
 
  This method is called as the currently displayed map camera changes as part of
  an animation, whether due to a user gesture or due to a call to a method such
- as `-[NGLMapView setCamera:animated:]`. This method can be called before
+ as ``NGLMapView/setCamera:animated:``. This method can be called before
  `-mapViewDidFinishLoadingMap:` is called.
 
  During the animation, this method may be called many times to report updates to
@@ -117,8 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param mapView The map view whose viewpoint is changing.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/clustering/">
- Cluster point data</a> example to learn how to trigger an action whenever
+ TODO: Cluster point data, learn how to trigger an action whenever
  the map region changes.
  */
 - (void)mapViewRegionIsChanging:(NGLMapView *)mapView;
@@ -129,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  This method is called as the currently displayed map camera changes as part of
  an animation, whether due to a user gesture or due to a call to a method such
- as `-[NGLMapView setCamera:animated:]`. This method can be called before
+ as ``NGLMapView/setCamera:animated:``. This method can be called before
  `-mapViewDidFinishLoadingMap:` is called.
 
  During the animation, this method may be called many times to report updates to
@@ -139,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param mapView The map view whose viewpoint is changing.
  @param reason The reason for the camera change.
 
- @note If this method is implemented `-mapViewRegionIsChanging:` will not be called.
+ > Note: If this method is implemented `-mapViewRegionIsChanging:` will not be called.
  */
 - (void)mapView:(NGLMapView *)mapView regionIsChangingWithReason:(NGLCameraChangeReason)reason;
 
@@ -169,11 +177,13 @@ NS_ASSUME_NONNULL_BEGIN
  @param animated Whether the change caused an animated effect on the map.
  @param reason The reason for the camera change.
 
- @note If this method is implemented `-mapView:regionDidChangeAnimated:` will not be called.
+ > Note: If this method is implemented `-mapView:regionDidChangeAnimated:` will not be called.
  */
-- (void)mapView:(NGLMapView *)mapView regionDidChangeWithReason:(NGLCameraChangeReason)reason animated:(BOOL)animated;
+- (void)mapView:(NGLMapView *)mapView
+    regionDidChangeWithReason:(NGLCameraChangeReason)reason
+                     animated:(BOOL)animated;
 
-#pragma mark Loading the Map
+// MARK: Loading the Map
 
 /**
  Tells the delegate that the map view will begin to load.
@@ -237,18 +247,53 @@ NS_ASSUME_NONNULL_BEGIN
  affecting performance.
 
  @param mapView The map view that has just redrawn.
+ @param fullyRendered A Boolean value indicating whether the map is fully rendered or not.
  */
 - (void)mapViewDidFinishRenderingFrame:(NGLMapView *)mapView fullyRendered:(BOOL)fullyRendered;
+/**
+ Tells the delegate that the map view has just redrawn.
+
+ This method is called any time the map view needs to redraw due to a change in
+ the viewpoint or style property transition. This method may be called very
+ frequently, even moreso than `-mapViewRegionIsChanging:`. Therefore, your
+ implementation of this method should be as lightweight as possible to avoid
+ affecting performance.
+
+ @param mapView The map view that has just redrawn.
+ @param fullyRendered A Boolean value indicating whether the map is fully rendered or not.
+ @param frameEncodingTime The time taken to encode the frame, in milliseconds.
+ @param frameRenderingTime The time taken to render the frame, in milliseconds.
+ */
+- (void)mapViewDidFinishRenderingFrame:(NGLMapView *)mapView
+                         fullyRendered:(BOOL)fullyRendered
+                     frameEncodingTime:(double)frameEncodingTime
+                    frameRenderingTime:(double)frameRenderingTime;
+/**
+ Tells the delegate that the map view has just redrawn.
+
+ This method is called any time the map view needs to redraw due to a change in
+ the viewpoint or style property transition. This method may be called very
+ frequently, even moreso than `-mapViewRegionIsChanging:`. Therefore, your
+ implementation of this method should be as lightweight as possible to avoid
+ affecting performance.
+
+ @param mapView The map view that has just redrawn.
+ @param fullyRendered A Boolean value indicating whether the map is fully rendered or not.
+ @param renderingStats A collection of rendering statistics
+ */
+- (void)mapViewDidFinishRenderingFrame:(NGLMapView *)mapView
+                         fullyRendered:(BOOL)fullyRendered
+                        renderingStats:(NGLRenderingStats *)renderingStats;
 
 /**
  Tells the delegate that the map view is entering an idle state, and no more
  drawing will be necessary until new data is loaded or there is some interaction
  with the map.
- 
+
  - No camera transitions are in progress
  - All currently requested tiles have loaded
  - All fade/transition animations have completed
- 
+
  @param mapView The map view that has just entered the idle state.
  */
 - (void)mapViewDidBecomeIdle:(NGLMapView *)mapView;
@@ -269,22 +314,37 @@ NS_ASSUME_NONNULL_BEGIN
  @param style The style that was loaded.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/runtime-multiple-annotations/">
- Dynamically style interactive points</a> and <a href="https://docs.nbmap.com/ios/maps/examples/shape-collection/">
- Add multiple shapes from a single shape source</a> examples to learn how to
- ensure a map's style has loaded before modifying it at runtime.
+ TODO: Dynamically style interactive points
+ TODO: Add multiple shapes from a single shape source examples, learn how to
+ ensure a map's style has loaded before modifying it at runtime
  */
 - (void)mapView:(NGLMapView *)mapView didFinishLoadingStyle:(NGLStyle *)style;
 
+/**
+ Tells the delegate that the source changed.
+
+ @param mapView The map view that owns the source.
+ @param source The source that changed.
+ */
+- (void)mapView:(NGLMapView *)mapView sourceDidChange:(NGLSource *)source;
+
+/**
+ Tells the delegate that the `mapView` is missing an image. The image should be added synchronously
+ with ``NGLStyle/setImage:forName:`` to be rendered on the current zoom level. When loading icons
+ asynchronously, you can load a placeholder image and replace it when your image has loaded.
+
+ @param mapView The map view that is loading the image.
+ @param imageName The name of the image that is missing.
+ */
 - (nullable UIImage *)mapView:(NGLMapView *)mapView didFailToLoadImage:(NSString *)imageName;
 
 /**
  Asks the delegate whether the map view should evict cached images.
- 
+
  This method is called in two scenarios: when the cumulative size of unused images
  exceeds the cache size or when the last tile that includes the image is removed from
  memory.
- 
+
  @param mapView The map view that is evicting the image.
  @param imageName The image name that is going to be removed.
  @return A Boolean value indicating whether the map view should evict
@@ -292,7 +352,158 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)mapView:(NGLMapView *)mapView shouldRemoveStyleImage:(NSString *)imageName;
 
-#pragma mark Tracking User Location
+// MARK: - Shader Compilation
+
+/**
+ Called when a shader is about to be compiled.
+
+ @param mapView The ``NGLMapView`` instance invoking this delegate method.
+ @param id The unique identifier for the shader being compiled.
+ @param backend An integer representing the backend type used for shader compilation.
+ @param defines A string containing the shader program configuration definitions.
+
+ > Warning: This method is not thread-safe.
+ */
+- (void)mapView:(NGLMapView *)mapView
+    shaderWillCompile:(NSInteger)id
+              backend:(NSInteger)backend
+              defines:(NSString *)defines;
+
+/**
+Called when a shader was successfully compiled.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param id The unique identifier for the shader that was compiled.
+@param backend An integer representing the backend type used for shader compilation.
+@param defines A string containing the shader program configuration definitions.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    shaderDidCompile:(NSInteger)id
+             backend:(NSInteger)backend
+             defines:(NSString *)defines;
+
+/**
+Called when a shader failed to compile.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param id The unique identifier for the shader that failed to compile.
+@param backend An integer representing the backend type used for shader compilation.
+@param defines A string containing the shader program configuration definitions.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    shaderDidFailCompile:(NSInteger)id
+                 backend:(NSInteger)backend
+                 defines:(NSString *)defines;
+
+// MARK: - Glyph Requests
+
+/**
+Called when glyphs for the specified font stack are about to be loaded.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param fontStack An array of strings identifying the requested font stack.
+@param range The range of glyphs that are being requested.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    glyphsWillLoad:(NSArray<NSString *> *)fontStack
+             range:(NSRange)range;
+
+/**
+Called when glyphs for the specified font stack have been successfully loaded.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param fontStack An array of strings identifying the requested font stack.
+@param range The range of glyphs that were successfully loaded.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    glyphsDidLoad:(NSArray<NSString *> *)fontStack
+            range:(NSRange)range;
+
+/**
+Called when an error occurred while loading glyphs for the specified font stack.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param fontStack An array of strings identifying the requested font stack.
+@param range The range of glyphs for which loading failed.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    glyphsDidError:(NSArray<NSString *> *)fontStack
+             range:(NSRange)range;
+
+// MARK: - Tile Requests
+
+/**
+Called when a tile-related action is triggered.
+
+This method notifies the delegate of various stages of tile processing, such as requesting from
+cache or network, parsing, or encountering errors.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param operation The type of tile operation triggered. See ``NGLTileOperation``.
+@param x The x-coordinate of the tile.
+@param y The y-coordinate of the tile.
+@param z The z (zoom) level of the tile.
+@param wrap The wrap value for the tile.
+@param overscaledZ The overscaled zoom level of the tile.
+@param sourceID A string identifier for the tile source.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView
+    tileDidTriggerAction:(NGLTileOperation)operation
+                       x:(NSInteger)x
+                       y:(NSInteger)y
+                       z:(NSInteger)z
+                    wrap:(NSInteger)wrap
+             overscaledZ:(NSInteger)overscaledZ
+                sourceID:(NSString *)sourceID;
+
+// MARK: - Sprite Requests
+
+/**
+Called when a sprite is about to be loaded.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param id The unique identifier for the sprite being loaded.
+@param url The URL from which the sprite is being requested.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView spriteWillLoad:(NSString *)id url:(NSString *)url;
+
+/**
+Called when a sprite has been successfully loaded.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param id The unique identifier for the sprite that was loaded.
+@param url The URL from which the sprite was loaded.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView spriteDidLoad:(NSString *)id url:(NSString *)url;
+
+/**
+Called when an error occurs while loading a sprite.
+
+@param mapView The ``NGLMapView`` instance invoking this delegate method.
+@param id The unique identifier for the sprite for which loading failed.
+@param url The URL from which the sprite was being requested.
+
+> Warning: This method is not thread-safe.
+*/
+- (void)mapView:(NGLMapView *)mapView spriteDidError:(NSString *)id url:(NSString *)url;
+
+// MARK: Tracking User Location
 
 /**
  Tells the delegate that the map view will begin tracking the user’s location.
@@ -316,13 +527,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Asks the delegate styling options for each default user location annotation view.
- 
+
  This method is called many times during gesturing, so you should avoid performing
  complex or performance-intensive tasks in your implementation.
- 
+
  @param mapView The map view that is tracking the user’s location.
  */
-- (NGLUserLocationAnnotationViewStyle *)mapViewStyleForDefaultUserLocationAnnotationView:(NGLMapView *)mapView NS_SWIFT_NAME(mapView(styleForDefaultUserLocationAnnotationView:));
+- (NGLUserLocationAnnotationViewStyle *)mapViewStyleForDefaultUserLocationAnnotationView:
+    (NGLMapView *)mapView NS_SWIFT_NAME(mapView(styleForDefaultUserLocationAnnotationView:));
 
 /**
  Tells the delegate that the location of the user was updated.
@@ -330,8 +542,8 @@ NS_ASSUME_NONNULL_BEGIN
  While the `showsUserLocation` property is set to `YES`, this method is called
  whenever a new location update is received by the map view. This method is also
  called if the map view’s user tracking mode is set to
- `NGLUserTrackingModeFollowWithHeading` and the heading changes, or if it is set
- to `NGLUserTrackingModeFollowWithCourse` and the course changes.
+ ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithHeading`` and the heading changes, or if it is
+ set to ``NGLUserTrackingMode/NGLUserTrackingModeFollowWithCourse`` and the course changes.
 
  This method is not called if the application is currently running in the
  background. If you want to receive location updates while running in the
@@ -341,7 +553,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param userLocation The location object representing the user’s latest
     location. This property may be `nil`.
  */
-- (void)mapView:(NGLMapView *)mapView didUpdateUserLocation:(nullable NGLUserLocation *)userLocation;
+- (void)mapView:(NGLMapView *)mapView
+    didUpdateUserLocation:(nullable NGLUserLocation *)userLocation;
 
 /**
  Tells the delegate that an attempt to locate the user’s position failed.
@@ -362,7 +575,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param mode The new tracking mode.
  @param animated Whether the change caused an animated effect on the map.
  */
-- (void)mapView:(NGLMapView *)mapView didChangeUserTrackingMode:(NGLUserTrackingMode)mode animated:(BOOL)animated;
+- (void)mapView:(NGLMapView *)mapView
+    didChangeUserTrackingMode:(NGLUserTrackingMode)mode
+                     animated:(BOOL)animated;
 
 /**
  Returns a screen coordinate at which to position the user location annotation.
@@ -372,8 +587,8 @@ NS_ASSUME_NONNULL_BEGIN
  When unimplemented, the user location annotation is aligned within the center of
  the map view with respect to the content insets.
 
- This method will override any values set by `NGLMapView.userLocationVerticalAlignment`
- or `-[NGLMapView setUserLocationVerticalAlignment:animated:]`.
+ This method will override any values set by ``NGLMapView/userLocationVerticalAlignment``
+ or ``NGLMapView/setUserLocationVerticalAlignment:animated:``.
 
  @param mapView The map view that is tracking the user's location.
  */
@@ -381,17 +596,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Tells the delegate that the map's location updates accuracy authorization has changed.
- 
+
  This method is called after the user changes location accuracy authorization when
  requesting location permissions or in privacy settings.
- 
+
  @param mapView The map view that changed its location accuracy authorization.
  @param manager The location manager reporting the update.
- 
- */
-- (void)mapView:(NGLMapView *)mapView didChangeLocationManagerAuthorization:(id<NGLLocationManager>)manager API_AVAILABLE(ios(14));
 
-#pragma mark Managing the Appearance of Annotations
+ */
+- (void)mapView:(NGLMapView *)mapView
+    didChangeLocationManagerAuthorization:(id<NGLLocationManager>)manager API_AVAILABLE(ios(14));
+
+// MARK: Managing the Appearance of Annotations
 
 /**
  Returns an annotation image object to mark the given point annotation object on
@@ -413,14 +629,14 @@ NS_ASSUME_NONNULL_BEGIN
     `nil` if you want to display the default marker image or an annotation view.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-models/">
- Annotation models</a>, <a href="https://docs.nbmap.com/ios/maps/examples/annotation-view-image/">
- Add annotation views and images</a>, and <a href="https://docs.nbmap.com/ios/maps/examples/marker-image/">
- Mark a place on the map with an image</a> examples to learn to specify which
- image should be used for `NGLAnnotation` objects that have been added to
- your map.
+ TODO: Annotation models
+ TODO: Add annotation views and images
+ TODO: Mark a place on the map with an image, learn to specify which
+ image should be used for ``NGLAnnotation`` objects that have been added to
+ your map
  */
-- (nullable NGLAnnotationImage *)mapView:(NGLMapView *)mapView imageForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable NGLAnnotationImage *)mapView:(NGLMapView *)mapView
+                      imageForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Returns the alpha value to use when rendering a shape annotation.
@@ -453,9 +669,8 @@ NS_ASSUME_NONNULL_BEGIN
  @return A color to use for the shape outline.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-models/">
- Annotation models</a> example to learn how to modify the outline color of an
- `NGLShape` object that has been added to your map as an annotation.
+ TODO: Annotation models, learn how to modify the outline color of an
+ ``NGLShape`` object that has been added to your map as an annotation.
  */
 - (UIColor *)mapView:(NGLMapView *)mapView strokeColorForShapeAnnotation:(NGLShape *)annotation;
 
@@ -473,9 +688,8 @@ NS_ASSUME_NONNULL_BEGIN
  @return The polygon’s interior fill color.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/polygon/">Add
- a polygon annotation</a> example to learn how to modify the color of a an
- `NGLPolygon` at runtime.
+ TODO: Add a polygon annotation, learn how to modify the color of a an
+ ``NGLPolygon`` at runtime.
  */
 - (UIColor *)mapView:(NGLMapView *)mapView fillColorForPolygonAnnotation:(NGLPolygon *)annotation;
 
@@ -490,13 +704,12 @@ NS_ASSUME_NONNULL_BEGIN
  @return A line width for the polyline, measured in points.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/line-geojson/">
- Add a line annotation from GeoJSON</a> example to learn how to modify the
- line width of an `NGLPolylineFeature` on your map.
+ TODO: Add a line annotation from GeoJSON, learn how to modify the
+ line width of an ``NGLPolylineFeature`` on your map.
  */
 - (CGFloat)mapView:(NGLMapView *)mapView lineWidthForPolylineAnnotation:(NGLPolyline *)annotation;
 
-#pragma mark Managing Annotation Views
+// MARK: Managing Annotation Views
 
 /**
  Returns a view object to mark the given point annotation object on the map.
@@ -511,8 +724,8 @@ NS_ASSUME_NONNULL_BEGIN
  and draw more quickly than annotation views.
 
  The user location annotation view can also be customized via this method. When
- `annotation` is an instance of `NGLUserLocation` (or equal to the map view’s
- `userLocation` property), return an instance of `NGLUserLocationAnnotationView`
+ `annotation` is an instance of ``NGLUserLocation`` (or equal to the map view’s
+ `userLocation` property), return an instance of ``NGLUserLocationAnnotationView``
  (or a subclass thereof).
 
  @param mapView The map view that requested the annotation view.
@@ -522,12 +735,12 @@ NS_ASSUME_NONNULL_BEGIN
     want to display an annotation image instead.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-view-image/">
- Add annotation views and images</a> example to learn how to specify what
- `NGLViewAnnotation` to use for a given `NGLPointAnnotation` object on your
+ TODO: Add annotation views and images, learn how to specify what
+ ``NGLAnnotation`` to use for a given ``NGLAnnotation`` object on your
  map.
  */
-- (nullable NGLAnnotationView *)mapView:(NGLMapView *)mapView viewForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable NGLAnnotationView *)mapView:(NGLMapView *)mapView
+                      viewForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Tells the delegate that one or more annotation views have been added and
@@ -537,12 +750,13 @@ NS_ASSUME_NONNULL_BEGIN
  implement this method to animate the addition of the annotation views.
 
  @param mapView The map view to which the annotation views were added.
- @param annotationViews An array of `NGLAnnotationView` objects representing the
+ @param annotationViews An array of ``NGLAnnotationView`` objects representing the
     views that were added.
  */
-- (void)mapView:(NGLMapView *)mapView didAddAnnotationViews:(NSArray<NGLAnnotationView *> *)annotationViews;
+- (void)mapView:(NGLMapView *)mapView
+    didAddAnnotationViews:(NSArray<NGLAnnotationView *> *)annotationViews;
 
-#pragma mark Selecting Annotations
+// MARK: Selecting Annotations
 
 /**
  Returns a Boolean value indicating whether the shape annotation can be selected.
@@ -569,11 +783,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param annotation The annotation that was selected.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/runtime-multiple-annotations/">
- Dynamically style interactive points</a> example to learn how to remove an
+ TODO: Dynamically style interactive points, learn how to remove an
  annotation view if it has already been selected.
  */
-- (void)mapView:(NGLMapView *)mapView didSelectAnnotation:(id <NGLAnnotation>)annotation;
+- (void)mapView:(NGLMapView *)mapView didSelectAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Tells the delegate that one of its annotations was deselected.
@@ -587,7 +800,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param mapView The map view containing the annotation.
  @param annotation The annotation that was deselected.
  */
-- (void)mapView:(NGLMapView *)mapView didDeselectAnnotation:(id <NGLAnnotation>)annotation;
+- (void)mapView:(NGLMapView *)mapView didDeselectAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Tells the delegate that one of its annotation views was selected.
@@ -621,7 +834,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)mapView:(NGLMapView *)mapView didDeselectAnnotationView:(NGLAnnotationView *)annotationView;
 
-#pragma mark Managing Callout Views
+// MARK: Managing Callout Views
 
 /**
  Returns a Boolean value indicating whether the annotation is able to display
@@ -648,13 +861,12 @@ NS_ASSUME_NONNULL_BEGIN
     callout.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/annotation-view-image/">
- Add annotation views and images</a>, <a href="https://docs.nbmap.com/ios/maps/examples/custom-callout/">
- Display custom views as callouts</a>, and <a href="https://docs.nbmap.com/ios/maps/examples/default-callout/">
- Default callout usage</a> examples to learn how to show callouts for
- `NGLAnnotation` objects.
+ TODO: Add annotation views and images
+ TODO: Display custom views as callouts
+ TODO: Default callout usage, learn how to show callouts for
+ ``NGLAnnotation`` objects.
  */
-- (BOOL)mapView:(NGLMapView *)mapView annotationCanShowCallout:(id <NGLAnnotation>)annotation;
+- (BOOL)mapView:(NGLMapView *)mapView annotationCanShowCallout:(id<NGLAnnotation>)annotation;
 
 /**
  Returns a callout view to display for the given annotation.
@@ -668,15 +880,15 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param mapView The map view that requested the callout view.
  @param annotation The object representing the annotation.
- @return A view conforming to the `NGLCalloutView` protocol, or `nil` to use the
+ @return A view conforming to the ``NGLCalloutView`` protocol, or `nil` to use the
     default callout view.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/custom-callout/">
- Display custom views as callouts</a> example to learn how to customize an
- `NGLAnnotation` object's `NGLCalloutView`.
+ TODO: Display custom views as callouts, learn how to customize an
+ ``NGLAnnotation`` object's ``NGLAnnotation``.
  */
-- (nullable id <NGLCalloutView>)mapView:(NGLMapView *)mapView calloutViewForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable id<NGLCalloutView>)mapView:(NGLMapView *)mapView
+              calloutViewForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Returns the view to display on the left side of the standard callout bubble.
@@ -703,11 +915,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return The accessory view to display.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/default-callout/">
- Default callout usage</a> example to learn how to modify the view that is
+ TODO: Default callout usage, learn how to modify the view that is
  displayed on the left side of the standard callout bubble.
  */
-- (nullable UIView *)mapView:(NGLMapView *)mapView leftCalloutAccessoryViewForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable UIView *)mapView:(NGLMapView *)mapView
+    leftCalloutAccessoryViewForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Returns the view to display on the right side of the standard callout bubble.
@@ -734,11 +946,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return The accessory view to display.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/default-callout/">
- Default callout usage</a> example to learn how to modify the view that is
+ TODO: Default callout usage, learn how to modify the view that is
  displayed on the right side of the standard callout bubble.
  */
-- (nullable UIView *)mapView:(NGLMapView *)mapView rightCalloutAccessoryViewForAnnotation:(id <NGLAnnotation>)annotation;
+- (nullable UIView *)mapView:(NGLMapView *)mapView
+    rightCalloutAccessoryViewForAnnotation:(id<NGLAnnotation>)annotation;
 
 /**
  Tells the delegate that the user tapped one of the accessory controls in the
@@ -756,7 +968,7 @@ NS_ASSUME_NONNULL_BEGIN
  If your custom accessory views are not descendants of the `UIControl` class,
  the map view does not call this method. If the annotation has a custom callout
  view via the `-mapView:calloutViewForAnnotation:` method, you can specify the
- custom accessory views using the `NGLCalloutView` protocol’s
+ custom accessory views using the ``NGLCalloutView`` protocol’s
  `leftAccessoryView` and `rightAccessoryView` properties.
 
  @param mapView The map view containing the specified annotation.
@@ -764,11 +976,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param control The control that was tapped.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/default-callout/">
- Default callout usage</a> example to learn how to trigger an action when the
+ TODO: Default callout usage, learn how to trigger an action when the
  standard callout bubble's accessory control is tapped.
  */
-- (void)mapView:(NGLMapView *)mapView annotation:(id <NGLAnnotation>)annotation calloutAccessoryControlTapped:(UIControl *)control;
+- (void)mapView:(NGLMapView *)mapView
+                       annotation:(id<NGLAnnotation>)annotation
+    calloutAccessoryControlTapped:(UIControl *)control;
 
 /**
  Tells the delegate that the user tapped on an annotation’s callout view.
@@ -777,7 +990,7 @@ NS_ASSUME_NONNULL_BEGIN
  opposed to the callout’s left or right accessory view. If the annotation has a
  custom callout view via the `-mapView:calloutViewForAnnotation:` method, this
  method is only called whenever the callout view calls its delegate’s
- `-[NGLCalloutViewDelegate calloutViewTapped:]` method.
+ ``NGLCalloutViewDelegate/calloutViewTapped:`` method.
 
  If this method is present on the delegate, the standard callout view’s body
  momentarily highlights when the user taps it, whether or not this method does
@@ -787,11 +1000,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param annotation The annotation whose callout was tapped.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/custom-callout/">
- Display custom views as callouts</a> example to learn how to trigger an
- action when an `NGLAnnotation`s `NGLCalloutView` is tapped.
+ TODO: Display custom views as callouts, learn how to trigger an
+ action when an ``NGLAnnotation``s ``NGLAnnotation`` is tapped.
  */
-- (void)mapView:(NGLMapView *)mapView tapOnCalloutForAnnotation:(id <NGLAnnotation>)annotation;
+- (void)mapView:(NGLMapView *)mapView tapOnCalloutForAnnotation:(id<NGLAnnotation>)annotation;
 
 @end
 

@@ -3,19 +3,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- An object conforming to the `NGLOfflineRegion` protocol determines which
- resources are required by an `NGLOfflinePack` object.
+ An object conforming to the ``NGLOfflineRegion`` protocol determines which
+ resources are required by an ``NGLOfflinePack`` object.
  */
 @protocol NGLOfflineRegion <NSObject>
 
 /**
  URL of the style whose resources are required for offline viewing.
- 
+
  In addition to the JSON stylesheet, different styles may require different font
  glyphs, sprite sheets, and other resources.
- 
- The URL may be a full HTTP or HTTPS URL or a Nbmap
- style URL (`nbmap://styles/{user}/{style}`).
+
+ The URL may be a full HTTP or HTTPS URL or a canonical URL
  */
 @property (nonatomic, readonly) NSURL *styleURL;
 
@@ -26,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  instead of relying on fonts downloaded as part of the offline pack.
  See `NGLIdeographicFontFamilyName` setting. Also, for regions outside of
  China, Japan, and Korea, these glyphs will rarely appear for non-CJK users.
- 
+
  By default, this property is set to `NO`, so that the offline pack will
  include ideographic glyphs.
  */

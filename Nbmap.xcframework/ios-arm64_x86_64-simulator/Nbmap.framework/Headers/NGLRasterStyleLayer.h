@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
  The resampling/interpolation method to use for overscaling, also known as
  texture magnification filter
 
- Values of this type are used in the `NGLRasterStyleLayer.rasterResamplingMode`
+ Values of this type are used in the ``NGLRasterStyleLayer/rasterResamplingMode``
  property.
  */
 typedef NS_ENUM(NSUInteger, NGLRasterResamplingMode) {
@@ -28,42 +28,40 @@ typedef NS_ENUM(NSUInteger, NGLRasterResamplingMode) {
 };
 
 /**
- An `NGLRasterStyleLayer` is a style layer that renders georeferenced raster
+ An ``NGLRasterStyleLayer`` is a style layer that renders georeferenced raster
  imagery on the map, especially raster tiles.
  
  Use a raster style layer to configure the color parameters of raster tiles
- loaded by an `NGLRasterTileSource` object or raster images loaded by an
- `NGLImageSource` object. For example, you could use a raster style layer to
- render <a href="https://www.nbmap.com/satellite/">Nbmap Satellite</a>
- imagery, a <a
- href="https://docs.nbmap.com/help/glossary/tileset/#raster-tilesets">raster
- tile set</a> uploaded to Nbmap Studio, or a raster map authored in <a
+ loaded by an ``NGLRasterStyleLayer`` object or raster images loaded by an
+ ``NGLRasterStyleLayer`` object. For example, you could use a raster style layer
+ to render <a href="https://www.nextbillion.com/satellite/">Nextbillion
+ Satellite</a> imagery, a <a
+ href="https://docs.nextbillion.com/help/glossary/tileset/#raster-tilesets">raster
+ tile set</a> uploaded to Nextbillion Studio, or a raster map authored in <a
  href="https://tilemill-project.github.io/tilemill/">TileMill</a>, the classic
- Nbmap Editor, or Nbmap Studio Classic.
+ Nextbillion Editor, or Nextbillion Studio Classic.
  
  Raster images may also be used as icons or patterns in a style layer. To
- register an image for use as an icon or pattern, use the `-[NGLStyle
- setImage:forName:]` method. To configure a point annotation’s image, use the
- `NGLAnnotationImage` class.
+ register an image for use as an icon or pattern, use the
+ ``NGLStyle/setImage:forName:`` method. To configure a point annotation’s image,
+ use the ``NGLRasterStyleLayer`` class.
 
  You can access an existing raster style layer using the
- `-[NGLStyle layerWithIdentifier:]` method if you know its identifier;
- otherwise, find it using the `NGLStyle.layers` property. You can also create a
+ ``NGLStyle/layerWithIdentifier:`` method if you know its identifier;
+ otherwise, find it using the ``NGLStyle/layers`` property. You can also create a
  new raster style layer and add it to the style using a method such as
- `-[NGLStyle addLayer:]`.
+ ``NGLStyle/addLayer:``.
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/image-source/">Add
- an image</a> and <a
- href="https://docs.nbmap.com/ios/maps/examples/source-custom-raster/">Add
+ See the <a
+ href="https://docs.nextbillion.com/ios/maps/examples/image-source/">Add an
+ image</a> and <a
+ href="https://docs.nextbillion.com/ios/maps/examples/source-custom-raster/">Add
  raster imagery</a> examples to learn how to add imagery with this style layer.
 
  ### Example
 
  ```swift
- let layer = NGLRasterStyleLayer(identifier: "clouds", source: source)
- layer.rasterOpacity = NSExpression(forConstantValue: 0.5)
- mapView.style?.addLayer(layer)
  ```
  */
 NGL_EXPORT
@@ -73,8 +71,8 @@ NGL_EXPORT
  Returns a raster style layer initialized with an identifier and source.
 
  After initializing and configuring the style layer, add it to a map view’s
- style using the `-[NGLStyle addLayer:]` or
- `-[NGLStyle insertLayer:belowLayer:]` method.
+ style using the ``NGLStyle/addLayer:`` or
+ ``NGLStyle/insertLayer:belowLayer:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
@@ -84,7 +82,7 @@ NGL_EXPORT
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier source:(NGLSource *)source;
 
-#pragma mark - Accessing the Paint Attributes
+// MARK: - Accessing the Paint Attributes
 
 /**
  Increase or reduce the brightness of the image. The value is the maximum
@@ -94,8 +92,8 @@ NGL_EXPORT
  `1`. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-raster-brightness-max"><code>raster-brightness-max</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-raster-brightness-max"><code>raster-brightness-max</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -127,8 +125,8 @@ NGL_EXPORT
  `0`. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-raster-brightness-min"><code>raster-brightness-min</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-raster-brightness-min"><code>raster-brightness-min</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -179,7 +177,8 @@ NGL_EXPORT
 @property (nonatomic) NGLTransition rasterContrastTransition;
 
 /**
- Fade duration when a new tile is added.
+ Fade duration when a new tile is added, or when a video is started or its
+ coordinates are updated.
  
  This property is measured in milliseconds.
  
@@ -208,8 +207,8 @@ NGL_EXPORT
  `0`. Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-raster-hue-rotate"><code>raster-hue-rotate</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-raster-hue-rotate"><code>raster-hue-rotate</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -267,8 +266,8 @@ NGL_EXPORT
  Set this property to `nil` to reset it to the default value.
  
  This attribute corresponds to the <a
- href="https://www.nbmap.com/nbmap-gl-style-spec/#paint-raster-resampling"><code>raster-resampling</code></a>
- layout property in the Nbmap Style Specification.
+ href="https://maplibre.org/maplibre-style-spec/#paint-raster-resampling"><code>raster-resampling</code></a>
+ layout property in the MapLibre Style Spec.
  
  You can set this property to an expression containing any of the following:
  
@@ -323,11 +322,11 @@ NGL_EXPORT
 
 /**
  Methods for wrapping an enumeration value for a style layer attribute in an
- `NGLRasterStyleLayer` object and unwrapping its raw value.
+ ``NGLRasterStyleLayer`` object and unwrapping its raw value.
  */
 @interface NSValue (NGLRasterStyleLayerAdditions)
 
-#pragma mark Working with Raster Style Layer Attribute Values
+// MARK: Working with Raster Style Layer Attribute Values
 
 /**
  Creates a new value object containing the given `NGLRasterResamplingMode` enumeration.
@@ -338,7 +337,7 @@ NGL_EXPORT
 + (instancetype)valueWithNGLRasterResamplingMode:(NGLRasterResamplingMode)rasterResamplingMode;
 
 /**
- The `NGLRasterResamplingMode` enumeration representation of the value.
+ The ``NGLRasterResamplingMode`` enumeration representation of the value.
  */
 @property (readonly) NGLRasterResamplingMode NGLRasterResamplingModeValue;
 

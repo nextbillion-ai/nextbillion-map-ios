@@ -13,71 +13,70 @@ NS_ASSUME_NONNULL_BEGIN
  integers.
 
  The default value for this option is 512. Version 4 of the
- <a href="https://docs.nbmap.com/api/maps/#raster-tiles">Nbmap Raster Tiles API</a>
+ <a href="https://docs.nextbillion.com/api/maps/#raster-tiles">Nextbillion Raster Tiles API</a>
  requires a value of 256, as do many third-party tile servers, so consult your
  provider’s documentation for the correct value.
 
- This option is only applicable to `NGLRasterTileSource` objects; it is ignored
- when initializing `NGLVectorTileSource` objects.
+ This option is only applicable to ``NGLRasterTileSource`` objects; it is ignored
+ when initializing ``NGLVectorTileSource`` objects.
  */
 FOUNDATION_EXTERN NGL_EXPORT const NGLTileSourceOption NGLTileSourceOptionTileSize;
 
 /**
- `NGLRasterTileSource` is a map content source that supplies raster image tiles
+ ``NGLRasterTileSource`` is a map content source that supplies raster image tiles
  to be shown on the map. The location of and metadata about the tiles are
  defined either by an option dictionary or by an external file that conforms to
  the
- <a href="https://github.com/nbmap/tilejson-spec/">TileJSON specification</a>.
- A raster tile source is added to an `NGLStyle` object along with one or more
- `NGLRasterStyleLayer` objects. Use a raster style layer to control the
+ <a href="https://github.com/nextbillion/tilejson-spec/">TileJSON specification</a>.
+ A raster tile source is added to an ``NGLStyle`` object along with one or more
+ ``NGLRasterStyleLayer`` objects. Use a raster style layer to control the
  appearance of content supplied by the raster tile source.
 
  Each
- <a href="https://www.nbmap.com/nbmap-gl-style-spec/#sources-raster"><code>raster</code></a>
+ <a href="https://maplibre.org/maplibre-style-spec/#sources-raster"><code>raster</code></a>
  source defined by the style JSON file is represented at runtime by an
- `NGLRasterTileSource` object that you can use to initialize new style layers. You
+ ``NGLRasterTileSource`` object that you can use to initialize new style layers. You
  can also add and remove sources dynamically using methods such as
- `-[NGLStyle addSource:]` and `-[NGLStyle sourceWithIdentifier:]`.
+ ``NGLStyle/addSource:`` and ``NGLStyle/sourceWithIdentifier:``.
 
  ### Example
 
  ```swift
- let source = NGLRasterTileSource(identifier: "clouds", tileURLTemplates: ["https://example.com/raster-tiles/{z}/{x}/{y}.png"], options: [
-     .minimumZoomLevel: 9,
+ let source = NGLRasterTileSource(identifier: "clouds", tileURLTemplates:
+ ["https://example.com/raster-tiles/{z}/{x}/{y}.png"], options: [ .minimumZoomLevel: 9,
      .maximumZoomLevel: 16,
      .tileSize: 512,
      .attributionInfos: [
-         NGLAttributionInfo(title: NSAttributedString(string: "© Nbmap"), url: URL(string: "https://nbmap.com"))
+         NGLAttributionInfo(title: NSAttributedString(string: "© Nextbillion"), url: URL(string:
+ "https://nextbillion.com"))
      ]
  ])
  mapView.style?.addSource(source)
  ```
 
  #### Related examples
- See the <a href="https://docs.nbmap.com/ios/maps/examples/source-custom-raster/">
- Add raster imagery</a> example to learn how to add a `NGLRasterStyleLayer`
- to your map using an `NGLRasterTileSource`.
+ TODO: Add raster imagery, learn how to add a ``NGLRasterStyleLayer``
+ to your map using an ``NGLRasterTileSource``.
  */
 NGL_EXPORT
 @interface NGLRasterTileSource : NGLTileSource
 
-#pragma mark Initializing a Source
+// MARK: Initializing a Source
 
 /**
  Returns a raster tile source initialized with an identifier and configuration
  URL.
 
  After initializing and configuring the source, add it to a map view’s style
- using the `-[NGLStyle addSource:]` method.
+ using the ``NGLStyle/addSource:`` method.
 
- The URL may be a full HTTP or HTTPS URL or, for tilesets hosted by Nbmap, a
- Nbmap URL indicating a tileset ID (`nbmap://<tilesetid>`). The URL should
+ The URL may be a full HTTP or HTTPS URL or canonical URL. The URL should
  point to a JSON file that conforms to the
- <a href="https://github.com/nbmap/tilejson-spec/">TileJSON specification</a>.
+ <a href="https://github.com/nextbillion/tilejson-spec/">TileJSON specification</a>.
 
- If a Nbmap URL is specified, this source uses a tile size of 256. For all
+ If a Nextbillion URL is specified, this source uses a tile size of 256. For all
  other tilesets, the default value is 512. (See the
- `NGLTileSourceOptionTileSize` documentation for more information about tile
+ ``NGLTileSourceOptionTileSize`` documentation for more information about tile
  sizes.) If you need to use a tile size other than the default, use the
  `-initWithIdentifier:configurationURL:tileSize:` method.
 
@@ -87,30 +86,32 @@ NGL_EXPORT
     source’s contents and other metadata.
  @return An initialized raster tile source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier configurationURL:(NSURL *)configurationURL;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                  configurationURL:(NSURL *)configurationURL;
 
 /**
  Returns a raster tile source initialized with an identifier, configuration URL,
  and tile size.
 
  After initializing and configuring the source, add it to a map view’s style
- using the `-[NGLStyle addSource:]` method.
+ using the ``NGLStyle/addSource:`` method.
 
- The URL may be a full HTTP or HTTPS URL or, for tilesets hosted by Nbmap, a
- Nbmap URL indicating a tileset ID (`nbmap://<tilesetid>`). The URL should
+ The URL may be a full HTTP or HTTPS URL or, canonical URL. The URL should
  point to a JSON file that conforms to the
- <a href="https://github.com/nbmap/tilejson-spec/">TileJSON specification</a>.
+ <a href="https://github.com/nextbillion/tilejson-spec/">TileJSON specification</a>.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
  @param configurationURL A URL to a TileJSON configuration file describing the
  source’s contents and other metadata.
  @param tileSize The width and height (measured in points) of each tiled image
-    in the raster tile source. See the `NGLTileSourceOptionTileSize`
+    in the raster tile source. See the ``NGLTileSourceOptionTileSize``
     documentation for details.
  @return An initialized raster tile source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier configurationURL:(NSURL *)configurationURL tileSize:(CGFloat)tileSize NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                  configurationURL:(NSURL *)configurationURL
+                          tileSize:(CGFloat)tileSize NS_DESIGNATED_INITIALIZER;
 
 /**
  Returns a raster tile source initialized an identifier, tile URL templates, and
@@ -121,18 +122,21 @@ NGL_EXPORT
  guide for information about the format of a tile URL template.
 
  After initializing and configuring the source, add it to a map view’s style
- using the `-[NGLStyle addSource:]` method.
+ using the ``NGLStyle/addSource:`` method.
 
  @param identifier A string that uniquely identifies the source in the style to
     which it is added.
  @param tileURLTemplates An array of tile URL template strings. Only the first
     string is used; any additional strings are ignored.
  @param options A dictionary containing configuration options. See
-    `NGLTileSourceOption` for available keys and values. Pass in `nil` to use
+    ``NGLTileSourceOption`` for available keys and values. Pass in `nil` to use
     the default values.
  @return An initialized tile source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier tileURLTemplates:(NSArray<NSString *> *)tileURLTemplates options:(nullable NSDictionary<NGLTileSourceOption, id> *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                  tileURLTemplates:(NSArray<NSString *> *)tileURLTemplates
+                           options:(nullable NSDictionary<NGLTileSourceOption, id> *)options
+    NS_DESIGNATED_INITIALIZER;
 
 @end
 
