@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "NextBillionMap"
-  spec.version      = "2.0.0-beta.6"
+  spec.version      = "2.0.0"
   spec.summary      = "The nextbillion.ai iOS  map cocoapods repo"
 
   spec.description  = <<-DESC
@@ -23,8 +23,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "qiu" => "zhengshen@nextbillion.ai" }
 
   spec.source       = { 
-    :git => "https://github.com/nextbillion-ai/nextbillion-map-ios.git",
-    :branch => "release/2.0.0-beta.6"
+    :git => "https://github.com/nextbillion-ai/nextbillion-map-ios.git"
   }
 
   spec.vendored_frameworks = '*.xcframework'
